@@ -1,16 +1,36 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        echo "Hello World! Bas leest dit dalijk!";
-        ?>
-    </body>
-</html>
+<?php
+
+// This file is the entry point of the website and acts like a router. 
+// Depending on the URL received from the user, the correct controller will be created. 
+
+//Start the session.
+session_start();
+
+include_once 'Model/GlobalSettings.php';            //Static class with global settings.
+include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
+
+//Get the page to open. Homepage default if none specified. 
+if(isset($_GET['p']) && !empty($_GET['p']))
+{
+    $page = $_GET['p'];
+}
+else
+{
+    $page = "home";
+}
+
+//Main routing functionality.
+switch ($page) {
+    case "home":
+        include_once("Controller/HomeController.php"); 
+        $homeController = new HomeController(); 
+        $homeController->invoke(); 
+        break;
+    default:
+        //Custom 'page does not exist' page.
+        echo("This is not the page you are looking for.");
+        break;
+}
+
+DatabaseConnector::closeConnection();
+?>
