@@ -26,6 +26,16 @@ switch ($page) {
         $homeController = new HomeController(); 
         $homeController->invoke(); 
         break;
+    case "resultaten":
+        include_once("Controller/ResultatenController.php"); 
+        $resultatenController = new ResultatenController(); 
+        $resultatenController->invoke(); 
+        break;
+    case "resultaat":
+        include_once("Controller/ResultaatController.php"); 
+        $resultaatController = new ResultaatController(); 
+        $resultaatController->invoke(); 
+        break;
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");
