@@ -26,6 +26,11 @@ switch ($page) {
         $homeController = new HomeController(); 
         $homeController->invoke(); 
         break;
+    case "studentsearch":
+        include_once("Controller/StudentSearchController.php"); 
+        $studentSearchController = new StudentSearchController(); 
+        $studentSearchController->invoke(); 
+        break;
     case "resultaat":
         include_once("Controller/ResultaatController.php"); 
         $resultaatController = new ResultaatController(); 
