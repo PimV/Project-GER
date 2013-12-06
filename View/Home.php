@@ -32,6 +32,8 @@
             <div class="fontIcon">&#xe071;</div>      
             <div class="text">Klassen</div>
         </div>
+        <!--TODO:-->
+        <!--CHECK OF DE DOCENT DIT JAAR COACH IS VAN EEN KLAS, ANDERS DEZE KNOP NIET EENS LATEN ZIEN BIJ EEN DOCENT!!!! DAN HEEFT DIE AAN BEOORDELING GENOEG-->
         <div class="menuItem" onclick="javascript:location.href='index.php?p=resultaten'">
             <div class="fontIcon">&#xe095;</div>      
             <div class="text">Resultaten</div>

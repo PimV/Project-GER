@@ -34,6 +34,10 @@
                 <td><input disabled="disabled" type="text" value="Patrick de Vries"/></td>
             </tr>  
             <tr>
+                <td>Student nummer</td>  
+                <td><input disabled="disabled" type="text" value="00203987"/></td>
+            </tr>
+            <tr>
                 <td>Coach</td>  
                 <td><input disabled="disabled" type="text" value="Bart Jansen"/></td>
             </tr>       
@@ -49,38 +53,33 @@
             <tr>
                 <td>Blok:</td>  
                 <td><input disabled="disabled" type="text" value="4"/></td>
-            </tr>     
+            </tr>
         </table>      
     </div>
-    
-    test
-</div>   
+</div> 
 
-<div style="width: 94%; border: 1px solid black;">
-     <table class="noAction">   
-                    <tr>
-                        <td>Klas</td>  
-                        <td>
-                            <select class="selectFullSize" >
-                                <option>Leerjaar 1</option>  
-                                <option>Leerjaar 2</option>
-                            </select>
-                        </td>
-                    </tr> 
-                    <tr>     
-                        <td>Student naam</td>         
-                        <td>
-                            <select class="selectFullSize" >
-                                <option></option> 
-                                <option>Blok 5 - Aarde</option>  
-                                <option>Blok 6 - Energie</option>
-                            </select>
-                        </td>
-                    </tr> 
-                </table>    
-</div>
+<br />
+<!--Alleen huidige blok laten zien wanener de coach is ingelogd. Bij beheerder alles.-->
+     <table class="noAction" style="width: 94%; border: 1px solid black;">   
+        <tr>
+            <td>Klas</td>  
+            <td>
+                <select class="selectFullSize" >
+                    <option>Leerjaar 1</option>  
+                    <option>Leerjaar 2</option>
+                </select>
+            </td>
 
-
+            <td>Blok</td>         
+            <td>
+                <select class="selectFullSize" >
+                    <option></option> 
+                    <option>Blok 5 - Aarde</option>  
+                    <option>Blok 6 - Energie</option>
+                </select>
+            </td>
+        </tr> 
+    </table>  
 
 <br />
 
@@ -182,7 +181,7 @@
 <br>
 
 <!--Check of de ingelogde docent de coach is, en er nog geen eindoordeel vast gezet is, laat dan onderstaande tabel zien.-->
-<table cellpadding="0" cellspacing="0" style="width: 94%;">
+<table class="noAction" style="width: 94%; border: 1px solid black;">
     <thead>
         <th>Nr 1</th>
         <th>Nr 2</th>
