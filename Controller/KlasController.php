@@ -7,17 +7,17 @@
  */
 class KlasController {
     
-    private $klasModel;
+    private $klassenModel;
     
     public function __construct() {
         include_once 'model/klassen.php';
-        $this->klasModel = new Klassen();
+        $this->klassenModel = new Klassen();
     }
     
     public function invoke() {
         $page = "view/klas.php";
         
-        $klassen = $this->klasModel->getAllClasses_array();
+        $klassen = $this->klassenModel->getAllClasses_array();
         
         include_once 'view/template.php';
     }

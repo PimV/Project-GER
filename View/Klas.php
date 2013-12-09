@@ -16,7 +16,7 @@
             Toevoegen
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=klasedit&id='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe006;
         </div>  
@@ -24,7 +24,7 @@
             Bewerken
         </div>
     </div> 
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=klas&del='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe0a8;
         </div>  
@@ -43,10 +43,10 @@
             $unEven = true;
             foreach ($klassen as $row) {
                 if($unEven){
-                    echo("<tr class='unEven'>");
+                    echo("<tr id='".$row["id"]."' class='unEven'>");
                 }
                 else {
-                    echo("<tr>");
+                    echo("<tr id='".$row["id"]."'>");
                 }
                     echo("<td>".$row["klascode"]."</td>");
                     echo("<td>".$row["studenten"]."</td>");
