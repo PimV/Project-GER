@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of Student
+ * Description of Studenten
  *
  * @author James Hay
  */
-class Student {
+class Studenten {
     
     public function __construct() {
     }
