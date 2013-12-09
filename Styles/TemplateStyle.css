@@ -236,6 +236,12 @@ table {
        color: #ffffff;      
        background-color: #008080;
    }
+   
+   table tbody tr.selected {
+       line-height: 20px;
+       color: #ffffff;      
+       background-color: #008080;
+   }
 
        table tr td {
            padding-left: 5px;

@@ -1,24 +1,20 @@
-var currentlySelected;
+var currentlySelected = Array();
 
 $( document ).ready(function() {
     
     //Makes it possible to select an item in the item lists.
-    $( "tbody tr" ).click(function() {
-        $( currentlySelected ).css({
-            "color": "",
-            "background-color": ""
-        });
-        
-        currentlySelected = this;
-        
-        $( this ).css({
-            "color": "#ffffff",
-            "background-color": "#008080"
-        });
+    $( "table tbody tr" ).click(function() {
+        var table = $(this).parent().parent();
+        if(!table.hasClass("noAction")){
+            $( currentlySelected[table.id] ).removeClass("selected");
+            currentlySelected[table.id] = this;
+            $( this ).addClass("selected");
+        }
     });
     
 });
 
-function getSelectedItemId(){
-    return currentlySelected.id;
+function getSelectedItemId(tableID){
+    if(tableID === undefined || tableID === null || tableID === ""){}
+    return currentlySelected[tableID].id;
 }
