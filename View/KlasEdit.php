@@ -1,6 +1,6 @@
 <h1>Klas bewerken</h1>          
 <div class="ribbon">     
-    <div class="item">
+    <div class="item" onclick=""> <!-- submit form -->
         <div class="fontIcon">
              &#xe060;
         </div>  
@@ -8,7 +8,7 @@
             Opslaan
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=klas'">
         <div class="fontIcon">
             &#xe0f9;
         </div>  
