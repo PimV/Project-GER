@@ -41,7 +41,7 @@ class DatabaseConnector {
         
         // Prepare statement
         $statement = self::$connection->prepare($query);
-        if($statement === false)
+        if($statement == false)
         {
             trigger_error('Wrong SQL: ' . $query . ' Error: ' . self::$connection->error, E_USER_ERROR);
         }
