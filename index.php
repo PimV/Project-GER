@@ -49,6 +49,10 @@ switch ($page) {
         $klasEditController = new KlasEditController();
         $klasEditController->invoke();
         break;
+    case "student":
+        include_once("Controller/StudentController.php");
+        $studentController = new StudentController();
+        $studentController->invoke();
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");
