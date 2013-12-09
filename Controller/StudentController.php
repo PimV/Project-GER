@@ -1,14 +1,16 @@
 <?php
 
 /**
- * Description of Student
+ * Description of StudentController
  *
  * @author James Hay
  */
-class Student {
+class StudentController {
     
     public function __construct() {
     }
+    
+    public function invoke() {
     }
 }
 
