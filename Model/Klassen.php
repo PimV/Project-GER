@@ -24,10 +24,11 @@ class Klassen {
         
         $query = "SELECT k.id, klascode, COUNT(s.id) AS studenten
                     FROM klas k 
-                    LEFT JOIN klas_student s ON s.klas_id = k.id ";
+                    LEFT JOIN klas_student s ON s.klas_id = k.id 
+                    WHERE k.verwijderd = false ";
         
         if($noHistory) {
-            $query .= "WHERE schooljaar = '$date' ";
+            $query .= "AND schooljaar = '$date' ";
         }
         
         $query .= "GROUP BY k.id";
@@ -41,6 +42,10 @@ class Klassen {
         
     }
     
+    public function removeClass($classID) {
+        $query = "UPDATE klas SET verwijderd = true WHERE id = ?";
+        DatabaseConnector::executeQuery($query, array($classID));
+    }
+    
 }
-
 ?>

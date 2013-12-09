@@ -17,6 +17,11 @@ class KlasController {
     public function invoke() {
         $page = "view/klas.php";
         
+        if(isset($_GET["del"])){
+            $this->klassenModel->removeClass($_GET["del"]);
+            header("Location: index.php?p=klas");
+        }
+        
         $klassen = $this->klassenModel->getAllClasses_array();
         
         include_once 'view/template.php';
