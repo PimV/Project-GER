@@ -20,7 +20,7 @@ class DatabaseConnector {
         }
         
         if (self::$connection->connect_error) {
-            trigger_error('Database connection failed: '  . self::$connection->connect_error, E_USER_ERROR);
+          trigger_error('Database connection failed: '  . self::$connection->connect_error, E_USER_ERROR);
         }
     }
     
@@ -41,33 +41,36 @@ class DatabaseConnector {
         
         // Prepare statement
         $statement = self::$connection->prepare($query);
-        if($statement == false)
+        if($statement === false)
         {
             trigger_error('Wrong SQL: ' . $query . ' Error: ' . self::$connection->error, E_USER_ERROR);
         }
         
-        //Put type letters of all variables in a string. s = string, i = integer, d = double, b = blob
-        $types = "";
         $referenceParameters = array();
-        $i = 0;
-        foreach ($parameters as &$parameter) {
-            if(is_int($parameter))
-            {
-                $types .= "i";
-            }
-            else if(is_double($parameter))
-            {
-                $types .= "i";
-            }
-            else
-            {
-                $types .= "s";
-            }
-            //The bind_param requires references to parameters. These are created here so you don't have to remember
-            //to create references on each call to this method. 
+        if(!empty($parameters))
+        {
+            //Put type letters of all variables in a string. s = string, i = integer, d = double, b = blob
+            $types = "";
+            $i = 0;
+            foreach ($parameters as &$parameter) {
+                if(is_int($parameter))
+                {
+                    $types .= "i";
+                }
+                else if(is_double($parameter))
+                {
+                    $types .= "i";
+                }
+                else
+                {
+                    $types .= "s";
+                }
+                //The bind_param requires references to parameters. These are created here so you don't have to remember
+                //to create references on each call to this method. 
 
-            $referenceParameters[$i] = &$parameter;
-            $i++;
+                $referenceParameters[$i] = &$parameter;
+                $i++;
+            }
         }
 
         //Bind parameters. (if there are any) $statement->bind_param() can't be used directly since 
