@@ -24,7 +24,7 @@
     </div>      
 
     <div class="menuRow">  
-        <div class="menuItem">
+        <div class="menuItem" onclick="javascript:location.href='index.php?p=student'">
             <div class="fontIcon">&#xe070;</div>      
             <div class="text">Studenten</div>
         </div>       
