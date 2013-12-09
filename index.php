@@ -39,6 +39,11 @@ switch ($page) {
         $resultaatController = new ResultaatController(); 
         $resultaatController->invoke(); 
         break;
+    case "klas":
+        include_once("Controller/KlasController.php");
+        $klasController = new KlasController();
+        $klasController->invoke();
+        break;
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");

@@ -28,7 +28,7 @@
             <div class="fontIcon">&#xe070;</div>      
             <div class="text">Studenten</div>
         </div>       
-        <div class="menuItem">
+        <div class="menuItem" onclick="javascript:location.href='index.php?p=klas'">
             <div class="fontIcon">&#xe071;</div>      
             <div class="text">Klassen</div>
         </div>
