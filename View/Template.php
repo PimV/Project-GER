@@ -18,9 +18,12 @@
     </head>
     <body>
         <div id="tmpHeader">
-            <?php
-                include("header.php");
-            ?>
+            <div class="headerMenu">
+                <ul>
+                    <li><div class="icon fontIcon" onclick="javascript:location.href='index.php?p=home'">&#xe001;</div><div class="text">Home</div></li>
+                    <li><div class="icon fontIcon">&#xe104;</div><div class="text">Logout</div></li>
+                </ul>
+            </div>
         </div>
    
         <div id="tmpContent"> 
