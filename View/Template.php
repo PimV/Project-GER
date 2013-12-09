@@ -3,6 +3,7 @@
     <head>
         <!-- Libraries -->
         <script src="Libraries/jQuery/jquery-1.10.2.min.js"></script>
+        <script src="JavaScript/Template.js"></script>
         
         <!-- Head overrides & additions -->
         <?php if (isset($pagehead)){include_once($pagehead);} ?>
