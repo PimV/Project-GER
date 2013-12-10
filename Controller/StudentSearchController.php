@@ -21,8 +21,12 @@ class StudentSearchController {
     public function invoke()
     {
         $page = 'StudentSearch.php';
-        // $pagehead = 'StudentSearchHead.php';        
+        $pagehead = 'StudentSearchHead.php';   
+        
         $studenten = $this->studentenModel->getAllStudents_array();
+        
+        //ALS admin is ingelogd vul $klassen aan de hand van getAllClasses
+        //ALS COACH is ingelogd vul $klassen aan de hand van getAlClassesRating met daarbij docent_id als parameter
         $klassen = $this->klassenModel->getAllClasses_array();
 
         include 'View/Template.php';

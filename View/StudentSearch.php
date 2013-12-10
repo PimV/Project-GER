@@ -5,12 +5,6 @@
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
 
-                        <script type="text/javascript">
-                            function createChart(){
-                                var a = document.getElementById("selectFullSize");
-                                alert(a.options[a.selectedIndex].value);
-                            }
-                        </script>
 <h1>Studenten zoeken</h1>          
 <div class="ribbon">     
     <div class="item">
@@ -116,11 +110,11 @@
             <tr>
                 <td>Klas</td>
                 <td>
-                    <select class="selectFullSize" onchange="createChart()">
-                        <option value="*"> </option>
+                    <select id="dropdownClass" class="selectFullSize" onchange="showId()">
+                        <option> </option>
                         <?php
                             foreach ($klassen as $row) {
-                                echo("<option value='".$row["id"]."'>".$row["klascode"]."</option>");
+                                echo("<option value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
                             }
                         ?>
                     </select>
@@ -139,36 +133,19 @@
             <tr>
                 <td>Klas</td>
                 <td>
-                    <select class="selectFullSize" >
+                    <select id="dropdownClass"  class="selectFullSize" onchange="showId()" >
                         <option value="*"> </option>
                         <?php
                             foreach ($klassen as $row) {
-                                echo("<option value='".$row["id"]."'>".$row["klascode"]."</option>");
+                                echo("<option value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
                             }
                         ?>
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td>Studentnummer</td>  
-                <td><input type="text"/></td>
-            </tr>  
         </table>            
     </div>
 
-    <div class="right">   
-        <table class="noAction">  
-            <tr>
-                <td>Voornaam</td>  
-                <td><input type="text"/></td>
-            </tr>         
-            <tr>
-                <td>Achternaam</td>  
-                <td><input type="text"/></td>
-            </tr> 
-        </table>     
-    </div>
-</div>
 
 <table cellpadding="0" cellspacing="0">
     <thead>

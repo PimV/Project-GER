@@ -20,22 +20,40 @@ class Klassen {
     
     public function getAllClasses_array($noHistory = true) {
         
-        //$date = date("Y") . "-" . (date("Y") + 1);
-        
-        $query = "SELECT k.id, klascode, COUNT(s.id) AS studenten
+        $result = DatabaseConnector::executeQuery($query);
+        return $result; 
+    }
+    
+    //2 = Pak alle klassen met een ingevulde deadline die nog NIET voorbij is (docent beoordeling)
+    //mag de regel met IS NOT NULL niet gewoon weg?
+    public function getAllClassesReviewing_array(){
+        $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
-                    WHERE k.verwijderd = false ";
-        
-        //if($noHistory) {
-        //    $query .= "AND schooljaar = '$date' ";
-        //}
-        
-        $query .= "GROUP BY k.id";
+                    LEFT JOIN blok b ON b.id = k.blok_id
+                    WHERE k.verwijderd = false 
+                    AND beoordeling_deadline IS NOT NULL
+                    AND beoordeling_deadline > NOW()
+                    GROUP BY k.id";
         
         $result = DatabaseConnector::executeQuery($query);
-        return $result;        
+        return $result; 
+    }
+    //3 = pak alle klassen waar docent coach is met een ingevulde deadline die WEL voorbij is (coach)
+    //mag de regel met IS NOT NULL niet gewoon weg?
+    public function getAllClassesRating_array($coachId){
+        $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
+                    FROM klas k 
+                    LEFT JOIN klas_student s ON s.klas_id = k.id 
+                    LEFT JOIN blok b ON b.id = k.blok_id
+                    WHERE k.verwijderd = false 
+                    AND k.coach_id = ?
+                    AND beoordeling_deadline IS NOT NULL
+                    AND beoordeling_deadline < NOW()
+                    GROUP BY k.id";
         
+        $result = DatabaseConnector::executeQuery($query, array($coachId));
+        return $result; 
     }
     
     public function getClass($classID) {
