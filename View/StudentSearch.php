@@ -143,26 +143,9 @@
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td>Studentnummer</td>  
-                <td><input type="text"/></td>
-            </tr>  
         </table>            
     </div>
 
-    <div class="right">   
-        <table class="noAction">  
-            <tr>
-                <td>Voornaam</td>  
-                <td><input type="text"/></td>
-            </tr>         
-            <tr>
-                <td>Achternaam</td>  
-                <td><input type="text"/></td>
-            </tr> 
-        </table>     
-    </div>
-</div>
 
 <table cellpadding="0" cellspacing="0">
     <thead>
