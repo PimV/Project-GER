@@ -110,17 +110,13 @@
             <tr>
                 <td>Klas</td>
                 <td>
-                    <select class="selectFullSize" >
+                    <select class="selectFullSize">
                         <option value="*"> </option>
                         <?php
                             foreach ($klassen as $row) {
                                 echo("<option value='".$row["id"]."'>".$row["klascode"]."</option>");
                             }
                         ?>
-                        <script>
-                            var a = document.getElementById("selectFullSize");
-                            alert(a.options[a.selectedIndex].value);
-                        </script>
                     </select>
                 </td>
             </tr>
