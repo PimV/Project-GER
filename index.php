@@ -26,6 +26,16 @@ else
 
 //Main routing functionality.
 switch ($page) {
+    case "groep":
+        include_once("Controller/HomeController.php"); 
+        $groepController = new HomeController(); 
+        $groepController->invoke(); 
+        break;
+    case "groepedit":
+        include_once("Controller/HomeController.php"); 
+        $groepEditController = new HomeController(); 
+        $groepEditController->invoke(); 
+        break;
     case "home":
         include_once("Controller/HomeController.php"); 
         $homeController = new HomeController(); 
