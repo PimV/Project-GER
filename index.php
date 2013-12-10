@@ -15,9 +15,9 @@ include_once 'Model/GlobalSettings.php';            //Static class with global s
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
 
 //Get the page to open. Homepage default if none specified. 
-if(isset($_GET['p']) && !empty($_GET['p']))
+if(isset($_GET["p"]) && !empty($_GET["p"]))
 {
-    $page = $_GET['p'];
+    $page = $_GET["p"];
 }
 else
 {
@@ -27,13 +27,13 @@ else
 //Main routing functionality.
 switch ($page) {
     case "groep":
-        include_once("Controller/HomeController.php"); 
-        $groepController = new HomeController(); 
+        include_once("Controller/GroepController.php"); 
+        $groepController = new GroepController(); 
         $groepController->invoke(); 
         break;
     case "groepedit":
-        include_once("Controller/HomeController.php"); 
-        $groepEditController = new HomeController(); 
+        include_once("Controller/GroepEditController.php"); 
+        $groepEditController = new GroepEditController(); 
         $groepEditController->invoke(); 
         break;
     case "home":

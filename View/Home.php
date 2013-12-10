@@ -5,7 +5,7 @@
             <div class="fontIcon">&#xe075;</div>      
             <div class="text">Docententen</div>
         </div>      
-        <div class="menuItem">
+        <div class="menuItem" onclick="javascript:location.href='index.php?p=groep'">
             <div class="fontIcon">&#xe006;</div>      
             <div class="text">Rollen</div>
         </div>   

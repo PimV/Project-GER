@@ -5,7 +5,7 @@
  *
  * @author Pieter School
  */
-class StudentController {
+class GroepEditController {
     
     public function __construct() {
     }
