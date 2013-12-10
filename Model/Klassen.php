@@ -20,6 +20,11 @@ class Klassen {
     
     public function getAllClasses_array($noHistory = true) {
         
+        $query = "SELECT k.id, klascode, COUNT(s.id) AS studenten
+                    FROM klas k 
+                    LEFT JOIN klas_student s ON s.klas_id = k.id 
+                    WHERE k.verwijderd = false ";
+
         $result = DatabaseConnector::executeQuery($query);
         return $result; 
     }
