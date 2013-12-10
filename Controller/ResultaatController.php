@@ -25,13 +25,13 @@ class ResultaatController {
              $klassen = $this->klassenModel->getAllClasses_array();
         }
         else{
-             $klassen = $this->klassenModel->getAllClassesRating_array($coachId);
+             $klassen = $this->klassenModel->getAllClassesRating_array($coachId, $studentId);
         }
         
         
         
         $page = 'Resultaat.php';
-       // $pagehead = 'ResultaatHead.php';
+        $pagehead = 'ResultaatHead.php';
 
         include 'View/Template.php';
     }
