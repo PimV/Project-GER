@@ -22,9 +22,10 @@ class Klassen {
         
         $date = date("Y") . "-" . (date("Y") + 1);
         
-        $query = "SELECT k.id, klascode, COUNT(s.id) AS studenten
+        $query = "SELECT k.id, klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
+                    LEFT JOIN blok b ON b.id = k.blok_id
                     WHERE k.verwijderd = false ";
         
         if($noHistory) {

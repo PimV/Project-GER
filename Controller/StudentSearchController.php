@@ -21,7 +21,8 @@ class StudentSearchController {
     public function invoke()
     {
         $page = 'StudentSearch.php';
-        // $pagehead = 'StudentSearchHead.php';        
+        $pagehead = 'StudentSearchHead.php';   
+        
         $studenten = $this->studentenModel->getAllStudents_array();
         $klassen = $this->klassenModel->getAllClasses_array();
 
