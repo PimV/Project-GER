@@ -133,8 +133,8 @@
             <tr>
                 <td>Klas</td>
                 <td>
-                    <select id="dropdownClass"  class="selectFullSize" onchange="showId()" >
-                        <option value="*"> </option>
+                    <select id="dropdownClass" class="selectFullSize" onchange="showId()">
+                        <option> </option>
                         <?php
                             foreach ($klassen as $row) {
                                 echo("<option value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
