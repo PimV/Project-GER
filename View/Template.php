@@ -18,23 +18,25 @@
         
     </head>
     <body>
-        <div id="tmpHeader">
-            <div class="headerMenu">
-                <ul>
-                    <li><div class="icon fontIcon" onclick="javascript:location.href='index.php?p=home'">&#xe001;</div><div class="text">Home</div></li>
-                    <li><div class="icon fontIcon">&#xe104;</div><div class="text">Logout</div></li>
-                </ul>
+        <div id="wrapper" style="position: absolute;width: 100%; height: 100%;">
+            <div id="tmpHeader">
+                <div class="headerMenu">
+                    <ul>
+                        <li><div class="icon fontIcon" onclick="javascript:location.href='index.php?p=home'">&#xe001;</div><div class="text">Home</div></li>
+                        <li><div class="icon fontIcon">&#xe104;</div><div class="text">Logout</div></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-   
-        <div id="tmpContent"> 
-            <?php
-            include($page);
-            ?>
-        </div>
-                        
-        <div id="tmpFooter">
-            
+
+            <div id="tmpContent"> 
+                <?php
+                include($page);
+                ?>
+            </div>
+
+            <div id="tmpFooter">
+
+            </div>
         </div>
     </body>
 </html>

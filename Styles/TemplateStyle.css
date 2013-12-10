@@ -1,8 +1,6 @@
 body {
     font-family: calibri;
     margin: 0;
-    background: url(../Images/bg.jpg);
-    background-size: 110% 100%;
 }
 
 @font-face {
@@ -14,6 +12,12 @@ body {
 		url('fontstyles/icomoon.svg#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
+}
+
+#wrapper{
+    
+    background: url(../Images/bg.jpg);
+    background-size: 100% 100%;
 }
 
 .fontIcon {
@@ -31,7 +35,7 @@ body {
 
 #tmpHeader {
    z-index: 500;
-   position: fixed;
+   position: absolute;
    left: 0;
    top: 0;
    padding: 0;
@@ -45,7 +49,8 @@ body {
 #tmpContent {
    position: relative;
    width: 1060px;
-   min-height: 600px;
+   max-width: 1060px;
+   min-height: 80%;
    margin: auto auto;
    margin-top:130px;
    padding:10px;
@@ -217,12 +222,12 @@ table {
    }
 
    table tr {
-       line-height: 20px;         
+       line-height: 22px;        
        background-color: #ffffff;
    }  
 
    table tbody tr:hover {
-       line-height: 20px;
+       line-height: 22px;
        color: #ffffff;      
        background-color: #008080;
    }
@@ -232,20 +237,20 @@ table {
    }   
 
    table tbody tr.unEven:hover {
-       line-height: 20px;
+       line-height: 22px;
        color: #ffffff;      
        background-color: #008080;
    }
    
    table tbody tr.selected {
-       line-height: 20px;
+       line-height: 22px;
+       margin-left: 15px;
        color: #ffffff;      
-       background-color: #008080;
+       background-color: #006060;
    }
 
        table tr td {
            padding-left: 5px;
-           line-height: 22px;
        }
 
 .splitScreen {
