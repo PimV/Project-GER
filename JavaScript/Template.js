@@ -52,8 +52,11 @@ $( document ).ready(function() {
             var listItem = $(".selected");
             if(listItem.text() !== "")
             {
-                leftList.append('<li class="listItem">' + listItem.text() + '</li>');    
-                listItem.remove();
+                if(listItem.parent().attr('alt') !== "left")
+                {
+                    leftList.append('<li class="listItem">' + listItem.text() + '</li>');    
+                    listItem.remove();
+                }
             }
         });           
     });    
@@ -71,8 +74,11 @@ $( document ).ready(function() {
             var listItem = $(".selected");
             if(listItem.text() !== "")
             {
-                rightList.append('<li class="listItem">' + listItem.text() + '</li>');    
-                listItem.remove();
+                if(listItem.parent().attr('alt') !== "right")
+                {
+                    rightList.append('<li class="listItem">' + listItem.text() + '</li>');    
+                    listItem.remove();
+                }
             }
         });           
     }); 
