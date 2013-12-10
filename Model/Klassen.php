@@ -38,7 +38,7 @@ class Klassen {
     
     //2 = Pak alle klassen met een ingevulde deadline die nog NIET voorbij is (docent beoordeling)
     //mag de regel met IS NOT NULL niet gewoon weg?
-    public function getAllClassesReviewing_array($studentId){
+    public function getAllClassesReviewing_array($studentId = null){
         $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
@@ -63,7 +63,7 @@ class Klassen {
     }
     //3 = pak alle klassen waar docent coach is met een ingevulde deadline die WEL voorbij is (coach)
     //mag de regel met IS NOT NULL niet gewoon weg?
-    public function getAllClassesRating_array($coachId, $studentId){
+    public function getAllClassesRating_array($coachId, $studentId = null){
         $parameters = array($coachId);
         
         $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
@@ -82,7 +82,7 @@ class Klassen {
                     AND beoordeling_deadline < NOW()
                     GROUP BY k.id";
         
-        $result = DatabaseConnector::executeQuery($query, array($parameters));
+        $result = DatabaseConnector::executeQuery($query, $parameters);
         return $result; 
     }
         

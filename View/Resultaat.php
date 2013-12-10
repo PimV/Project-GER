@@ -68,7 +68,6 @@
                     <option> </option>
                     <?php
                         foreach ($klassen as $row) {
-                            echo("<input type='checkbox' value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."<br>");
                             echo("<option value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
                         }
                     ?>
