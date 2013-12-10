@@ -10,7 +10,7 @@
         
         <!-- Default head -->
         <title>GER</title>
-        <meta charset="UTF-8"/>
+        <meta charset="ISO-8859-15"/>
         <meta name="description" content="GER (Green Engineering Rubrics) beoordeling systeem"/>
         <meta name="keywords" content="GER, student, beoordeling"/>
         <link rel="stylesheet" type="text/css" href="Styles/TemplateStyle.css"/>
