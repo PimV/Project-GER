@@ -7,7 +7,7 @@
 session_start();
 
 //Sessie admin variable welke op true staat als volgens de DB de ingelogde een admin level heeft
-$_SESSION['admin'] = true;
+$_SESSION['admin'] = false;
 
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
@@ -53,6 +53,11 @@ switch ($page) {
         include_once("Controller/StudentController.php");
         $studentController = new StudentController();
         $studentController->invoke();
+        break;
+    case "studentedit":
+        include_once("Controller/StudentEditController.php");
+        $studentEditController = new StudentEditController();
+        $studentEditController->invoke();
         break;
     default:
         //Custom 'page does not exist' page.

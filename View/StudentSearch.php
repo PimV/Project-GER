@@ -7,7 +7,7 @@
 
 <h1>Studenten zoeken</h1>          
 <div class="ribbon">     
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php'">
         <div class="fontIcon"> 
              &#xe126;
         </div>  
@@ -34,7 +34,7 @@
     
     <!-- Laat onderstaande knoppen alleen zien als een administrator is ingelogd -->
     <?php if($_SESSION['admin']) { ?>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentedit'">
         <div class="fontIcon">
             &#xe102;
         </div>  
@@ -42,7 +42,7 @@
             Toevoegen
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentedit&id='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe006;
         </div>  
@@ -50,7 +50,7 @@
             Bewerken
         </div>
     </div> 
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe0a8;
         </div>  
@@ -133,8 +133,8 @@
             <tr>
                 <td>Klas</td>
                 <td>
-                    <select id="dropdownClass"  class="selectFullSize" onchange="showId()" >
-                        <option value="*"> </option>
+                    <select id="dropdownClass" class="selectFullSize" onchange="showId()">
+                        <option> </option>
                         <?php
                             foreach ($klassen as $row) {
                                 echo("<option value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
@@ -143,26 +143,9 @@
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td>Studentnummer</td>  
-                <td><input type="text"/></td>
-            </tr>  
         </table>            
     </div>
 
-    <div class="right">   
-        <table class="noAction">  
-            <tr>
-                <td>Voornaam</td>  
-                <td><input type="text"/></td>
-            </tr>         
-            <tr>
-                <td>Achternaam</td>  
-                <td><input type="text"/></td>
-            </tr> 
-        </table>     
-    </div>
-</div>
 
 <table cellpadding="0" cellspacing="0">
     <thead>
@@ -192,10 +175,10 @@
             $unEven = true;
             foreach ($studenten as $row) {
                 if($unEven){
-                    echo("<tr class='unEven'>");
+                    echo("<tr id='".$row["id"]."' class='unEven'>");
                 }
                 else {
-                    echo("<tr>");
+                    echo("<tr id='".$row["id"]."'>");
                 }
                     echo("<td>".$row["id"]."</td>");
                     echo("<td>".$row["voornaam"]."</td>");

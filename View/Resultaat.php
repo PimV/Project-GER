@@ -1,6 +1,6 @@
 <h1>Resultaat</h1>          
 <div class="ribbon">  
-    <div class="item" onclick="javascript:location.href='index.php?p=resultaten'">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentsearch'">
                 <div class="fontIcon"> 
                      &#xe126;
                 </div>  
