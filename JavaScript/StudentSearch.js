@@ -1,6 +1,5 @@
 function showId(){
-    alert("test");
     var a = document.getElementById("dropdownClass");
-    alert(a);
-    alert(a.options[a.selectedIndex].value);
+    var id = a.options[a.selectedIndex].value;
+    alert("Het unique database ID van deze klas is: " + id);
 }
