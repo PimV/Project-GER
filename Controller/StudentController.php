@@ -16,7 +16,7 @@ class StudentController {
     
     public function invoke() {
         $page = "view/student.php";
-        $studenten = $this->studentenModel->getAllClasses_array();
+        $studenten = $this->studentenModel->getAllStudents_array();
         
         include_once 'view/template.php';
     }

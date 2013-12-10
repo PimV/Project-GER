@@ -10,15 +10,15 @@ class Studenten {
     public function __construct() {
     }
     
-    public function addClass() {
+    public function addStudent() {
         
     }
     
-    public function getAllClasses() {
+    public function getAllStudents() {
         
     }
     
-    public function getAllClasses_array($noHistory = true) {
+    public function getAllStudents_array($noHistory = true) {
         $query = "SELECT * from student"; 
         
         $result = DatabaseConnector::executeQuery($query);

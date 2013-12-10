@@ -19,7 +19,7 @@ class StudentSearchController {
     {
         $page = 'StudentSearch.php';
         // $pagehead = 'StudentSearchHead.php';        
-        $studenten = $this->studentenModel->getAllClasses_array();
+        $studenten = $this->studentenModel->getAllStudents_array();
 
         include 'View/Template.php';
     }
