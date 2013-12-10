@@ -44,14 +44,19 @@ class Klassen {
     //    }
 
     //1 = pak alle klassen (admin) 
-    public function getAllClasses_array(){
+    public function getAllClasses_array($noHistory = true){
         $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
-                    WHERE k.verwijderd = false
-                    GROUP BY k.id";
+                    WHERE k.verwijderd = false ";
 
+        if($noHistory) {
+            $query .= "AND (beoordeling_deadline IS NULL 
+                        OR beoordeling_deadline > NOW()) ";
+        }
+        $query .= "GROUP BY k.id";
+        
         $result = DatabaseConnector::executeQuery($query);
         return $result; 
     }
