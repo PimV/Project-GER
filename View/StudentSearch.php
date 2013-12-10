@@ -155,57 +155,49 @@
         </table>     
     </div>
 </div>
-<?php } ?>
 
 <table cellpadding="0" cellspacing="0">
-    <thead>      
-        <th>Nummer</th>
-        <th>Voornaam</th>     
-        <th>Tussenvoegsel</th>   
+    <thead>
+        <th>Id</th>     
+        <th>Voornaam</th>
         <th>Achternaam</th>
-        <th>Email</th>      
-        <th>Klas</th>
-    </thead>    
+        <th>Tussenvoegsel</th>
+        <th>Mail</th>   
+    </thead>
     <tbody>
-        <tr class="unEven">
-            <td>12452</td>    
-            <td>Henk</td>       
-            <td>de</td>
-            <td>Boer</td>
-            <td>hBoer@hyves.nl</td>   
-            <td>12asd51x</td>
-        </tr>    
-        <tr>      
-            <td>23133</td>    
-            <td>Joep</td>       
-            <td></td>
-            <td>Huizen</td>
-            <td>jHuizen@me.com</td>      
-            <td>12asd51x</td>
-        </tr>
-        <tr class="unEven">  
-            <td>15452</td>    
-            <td>Barry</td>       
-            <td>van de</td>
-            <td>Hoofdt</td>
-            <td>bHoofdt@hotmail.nl</td>    
-            <td>12asd51x</td>
-        </tr>
-        <tr>         
-            <td>45124</td>   
-            <td>Dennis</td>       
-            <td></td>
-            <td>Meeuwes</td>
-            <td>dMeeuwes@live.nl</td>    
-            <td>12asd52x</td>
-        </tr>
-        <tr class="unEven">  
-            <td>36154</td>   
-            <td>Frans</td>       
-            <td></td>
-            <td>Uijlen</td>
-            <td>fUilen@msn.com</td>  
-            <td>12asd52x</td>
-        </tr>
+        
     </tbody>
 </table>
+<?php } ?>
+
+<?php if($_SESSION['admin']) { ?>
+<table cellpadding="0" cellspacing="0">
+    <thead>
+        <th>Id</th>     
+        <th>Voornaam</th>
+        <th>Achternaam</th>
+        <th>Tussenvoegsel</th>
+        <th>Mail</th>   
+    </thead>
+    <tbody>
+        <?php
+            $unEven = true;
+            foreach ($studenten as $row) {
+                if($unEven){
+                    echo("<tr class='unEven'>");
+                }
+                else {
+                    echo("<tr>");
+                }
+                    echo("<td>".$row["id"]."</td>");
+                    echo("<td>".$row["voornaam"]."</td>");
+                    echo("<td>".$row["achternaam"]."</td>");
+                    echo("<td>".$row["tussenvoegsel"]."</td>");
+                    echo("<td>".$row["mail"]."</td>");
+                echo("</tr>");
+                $unEven = !$unEven;
+            }
+        ?>
+    </tbody>
+</table>
+<?php } ?>
