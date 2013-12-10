@@ -26,7 +26,7 @@ class Studenten {
         
     }
     
-    public function getClass($classID) {
+    public function getStudent($studentID) {
     }
 }
 
