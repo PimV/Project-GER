@@ -26,9 +26,7 @@ class Klassen {
      * @return array[][]
      */
     public function getAllClasses_array($currentlyReviewing = false, $noHistory = true) {
-        
-        $date = date("Y") . "-" . (date("Y") + 1);
-        
+                
         $query = "SELECT k.id, klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
