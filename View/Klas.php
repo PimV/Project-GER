@@ -48,7 +48,7 @@
                 else {
                     echo("<tr id='".$row["id"]."'>");
                 }
-                    echo("<td>".$row["klascode"]."</td>");
+                    echo("<td>".$row["klascode"]." - ".$row["naam"]."</td>");
                     echo("<td>".$row["studenten"]."</td>");
                 echo("</tr>");
                 $unEven = !$unEven;
