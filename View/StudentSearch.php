@@ -5,6 +5,12 @@
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
 
+                        <script type="text/javascript">
+                            function createChart(){
+                                var a = document.getElementById("selectFullSize");
+                                alert(a.options[a.selectedIndex].value);
+                            }
+                        </script>
 <h1>Studenten zoeken</h1>          
 <div class="ribbon">     
     <div class="item">
@@ -117,12 +123,6 @@
                                 echo("<option value='".$row["id"]."'>".$row["klascode"]."</option>");
                             }
                         ?>
-                        <script>
-                            function createChart(){
-                                var a = document.getElementById("selectFullSize");
-                                alert(a.options[a.selectedIndex].value);
-                            }
-                        </script>
                     </select>
                 </td>
             </tr>
