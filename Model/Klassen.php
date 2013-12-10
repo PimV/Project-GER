@@ -107,7 +107,7 @@ class Klassen {
                     AND beoordeling_deadline < NOW()
                     GROUP BY k.id";
         
-        $result = DatabaseConnector::executeQuery($query, array($parameters));
+        $result = DatabaseConnector::executeQuery($query, $parameters);
         return $result; 
     }
         
