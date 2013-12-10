@@ -8,12 +8,12 @@
             Opslaan
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=groep'">
         <div class="fontIcon">
             &#xe0f9;
         </div>  
         <div class="text">
-            Verwerpen
+            Annuleren
         </div>
     </div>
 </div>  
@@ -29,27 +29,29 @@
 
         <h2>Rubrieken</h2>
 
-        <ul class="listView">
-            <li class="listItem">Vakinhoudelijke kennis en vaardigheden</li>      
-            <li class="listItem">Technische vaardigheden</li>
-        </ul>     
+        <div alt="listItem">
+            <ul class="listView" alt="left">
+                <li class="listItem">Vakinhoudelijke kennis en vaardigheden</li>      
+                <li class="listItem">Technische vaardigheden</li>
+            </ul>     
 
-        <div class="listViewControl">
-            <div class="fontIcon">&#xe111;</div>    
-            <div class="fontIcon">&#xe112;</div>      
-        </div>    
+            <div class="listViewControl">
+                <div name="Left" class="fontIcon">&#xe111;</div>    
+                <div name="Right" class="fontIcon">&#xe112;</div>      
+            </div>    
 
-        <ul class="listView">
-            <li class="listItem">Exact</li>        
-            <li class="listItem">Kwaliteit en zorgvuldigheid</li>    
-            <li class="listItem">Communicatie</li>    
-            <li class="listItem">Sociale vaardigheden</li>    
-            <li class="listItem">Plannen en organiseren</li>    
-            <li class="listItem">Ondernemerschap</li>    
-            <li class="listItem">Verantwoordelijkheid</li>    
-            <li class="listItem">Zelfstandigheid</li>                  
-            <li class="listItem">Transfervaardigheid</li>    
-        </ul> 
+            <ul class="listView" alt="right">
+                <li class="listItem">Exact</li>        
+                <li class="listItem">Kwaliteit en zorgvuldigheid</li>    
+                <li class="listItem">Communicatie</li>    
+                <li class="listItem">Sociale vaardigheden</li>    
+                <li class="listItem">Plannen en organiseren</li>    
+                <li class="listItem">Ondernemerschap</li>    
+                <li class="listItem">Verantwoordelijkheid</li>    
+                <li class="listItem">Zelfstandigheid</li>                  
+                <li class="listItem">Transfervaardigheid</li>    
+            </ul> 
+        </div>
     </div>
 
     <div class="right">   

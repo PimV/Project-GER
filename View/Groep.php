@@ -1,6 +1,6 @@
 <h1>Rollen</h1>          
 <div class="ribbon">     
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php'">
         <div class="fontIcon">
              &#xe126;
         </div>  
@@ -8,7 +8,7 @@
             Terug
         </div>
     </div> 
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=groepedit&mode=add'">
         <div class="fontIcon">
             &#xe102;
         </div>  

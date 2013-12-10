@@ -287,9 +287,13 @@ table {
    }    
 
    .listView .listItem:hover{ 
-       background-color: #008b8b;
+       background-color: #008080;
        color: #ffffff;
    }
+   .listView .listItem.selected{
+       background-color: #006060;
+       color: #ffffff;
+   } 
 
 .listViewControl {
    width: 8%;
