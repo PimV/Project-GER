@@ -50,8 +50,11 @@ $( document ).ready(function() {
                 
         rightList.each(function(){
             var listItem = $(".selected");
-            leftList.append('<li class="listItem">' + listItem.text() + '</li>');    
-            listItem.remove();
+            if(listItem.text() !== "")
+            {
+                leftList.append('<li class="listItem">' + listItem.text() + '</li>');    
+                listItem.remove();
+            }
         });           
     });    
 });
@@ -66,8 +69,11 @@ $( document ).ready(function() {
                 
         leftList.each(function(){
             var listItem = $(".selected");
-            rightList.append('<li class="listItem">' + listItem.text() + '</li>');    
-            listItem.remove();
+            if(listItem.text() !== "")
+            {
+                rightList.append('<li class="listItem">' + listItem.text() + '</li>');    
+                listItem.remove();
+            }
         });           
     }); 
 });
