@@ -18,7 +18,14 @@ class Klassen {
         
     }
     
-    public function getAllClasses_array($noHistory = true) {
+    /**
+     * Get a 2d array of all classes containing the class id, name and student amount.
+     * 
+     * @param boolean $currentlyReviewing If true, only retrieve classes that are currently beïng reviewed. $noHistory will have no effect.
+     * @param boolean $noHistory If true, will not retrieve classes from the past. (reviewing deadline has already past)
+     * @return array[][]
+     */
+    public function getAllClasses_array($currentlyReviewing = false, $noHistory = true) {
         
         $date = date("Y") . "-" . (date("Y") + 1);
         
@@ -28,8 +35,15 @@ class Klassen {
                     LEFT JOIN blok b ON b.id = k.blok_id
                     WHERE k.verwijderd = false ";
         
-        if($noHistory) {
-            $query .= "AND schooljaar = '$date' ";
+        if($currentlyReviewing) {
+            $query .= "AND beoordeling_deadline IS NOT NULL 
+                        AND beoordeling_deadline > NOW() ";
+        }
+        else {
+            if($noHistory) {
+                $query .= "AND (beoordeling_deadline IS NULL 
+                            OR beoordeling_deadline < NOW()) ";
+            }
         }
         
         $query .= "GROUP BY k.id";
