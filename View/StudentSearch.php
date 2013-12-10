@@ -111,8 +111,12 @@
                 <td>Klas</td>
                 <td>
                     <select class="selectFullSize" >
-                        <option>Leerjaar 1</option>  
-                        <option>Leerjaar 2</option>
+                        <option> </option>
+                        <?php
+                            foreach ($klassen as $row) {
+                                echo("<option id='".$row["id"]."'>".$row["klascode"]."</option>");
+                            }
+                        ?>
                     </select>
                 </td>
             </tr>
@@ -130,8 +134,12 @@
                 <td>Klas</td>
                 <td>
                     <select class="selectFullSize" >
-                        <option>Leerjaar 1</option>  
-                        <option>Leerjaar 2</option>
+                        <option> </option>
+                        <?php
+                            foreach ($klassen as $row) {
+                                echo("<option id='".$row["id"]."'>".$row["klascode"]."</option>");
+                            }
+                        ?>
                     </select>
                 </td>
             </tr>
