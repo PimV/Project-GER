@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Description of StudentController
+ * Description of StudentEditController
  *
  * @author James Hay
  */
-class StudentController {
+class StudentEditController {
+    
     
     public function __construct() {
     }
     
     public function invoke() {
-        $page = "view/student.php";
-        
+        $page = "view/studentEdit.php";
         include_once 'view/template.php';
     }
 }

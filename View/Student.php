@@ -16,7 +16,7 @@
             Toevoegen
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentedit&id='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe006;
         </div>  

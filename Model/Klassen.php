@@ -20,16 +20,16 @@ class Klassen {
     
     public function getAllClasses_array($noHistory = true) {
         
-        $date = date("Y") . "-" . (date("Y") + 1);
+        //$date = date("Y") . "-" . (date("Y") + 1);
         
         $query = "SELECT k.id, klascode, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     WHERE k.verwijderd = false ";
         
-        if($noHistory) {
-            $query .= "AND schooljaar = '$date' ";
-        }
+        //if($noHistory) {
+        //    $query .= "AND schooljaar = '$date' ";
+        //}
         
         $query .= "GROUP BY k.id";
         

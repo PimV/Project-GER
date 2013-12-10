@@ -40,7 +40,7 @@
     
     <!-- Laat onderstaande knoppen alleen zien als een administrator is ingelogd -->
     <?php if($_SESSION['admin']) { ?>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentedit'">
         <div class="fontIcon">
             &#xe102;
         </div>  
@@ -48,7 +48,7 @@
             Toevoegen
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentedit&id='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe006;
         </div>  
@@ -56,7 +56,7 @@
             Bewerken
         </div>
     </div> 
-    <div class="item">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();">
         <div class="fontIcon">
             &#xe0a8;
         </div>  
@@ -198,10 +198,10 @@
             $unEven = true;
             foreach ($studenten as $row) {
                 if($unEven){
-                    echo("<tr class='unEven'>");
+                    echo("<tr id='".$row["id"]."' class='unEven'>");
                 }
                 else {
-                    echo("<tr>");
+                    echo("<tr id='".$row["id"]."'>");
                 }
                     echo("<td>".$row["id"]."</td>");
                     echo("<td>".$row["voornaam"]."</td>");

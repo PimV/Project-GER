@@ -54,6 +54,11 @@ switch ($page) {
         $studentController = new StudentController();
         $studentController->invoke();
         break;
+    case "studentedit":
+        include_once("Controller/StudentEditController.php");
+        $studentEditController = new StudentEditController();
+        $studentEditController->invoke();
+        break;
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");
