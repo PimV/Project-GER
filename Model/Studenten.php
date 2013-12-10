@@ -10,11 +10,11 @@ class Studenten {
     public function __construct() {
     }
     
-    public function addClass() {
+    public function addStudent() {
         
     }
     
-    public function getAllClasses() {
+    public function getAllStudents() {
         
     }
     
