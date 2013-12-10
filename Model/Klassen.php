@@ -87,7 +87,7 @@ class Klassen {
         $result = DatabaseConnector::executeQuery($query, array($coachId));
         return $result; 
     }
-    
+        
     public function getClass($classID) {
         
     }
