@@ -36,6 +36,8 @@ class ResultaatController {
         $pagehead = 'ResultaatHead.php';
         
         include 'View/Template.php';
+        
+        echo "<script>reloadComboAjaxClass(". $studentId .");</script>";        
     }
 }
 

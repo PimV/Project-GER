@@ -76,6 +76,16 @@ switch ($page) {
         $exportController = new ExportController();
         $exportController->invoke();
         break;
+    case "ajaxresultaatklassencontroller":
+        include_once("Controller/AJAX/AjaxResultaatKlassenController.php");
+        $klassenController = new AjaxResultaatKlassenController();
+        $klassenController->invoke();
+        break;
+    case "ajaxresultaatresultatencontroller":
+        include_once("Controller/AJAX/AjaxResultaatResultatenController.php");
+        $resultatenController = new AjaxResultaatResultatenController();
+        $resultatenController->invoke();
+        break;
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");
