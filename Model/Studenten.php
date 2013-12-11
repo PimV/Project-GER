@@ -26,11 +26,15 @@ class Studenten {
         
     }
     
-    public function getStudent($studentID) {
+    public function getStudent($studentId) {
+        $query = "SELECT * from student WHERE id = {$studentId}";
+        
+        $result = DatabaseConnector::executeQuery($query);
+        return $result;
     }
 
     public function removeStudent($studentID) {
-      $queyr = "DELETE FROM student WHERE id = ?";
+      $query = "DELETE FROM student WHERE id = ?";
       DatabaseConnector::executeQuery($query, array($studentId));
     }
 }
