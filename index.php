@@ -90,12 +90,13 @@ switch ($page) {
         include_once("Controller/AJAX/AjaxResultaatResultatenController.php");
         $resultatenController = new AjaxResultaatResultatenController();
         $resultatenController->invoke();
-    case "rubriek";
+        break;
+    case "rubriek":
 	include_once("Controller/RubriekController.php"); 
         $rubriekController = new RubriekController(); 
         $rubriekController->invoke(); 
         break;
-    case "rubriekedit";
+    case "rubriekedit":
 	include_once("Controller/RubriekEditController.php"); 
         $rubriekEditController = new RubriekEditController(); 
         $rubriekEditController->invoke(); 
