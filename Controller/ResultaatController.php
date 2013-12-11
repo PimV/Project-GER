@@ -7,14 +7,11 @@
  */
 class ResultaatController {
     
-    private $klassenModel;
     private $studentenModel;
     
     public function __construct()
     {        
-        include_once 'model/Klassen.php';
         include_once 'model/Studenten.php';
-        $this->klassenModel = new Klassen();
         $this->studentenModel = new Studenten();
     }
     
@@ -27,10 +24,12 @@ class ResultaatController {
         
         
         if($_SESSION['admin']){
-             $klassen = $this->klassenModel->getAllClasses_array();
+            $schooljaren = $this->studentenModel->getAllSchoolYearsOfStudent_array($studentId);
+            $klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaren[count($schooljaren) -1]["leerjaar"]);
         }
         else{
-             $klassen = $this->klassenModel->getAllClassesRating_array($coachId, $studentId);
+            $schooljaren = $this->studentenModel->getAllSchoolYearsOfStudent_array($studentId, $coachId);
+            $klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaren[count($schooljaren) -1]["leerjaar"], $coachId);
         }
         
         $page = 'Resultaat.php';
