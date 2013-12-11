@@ -7,17 +7,20 @@
  */
 class KlasEditController {
     
+    private $klassenModel;
     private $klasModel;
     
     public function __construct() {
-        //include_once 'model/klassen.php';
-        //$this->klasModel = new Klas();
+        include_once 'model/klassen.php';
+        $this->klassenModel = new Klassen();
+        $this->klasModel = $this->klassenModel->getClass($_GET["id"]);
     }
     
     public function invoke() {
-        $page = "view/klasEdit.php";
+        $page = "View/KlasEdit.php";
+        $head = "View/KlasEditHead.php";
         
-        include_once 'view/template.php';
+        include_once 'View/Template.php';
     }
 }
 

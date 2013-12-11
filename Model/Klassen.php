@@ -87,7 +87,7 @@ class Klassen {
     }
         
     public function getClass($classID) {
-        
+        return new Klas($classID);
     }
     
     public function removeClass($classID) {
