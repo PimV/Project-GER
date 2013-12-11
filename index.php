@@ -71,6 +71,11 @@ switch ($page) {
         $studentEditController = new StudentEditController();
         $studentEditController->invoke();
         break;
+    case "export":
+        include_once("Controller/ExportController.php");
+        $exportController = new ExportController();
+        $exportController->invoke();
+        break;
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");

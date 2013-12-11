@@ -1,0 +1,1 @@
+<script src="JavaScript/Resultaat.js"> </script>

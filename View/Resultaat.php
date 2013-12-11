@@ -1,4 +1,4 @@
-<h1>Resultaat</h1>          
+<h1>Resultaat</h1>       
 <div class="ribbon">  
     <div class="item" onclick="javascript:location.href='index.php?p=studentsearch'">
                 <div class="fontIcon"> 
@@ -8,7 +8,7 @@
                     Terug
                 </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="submitFormTotalRating()">
         <div class="fontIcon">
              &#xe060;
         </div>  
@@ -16,7 +16,7 @@
             Opslaan
         </div>
     </div>      
-    <div class="item">
+    <div class="item" onclick="javascript:window.open('index.php?p=export&c=resultaat', '_newtab')">
         <div class="fontIcon">
              &#xe1b2;
         </div>  
@@ -31,36 +31,20 @@
         <table class="noAction">
             <tr>
                 <td>Naam</td>  
-                <td><input disabled="disabled" type="text" value="Patrick de Vries"/></td>
+                <td><input disabled="disabled" type="text" value="<?php echo $student[0]["voornaam"] . " " . $student[0]["tussenvoegsel"] . " " . $student[0]["achternaam"] ; ?>"/></td>
             </tr>  
             <tr>
                 <td>Student nummer</td>  
-                <td><input disabled="disabled" type="text" value="00203987"/></td>
-            </tr>
-            <tr>
-                <td>Coach</td>  
-                <td><input disabled="disabled" type="text" value="Bart Jansen"/></td>
-            </tr>       
+                <td><input disabled="disabled" type="text" value="<?php echo $student[0]["id"]; ?>"/></td>
+            </tr>   
         </table>         
-    </div>
-
-    <div class="right">   
-        <table class="noAction">       
-            <tr>
-                <td>Klas:</td>  
-                <td><input disabled="disabled" type="text" value="42las54"/></td>
-            </tr>       
-            <tr>
-                <td>Blok:</td>  
-                <td><input disabled="disabled" type="text" value="4"/></td>
-            </tr>
-        </table>      
     </div>
 </div> 
 
 <br />
 <!--Alleen huidige blok laten zien wanener de coach is ingelogd. Bij beheerder alles.-->
-     <table class="noAction" style="width: 94%; border: 1px solid black;">   
+<!-- binnen de ajax ook de coach van dat blok laten zien!!!!!!!!!!!!!!-->
+<table class="noAction" style="width: 94%; border: 1px solid black;">   
         <tr>
             <td>Klas</td>  
             <td>

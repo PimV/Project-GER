@@ -22,8 +22,7 @@ class Studenten {
         $query = "SELECT * from student"; 
         
         $result = DatabaseConnector::executeQuery($query);
-        return $result;        
-        
+        return $result;  
     }
     
     public function getStudent($studentId) {

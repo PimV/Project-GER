@@ -11,7 +11,7 @@ class ResultaatController {
     private $studentenModel;
     
     public function __construct()
-    {
+    {        
         include_once 'model/Klassen.php';
         include_once 'model/Studenten.php';
         $this->klassenModel = new Klassen();
@@ -23,7 +23,7 @@ class ResultaatController {
         $studentId = $_GET["id"];
         $coachId = $_SESSION["docentId"];
         
-        $student = $this->klassenModel->getStudent($studentId); 
+        $student = $this->studentenModel->getStudent($studentId);
         
         
         if($_SESSION['admin']){
@@ -33,11 +33,9 @@ class ResultaatController {
              $klassen = $this->klassenModel->getAllClassesRating_array($coachId, $studentId);
         }
         
-        
-        
         $page = 'Resultaat.php';
         $pagehead = 'ResultaatHead.php';
-
+        
         include 'View/Template.php';
     }
 }
