@@ -18,7 +18,7 @@ class Studenten {
         
     }
     
-    public function getAllStudents_array($noHistory = true) {
+    public function getAllStudents_array() {
         $query = "SELECT * from student"; 
         
         $result = DatabaseConnector::executeQuery($query);
@@ -27,9 +27,9 @@ class Studenten {
     }
     
     public function getStudent($studentId) {
-        $query = "SELECT * from student WHERE id = {$studentId}";
+        $query = "SELECT * from student WHERE id = ?";
         
-        $result = DatabaseConnector::executeQuery($query);
+        $result = DatabaseConnector::executeQuery($query, array($studentId));
         return $result;
     }
 
