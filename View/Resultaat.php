@@ -49,21 +49,37 @@
             <td>Klas</td>  
             <td>
                 <select class="selectFullSize" >
-                    <option> </option>
                     <?php
-                        foreach ($klassen as $row) {
-                            echo("<option value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
+                    $i = 0;
+                        foreach ($schooljaren as $row) {
+                            $selected = "";
+                            if(count($schooljaren) -1 == $i)
+                            {
+                                $selected = "selected";
+                            }
+                            echo("<option $selected value='".$row["leerjaar"]."'> Leerjaar ".$row["leerjaar"] ."</option>");
+                            $i++;
                         }
                     ?>
                 </select>
             </td>
 
             <td>Blok</td>         
-            <td>
+            <td id="tdComboAjaxClass">
                 <select class="selectFullSize" >
                     <option></option> 
-                    <option>Blok 5 - Aarde</option>  
-                    <option>Blok 6 - Energie</option>
+                    <?php
+                    $i = 0;
+                        foreach ($klassen as $row) {
+                            $selected = "";
+                            if(count($klassen) -1 == $i)
+                            {
+                                $selected = "selected";
+                            }
+                            echo("<option $selected value='".$row["id"]."'>".$row["klascode"]." - ".$row["naam"]."</option>");
+                            $i++;
+                        }
+                    ?>
                 </select>
             </td>
         </tr> 
