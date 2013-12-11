@@ -2,7 +2,6 @@
 
 // This file is the entry point of the website and acts like a router. 
 // Depending on the URL received from the user, the correct controller will be created. 
-
 //Start the session.
 session_start();
 
@@ -13,43 +12,49 @@ $_SESSION["docentId"] = 3;
 
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
-
 //Get the page to open. Homepage default if none specified. 
-if(isset($_GET["p"]) && !empty($_GET["p"]))
-{
+if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = $_GET["p"];
-}
-else
-{
+} else {
     $page = "home";
 }
 
 //Main routing functionality.
 switch ($page) {
+    case "beoordeling":
+        include_once("Controller/BeoordelingController.php");
+        $beoordelingController = new BeoordelingController();
+        $beoordelingController->invoke();
+        break;
+    case "beoordelingedit":
+        include_once("Controller/BeoordelingEditController.php");
+        $beoordelingEditController = new BeoordelingEditController();
+        $beoordelingEditController->invoke();
+        break;
     case "groep":
-        include_once("Controller/GroepController.php"); 
-        $groepController = new GroepController(); 
-        $groepController->invoke(); 
+        include_once("Controller/GroepController.php");
+        $groepController = new GroepController();
+        $groepController->invoke();
         break;
     case "groepedit":
-        include_once("Controller/GroepEditController.php"); 
-        $groepEditController = new GroepEditController(); 
-        $groepEditController->invoke(); 
+        include_once("Controller/GroepEditController.php");
+        $groepEditController = new GroepEditController();
+        $groepEditController->invoke();
         break;
     case "home":
-        include_once("Controller/HomeController.php"); 
-        $homeController = new HomeController(); 
-        $homeController->invoke(); 
+        include_once("Controller/HomeController.php");
+        $homeController = new HomeController();
+        $homeController->invoke();
         break;
     case "studentsearch":
-        include_once("Controller/StudentSearchController.php"); 
-        $studentSearchController = new StudentSearchController(); 
-        $studentSearchController->invoke(); 
+        include_once("Controller/StudentSearchController.php");
+        $studentSearchController = new StudentSearchController();
+        $studentSearchController->invoke();
         break;
     case "resultaat":
-        include_once("Controller/ResultaatController.php"); 
-        $resultaatController = new ResultaatController(); 
-        $resultaatController->invoke(); 
+        include_once("Controller/ResultaatController.php");
+        $resultaatController = new ResultaatController();
+        $resultaatController->invoke();
         break;
     case "klas":
         include_once("Controller/KlasController.php");
