@@ -23,7 +23,7 @@
             Zoeken
         </div>
     </div>   
-    <div class="item" onclick="javascript:location.href='index.php?p=resultaat'">
+    <div class="item" onclick="javascript:location.href='index.php?p=resultaat&id='+getSelectedItemId()">
         <div class="fontIcon">
             &#xe095;
         </div>  
