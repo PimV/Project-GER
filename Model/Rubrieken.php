@@ -8,24 +8,30 @@
 class Rubrieken {
 
 	public function __construct() {
-
+		include_once($_SERVER['DOCUMENT_ROOT']."/Controller/DatabaseConnector.php");
 	}
 	
 	public function addRubric($name, $description) {
 		$array = array($name, $description);
-		include_once($_SERVER['DOCUMENT_ROOT']."/Controller/DatabaseConnector.php");
 		DatabaseConnector::executeQuery("INSERT INTO rubriek(naam, omschrijving) VALUES(?, ?)", $array);
+	}
+	
+	public function removeRubric($id) {
+		DatabaseConnector::executeQuery("UPDATE rubriek
+										 SET verwijderd = 1
+										 WHERE id = ?", array($id));
+	}
+	
+	public function getRubric($id) {
+		$result = DatabaseConnector::executeQuery("SELECT * FROM rubriek WHERE id = ?", array($id));
+		return $result;
 	}
 
 	public function getAllRubrics() {
-		include_once($_SERVER['DOCUMENT_ROOT']."/Controller/DatabaseConnector.php");
-		$result = DatabaseConnector::executeQuery("SELECT * FROM rubriek");
+		$result = DatabaseConnector::executeQuery("SELECT * FROM rubriek WHERE verwijderd = 0");
 		return $result;
 	}
 	
-	public function pr() {
-		return 'pr called';
-	}
 
 
 

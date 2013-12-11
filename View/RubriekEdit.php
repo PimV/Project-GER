@@ -1,7 +1,16 @@
 <?php
 
-	if ($_POST['submit'])  {
-		header('Location:rubriek.php');
+	if(isset($_GET['id'])) {
+		// Assign id
+		$id = $_GET['id'];
+		// Include Rubrieken.php en maak Rubrieken klasse aan
+		include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+		$rubrics = new Rubrieken;
+		// Get rubriek met id
+		$result = $rubrics->getRubric($id);	
+		// Set naam & omschrijving variabelen
+		$name = $result[0]['naam'];
+		$description = $result[0]['omschrijving'];
 	}
 
 ?>
@@ -32,8 +41,15 @@
 		<div class="left">
 			<table class="noAction">
 				<tr>
-					<td>Naam</td>  
-					<td><input type="text" name="name"/></td>
+					<td>Naam</td>
+					<td>
+					<?php if(isset($name)) {
+						echo "<input type='text' name='name' value='".$name."'/>";
+					} else {
+						echo "<input type='text' name='name' />";
+					}
+					?>
+					</td>
 				</tr>     
 			</table>            
 		</div>
@@ -41,8 +57,15 @@
 		<div class="right">   
 			<table class="noAction">
 				<tr>
-					<td>Omschrijving</td>  
-					<td><input type="text" name="description"/></td>
+					<td>Omschrijving</td> 
+					<td>
+					<?php if(isset($description)) {
+						echo "<input type='text' name='description' value='".$description."'/>";
+					} else {
+						echo "<input type='text' name='description' />";
+					}
+					?>
+					</td>					
 				</tr>     
 			</table>     
 		</div>

@@ -1,4 +1,16 @@
+<?php
 
+	if(isset($_GET['del'])) {
+		// Assign id
+		$id = $_GET['del'];
+		// Include Rubrieken.php en maak Rubrieken klasse aan
+		include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+		$rubrics = new Rubrieken;
+		// Delete rubriek met id
+		$rubrics->removeRubric($id);	
+	}
+
+?>
 <h1>Rubrieken</h1>          
 	<div class="ribbon">     
 		<div class="item" onclick="javascript:location.href='index.php?p=home'">
@@ -9,7 +21,7 @@
 				Terug
 			</div>
 		</div> 
-		<div class="item" onclick="javascript:location.href='index.php?p=rubriekEdit'">
+		<div class="item" onclick="javascript:location.href='index.php?p=rubriekedit'">
 			<div class="fontIcon">
 				&#xe102;
 			</div>  
@@ -17,7 +29,7 @@
 				Toevoegen
 			</div>
 		</div>
-		<div class="item" onclick="javascript:location.href='index.php?p=rubriekEdit'&id='+getSelectedItemId()'">
+		<div class="item" onclick="javascript:location.href='index.php?p=rubriekedit&id='+getSelectedItemId();">
 			<div class="fontIcon">
 				&#xe006;
 			</div>  
@@ -25,7 +37,7 @@
 				Bewerken
 			</div>
 		</div> 
-		<div class="item" onclick="javascript:location.href='index.php?p=klas&del='+getSelectedItemId();">
+		<div class="item" onclick="javascript:location.href='index.php?p=rubriek&del='+getSelectedItemId();">
 			<div class="fontIcon">
 				&#xe0a8;
 			</div>  
