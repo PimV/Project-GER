@@ -66,14 +66,6 @@
             Importeren
         </div>
     </div>
-    <div class="item">
-        <div class="fontIcon">
-            &#xe0be;
-        </div>  
-        <div class="text">
-            Exporteren
-        </div>
-    </div>
     <?php } ?>
 </div>  
 
