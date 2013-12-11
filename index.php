@@ -81,6 +81,16 @@ switch ($page) {
         $exportController = new ExportController();
         $exportController->invoke();
         break;
+	case "rubriek";
+		include_once("Controller/RubriekController.php"); 
+        $rubriekController = new RubriekController(); 
+        $rubriekController->invoke(); 
+        break;
+	case "rubriekedit";
+		include_once("Controller/RubriekEditController.php"); 
+        $rubriekEditController = new RubriekEditController(); 
+        $rubriekEditController->invoke(); 
+        break;
     default:
         //Custom 'page does not exist' page.
         echo("This is not the page you are looking for.");
