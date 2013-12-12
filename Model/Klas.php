@@ -56,7 +56,8 @@ class Klas {
         $this->reviewDeadline = $date;
     }
     
-    //Check if students where already 
+    //Compare the new student list with the old one. 
+    //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
     public function setStudents($studentIds = array()) {
         
     }
@@ -73,7 +74,12 @@ class Klas {
     }
     
     public function isChangePossible(){
-        
+        if(!empty($this->reviewDeadline)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     public function saveToDB() {
