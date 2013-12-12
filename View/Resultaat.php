@@ -16,7 +16,7 @@
             Opslaan
         </div>
     </div>      
-    <div class="item" onclick="javascript:window.open('index.php?p=export&c=resultaat', '_newtab')">
+    <div class="item" onclick="exportClicked()">
         <div class="fontIcon">
              &#xe1b2;
         </div>  

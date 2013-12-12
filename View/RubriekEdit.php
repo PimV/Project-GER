@@ -1,5 +1,17 @@
 <?php
 
+	if(!empty($_POST['name']) && !empty($_POST['description'])) {
+		// Include Rubrieken.php en maak Rubrieken klasse aan
+		include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+		$rubrics = new Rubrieken;
+		// Initialiseer variabelen
+		$name = $_POST['name'];
+		$description = $_POST['description'];
+		// Voeg nieuwe rubriek toe
+		$rubrics->addRubric($name, $description);
+		// Redirect naar rubriek.php
+		header("Location:index.php?p=rubriek");
+	}
 	if(isset($_GET['id'])) {
 		// Assign id
 		$id = $_GET['id'];
@@ -11,14 +23,17 @@
 		// Set naam & omschrijving variabelen
 		$name = $result[0]['naam'];
 		$description = $result[0]['omschrijving'];
+	} else {
+	
+	
 	}
 
 ?>
 <h1>Rubriek bewerken</h1>   
    
-<form name="save-form" id="save-form" method="POST">   
+<form id="save-form" action="index.php?p=rubriekedit" method="POST">
 	<div class="ribbon">   
-			<div class="item" onclick=document.forms['save-form'].submit();>
+			<div class="item" onclick="document.forms['save-form'].submit();">
 				<div class="fontIcon" >
 					 &#xe060;
 				</div>  

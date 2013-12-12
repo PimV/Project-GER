@@ -237,3 +237,5 @@
         </td>
     </tr>  
 </table>
+
+<canvas hidden="true" id="cvs" width="700" height="500">[No canvas support]</canvas>
