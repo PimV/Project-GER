@@ -20,7 +20,7 @@ class Klassen {
 
     //1 = pak alle klassen (admin) 
     public function getAllClasses_array($noHistory = true){
-        $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
+        $query = "SELECT k.id, k.klascode, b.naam, b.bloknummer, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
@@ -30,7 +30,8 @@ class Klassen {
             $query .= "AND (beoordeling_deadline IS NULL 
                         OR beoordeling_deadline > NOW()) ";
         }
-        $query .= "GROUP BY k.id";
+        $query .= "GROUP BY k.id
+                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
         
         $result = DatabaseConnector::executeQuery($query);
         return $result; 
@@ -51,7 +52,8 @@ class Klassen {
         
         $query .= "AND beoordeling_deadline IS NOT NULL
                     AND beoordeling_deadline > NOW()
-                    GROUP BY k.id";
+                    GROUP BY k.id
+                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
         if(!is_null($studentId)) {
             $result = DatabaseConnector::executeQuery($query, array($studentId));
         }
@@ -80,7 +82,8 @@ class Klassen {
         
         $query .= "AND beoordeling_deadline IS NOT NULL
                     AND beoordeling_deadline < NOW()
-                    GROUP BY k.id";
+                    GROUP BY k.id
+                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
         
         $result = DatabaseConnector::executeQuery($query, $parameters);
         return $result; 
