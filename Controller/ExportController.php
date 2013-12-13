@@ -36,13 +36,12 @@ class ExportController {
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
-        $file = 'tmp.png';
+        $file = 'Images/temp/chart.png';
         $success = file_put_contents($file, $data);
     }
     
     private function createResultaatPDF()
     { 
-        
         //TODO: ook nog de beoordeling per docent in die bepaalde blok of jaar laten zien
         
         $pdf = new FPDF();
@@ -50,8 +49,8 @@ class ExportController {
         $pdf->SetFont('Arial','B',16);
         $pdf->Cell(40,10,'Hello World!');
         //                     x,y,size
-        $pdf->Image('tmp.png',20,50,175);
-        $pdf->Output('example1.pdf','I'); 
+        $pdf->Image('Images/temp/chart.png',20,50,175);
+        $pdf->Output('beoordeling.pdf','I'); 
     }
 }
 

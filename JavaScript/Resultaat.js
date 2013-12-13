@@ -58,5 +58,5 @@ function createUrl(){
 };
 
 function exportClicked(){
-    $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='i' value='" + imageUrl + "'></form>").submit();
+    $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='i' value='" + imageUrl + "'></form>").appendTo('body').submit();
 }
