@@ -18,7 +18,7 @@ class Klas {
         if(!is_null($classID))
         {
             $this->classId = $classID;
-            loadClassData();
+            $this->loadClassData();
         }
     }
     

@@ -29,8 +29,8 @@
                 <td>Schooljaar</td>  
                 <td>
                     <select class="selectFullSize">
-                        <option>2013/2014</option>   
-                        <option>2014/2015</option>  
+                        <option><?php echo($year1) ?></option>   
+                        <option><?php echo($year2) ?></option>  
                     </select>    
                 </td>
             </tr> 
@@ -42,8 +42,7 @@
             <tr>
                 <td>Coach</td>  
                 <td>
-                    <select class="selectFullSize">
-                        <option>Henk de Vries</option>  
+                    <select class="selectFullSize"> 
                     </select>    
                 </td>
             </tr>          
@@ -51,9 +50,6 @@
                 <td>Blok</td>  
                 <td>
                     <select class="selectFullSize">
-                        <option>1</option>  
-                        <option>2</option>
-                        <option>3</option>
                     </select>    
                 </td>
             </tr>
@@ -67,8 +63,11 @@
 
     <div alt="listItem">
         <ul class="listView" alt="left">
-            <li class="listItem">12542 | Henk de Rooij</li>      
-            <li class="listItem">12532 | Jop Flop</li>
+            <?php
+            foreach ($students as $row) {
+                echo("<li class='listItem'>".$row["studentid"]. " | " .$row["studentnaam"]."</li>");
+            }
+            ?>
         </ul>     
 
         <div class="listViewControl">
@@ -76,31 +75,7 @@
             <div name="Right" class="fontIcon">&#xe112;</div>      
         </div>    
 
-        <ul class="listView" alt="right">                               
-            <li class="listItem">12543 | Bob Boppers</li>  
-            <li class="listItem">12544 | Lisa de Rooij</li>  
-            <li class="listItem">12545 | Tim de Vrij</li>  
-            <li class="listItem">12546 | Ton van Vloed</li>  
-            <li class="listItem">12547 | Max Imuns</li>  
-            <li class="listItem">12548 | Rens Snert</li>     
-            <li class="listItem">12543 | Bob Boppers</li>  
-            <li class="listItem">12544 | Lisa de Rooij</li>  
-            <li class="listItem">12545 | Tim de Vrij</li>  
-            <li class="listItem">12546 | Ton van Vloed</li>  
-            <li class="listItem">12547 | Max Imuns</li>  
-            <li class="listItem">12548 | Rens Snert</li>      
-            <li class="listItem">12543 | Bob Boppers</li>  
-            <li class="listItem">12544 | Lisa de Rooij</li>  
-            <li class="listItem">12545 | Tim de Vrij</li>  
-            <li class="listItem">12546 | Ton van Vloed</li>  
-            <li class="listItem">12547 | Max Imuns</li>  
-            <li class="listItem">12548 | Rens Snert</li>     
-            <li class="listItem">12543 | Bob Boppers</li>  
-            <li class="listItem">12544 | Lisa de Rooij</li>  
-            <li class="listItem">12545 | Tim de Vrij</li>  
-            <li class="listItem">12546 | Ton van Vloed</li>  
-            <li class="listItem">12547 | Max Imuns</li>  
-            <li class="listItem">12548 | Rens Snert</li>  
+        <ul class="listView" alt="right"> 
         </ul> 
     </div>
 </div>  
