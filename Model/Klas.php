@@ -13,6 +13,7 @@ class Klas {
     private $schoolYear;
     private $reviewDeadline;
     private $students = array();
+    private $newStudents = array();
     
     public function __construct($classID = null) {
         if(!is_null($classID))
@@ -23,17 +24,26 @@ class Klas {
     }
     
     private function loadClassData() {
-        $query = "SELECT k.*
+        $classQuery = "SELECT k.*
                     FROM klas k
                     WHERE k.id = ?";
         
-        $result = DatabaseConnector::executeQuery($query, array($this->classId));
+        $studentQuery = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
+                    FROM student s
+                    LEFT JOIN klas_student ks ON ks.student_id = s.id
+                    LEFT JOIN klas k ON ks.klas_id = k.id
+                    WHERE k.id = ?
+                    ORDER BY s.id ASC";
+        
+        $classQuery = DatabaseConnector::executeQuery($classQuery, array($this->classId));
+        $studentQuery = DatabaseConnector::executeQuery($studentQuery, array($this->classId));
    
-        $this->classCode = $result[0]["klascode"];
-        $this->coachId = $result[0]["coach_id"];
-        $this->blockId = $result[0]["blok_id"];
-        $this->schoolYear = $result[0]["schooljaar"];
-        $this->reviewDeadline = $result[0]["beoordeling_deadline"];
+        $this->classCode = $classQuery[0]["klascode"];
+        $this->coachId = $classQuery[0]["coach_id"];
+        $this->blockId = $classQuery[0]["blok_id"];
+        $this->schoolYear = $classQuery[0]["schooljaar"];
+        $this->reviewDeadline = $classQuery[0]["beoordeling_deadline"];
+        $this->students = $studentQuery;
     }
     
     public function setClassCode($classCode) {
@@ -56,21 +66,12 @@ class Klas {
         $this->reviewDeadline = $date;
     }
     
-    //Compare the new student list with the old one. 
-    //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
     public function setStudents($studentIds = array()) {
-        
+        $this->newStudents = $studentIds;
     }
     
     public function getStudents() {
-        $query = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
-                    FROM student s
-                    LEFT JOIN klas_student ks ON ks.student_id = s.id
-                    LEFT JOIN klas k ON ks.klas_id = k.id
-                    WHERE k.id = ?";
-        
-        $result = DatabaseConnector::executeQuery($query, array($this->classId));
-        return $result;
+        return $this->students;
     }
     
     public function isChangePossible(){
@@ -82,6 +83,9 @@ class Klas {
         }
     }
     
+    //Compare the new student list with the old one. 
+    //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
+    //If new block, create new class record.
     public function saveToDB() {
         
     }
