@@ -9,7 +9,7 @@
             <div class="fontIcon">&#xe006;</div>      
             <div class="text">Rollen</div>
         </div>   
-        <div class="menuItem" onclick="javascript:location.href='index.php?p=rubriek'">
+        <div class="menuItem" onclick="javascript:location.href= 'index.php?p=rubriek'">
             <div class="fontIcon">&#xe096;</div>      
             <div class="text">Rubrieken</div>
         </div>   
@@ -17,7 +17,7 @@
             <div class="fontIcon">&#xe023;</div>      
             <div class="text">Beoordelingen</div>
         </div>    
-        <div class="menuItem">
+        <div class="menuItem" onclick="javascript:location.href = 'index.php?p=blok'">
             <div class="fontIcon">&#xe02d;</div>      
             <div class="text">Blokken</div>
         </div>

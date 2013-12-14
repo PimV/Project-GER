@@ -92,14 +92,24 @@ switch ($page) {
         $resultatenController->invoke();
         break;
     case "rubriek":
-	include_once("Controller/RubriekController.php"); 
+		include_once("Controller/RubriekController.php"); 
         $rubriekController = new RubriekController(); 
         $rubriekController->invoke(); 
         break;
     case "rubriekedit":
-	include_once("Controller/RubriekEditController.php"); 
+		include_once("Controller/RubriekEditController.php"); 
         $rubriekEditController = new RubriekEditController(); 
         $rubriekEditController->invoke(); 
+        break;
+	case "blok":
+		include_once("Controller/BlokController.php"); 
+        $blokController = new BlokController(); 
+        $blokController->invoke(); 
+        break;
+    case "blokedit":
+		include_once("Controller/BlokEditController.php"); 
+        $blokEditController = new BlokEditController(); 
+        $blokEditController->invoke(); 
         break;
     default:
         //Custom 'page does not exist' page.
