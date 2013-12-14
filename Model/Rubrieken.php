@@ -8,7 +8,7 @@
 class Rubrieken {
 
 	public function __construct() {
-		include_once($_SERVER['DOCUMENT_ROOT']."/Controller/DatabaseConnector.php");
+
 	}
 	
 	public function addRubric($name, $description) {

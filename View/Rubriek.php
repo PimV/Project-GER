@@ -4,7 +4,7 @@
 		// Assign id
 		$id = $_GET['del'];
 		// Include Rubrieken.php en maak Rubrieken klasse aan
-		include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+		include_once("Model/Rubrieken.php");
 		$rubrics = new Rubrieken;
 		// Delete rubriek met id
 		$rubrics->removeRubric($id);	
@@ -53,7 +53,7 @@
 		</thead>    
 		<tbody>
 			<?php 
-			include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+			include_once("Model/Rubrieken.php");
 			$rubrics = new Rubrieken;
 			$arr = $rubrics->getAllRubrics();				
 			foreach ($arr as &$value) {

@@ -43,7 +43,7 @@
             </thead>    
             <tbody>
 				<?php 
-				include_once($_SERVER['DOCUMENT_ROOT']."/Model/Blokken.php");
+				include_once("Model/Blokken.php");
 				$blocks = new Blokken;
 				$arr = $blocks->getAllBlocks();				
 				foreach ($arr as &$value) {

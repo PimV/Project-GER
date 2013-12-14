@@ -2,7 +2,7 @@
 
 	if(!empty($_POST['name']) && !empty($_POST['description'])) {
 		// Include Rubrieken.php en maak Rubrieken klasse aan
-		include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+		include_once("Model/Rubrieken.php");
 		$rubrics = new Rubrieken;
 		// Initialiseer variabelen
 		$name = $_POST['name'];
@@ -24,7 +24,7 @@
 		// Assign id
 		$id = $_GET['id'];
 		// Include Rubrieken.php en maak Rubrieken klasse aan
-		include_once($_SERVER['DOCUMENT_ROOT']."/Model/Rubrieken.php");
+		include_once("Model/Rubrieken.php");
 		$rubrics = new Rubrieken;
 		// Get rubriek met id
 		$result = $rubrics->getRubric($id);	
