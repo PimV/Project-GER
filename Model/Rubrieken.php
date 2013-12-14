@@ -22,6 +22,13 @@ class Rubrieken {
 										 WHERE id = ?", array($id));
 	}
 	
+	public function updateRubric($name, $omschrijving, $id) {
+		$array = array($name, $omschrijving, $id);
+		DatabaseConnector::executeQuery("UPDATE rubriek
+										 SET naam = ?, omschrijving = ?
+										 WHERE id = ?", $array);
+	}
+	
 	public function getRubric($id) {
 		$result = DatabaseConnector::executeQuery("SELECT * FROM rubriek WHERE id = ?", array($id));
 		return $result;
@@ -32,9 +39,6 @@ class Rubrieken {
 		return $result;
 	}
 	
-
-
-
 
 }
  

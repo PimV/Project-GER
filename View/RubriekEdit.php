@@ -7,8 +7,16 @@
 		// Initialiseer variabelen
 		$name = $_POST['name'];
 		$description = $_POST['description'];
-		// Voeg nieuwe rubriek toe
-		$rubrics->addRubric($name, $description);
+		// Check of sessie 'rubric' bestaat, als dit het geval is update de huidige rubriek
+		// d.m.v het id en unset de sessie 'rubric'
+		if(isset($_SESSION['rubric'])) {
+			$id = $_SESSION['rubric'];
+			$rubrics->updateRubric($name, $description, $id);
+			unset($_SESSION['rubric']);
+		} else { 
+			// Sessie 'rubric' bestaat niet, voeg nieuwe rubriek toe
+			$rubrics->addRubric($name, $description);
+		}
 		// Redirect naar rubriek.php
 		header("Location:index.php?p=rubriek");
 	}
@@ -23,10 +31,9 @@
 		// Set naam & omschrijving variabelen
 		$name = $result[0]['naam'];
 		$description = $result[0]['omschrijving'];
-	} else {
-	
-	
-	}
+		// Maak sessie met rubriek id
+		$_SESSION['rubric'] = $id;
+	} 
 
 ?>
 <h1>Rubriek bewerken</h1>   
