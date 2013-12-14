@@ -23,6 +23,7 @@ class KlasController {
         }
         
         $klassen = $this->klassenModel->getAllClasses_array();
+        //TODO: klassen waarvan al een deadline geset is, mogen niet aangepast worden.
         
         include_once 'view/template.php';
     }

@@ -84,6 +84,11 @@
         </div>    
 
         <ul class="listView" alt="right"> 
+            <?php
+            foreach ($classLessStudents as $row) {
+                echo("<li id='".$row["studentid"]."' class='listItem'>".$row["studentid"]. " | " .$row["studentnaam"]."</li>");
+            }
+            ?>
         </ul> 
     </div>
 </div>

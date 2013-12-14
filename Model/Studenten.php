@@ -25,6 +25,7 @@ class Studenten {
         return $result;  
     }
     
+    //TODO: moet een 'student' model returnen.
     public function getStudent($studentId) {
         $query = "SELECT * from student WHERE id = ?";
         
@@ -37,6 +38,22 @@ class Studenten {
       DatabaseConnector::executeQuery($query, array($studentId));
     }
     
+    //TODO: studenten die van school af zijn?
+    public function getClasslessStudents() {
+        $query = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
+                    FROM student s
+                    WHERE s.id NOT IN (
+                        SELECT ks.student_id
+                        FROM klas k
+                        LEFT JOIN klas_student ks ON ks.klas_id = k.id
+                        WHERE k.beoordeling_deadline IS NULL
+                    )";
+        
+        $result = DatabaseConnector::executeQuery($query);
+        return $result;
+    }
+    
+    //TODO: moet verplaatst worden naar 'student' model.
     //Word gebruikt op de result pagina om alle klassen van een student op te halen voor wanneer de admin is ingelogd
     //en coach id kan daar nog bij worden opgegeven wanneer een docent is ingelogd 
     //Schooljaar kan worden megegeven voor de comboboxen op resultaat pagina
@@ -68,6 +85,7 @@ class Studenten {
         return $result;         
     }
     
+    //TODO: moet verplaatst worden naar 'student' model.
     public function getAllSchoolYearsOfStudent_array($studentId, $coachId = null){
         $parameters = array($studentId);
         
