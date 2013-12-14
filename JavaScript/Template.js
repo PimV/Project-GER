@@ -20,6 +20,8 @@ $( document ).ready(function() {
     
 });
 
+//TODO: Dit heeft effect op ALLE ul lijsten... Wat als ik nu een normale ul list wil maken zonder dat ze de 'selected' class krijgen wanneer ik er op klik? Denk niet dat we dat zullen
+//doen in dit project, maar in het geval dat, zou het mogelijk wel een probleem kunnen zijn. 
 $( document ).ready(function() {    
     //Makes it possible to select an item in the item lists.
     $( "ul" ).on('click','li',function() {
@@ -54,8 +56,7 @@ $( document ).ready(function() {
             {
                 if(listItem.parent().attr('alt') !== "left")
                 {
-                    leftList.append('<li class="listItem">' + listItem.text() + '</li>');    
-                    listItem.remove();
+                    leftList.append(listItem);
                 }
             }
         });           
@@ -76,15 +77,44 @@ $( document ).ready(function() {
             {
                 if(listItem.parent().attr('alt') !== "right")
                 {
-                    rightList.append('<li class="listItem">' + listItem.text() + '</li>');    
-                    listItem.remove();
+                    rightList.append(listItem);
                 }
             }
-        });           
+        });
     }); 
 });
 
 
+/**
+ * Add the custom transfer lists to your form. You should do this right before submitting it.
+ * 
+ * @param {elementID} formID The ID of the form to add the list(s) to.
+ * @param {elementID} listID The ID of the transfer list. You can enter multiple of these.
+ */
+function addTranserListsToForm(formID, listID)
+{
+    for (var i = 1; i < arguments.length; i++){
+        
+        var listids = $("#"+arguments[i]+" > li").map(function() {
+            return this.id;
+        }).get();
+        
+        $("#"+formID+" input[name='"+arguments[i]+"[]']").each(function(){
+            $(this).remove();
+        });
+        
+        for (var j = 0; j < listids.length; j++){
+            $("#"+formID).append("<input type='hidden' name='"+arguments[i]+"[]' value='"+listids[j]+"'/>");
+        }
+    }
+}
+
+/**
+ * Get the selected item in an item list list. 
+ * 
+ * @param {elementID} tableID The ID of the list to get the selected item from.
+ * @returns {elementID} The ID of the selected list item. 
+ */
 function getSelectedItemId(tableID){
     if(tableID === undefined || tableID === null || tableID === ""){}
     return currentlySelected[tableID].id;

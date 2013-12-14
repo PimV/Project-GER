@@ -1,6 +1,6 @@
 <h1>Klas bewerken</h1>          
 <div class="ribbon">     
-    <div class="item" onclick=""> <!-- submit form -->
+    <div class="item" onclick="addTranserListsToForm('form', 'list1'); $('#form').submit();">
         <div class="fontIcon">
              &#xe060;
         </div>  
@@ -18,54 +18,62 @@
     </div>    
 </div>  
 
-<div class="splitScreen">
-    <div class="left">
-        <table class="noAction">
-            <tr>
-                <td>Code</td>  
-                <td><input type="text"/></td>
-            </tr>        
-            <tr>
-                <td>Schooljaar</td>  
-                <td>
-                    <select class="selectFullSize">
-                        <option><?php echo($year1) ?></option>   
-                        <option><?php echo($year2) ?></option>  
-                    </select>    
-                </td>
-            </tr> 
-        </table>                  
-    </div>
+<form id="form" action="#" method="POST">
+    <div class="splitScreen">
+        <div class="left">
+            <table class="noAction">
+                <tr>
+                    <td>Code</td>  
+                    <td><input name="code" type="text"/></td>
+                </tr>        
+                <tr>
+                    <td>Schooljaar</td>  
+                    <td>
+                        <select name="schoolyear" class="selectFullSize">
+                            <?php
+                            echo("<option value='$year1'>$year1</option>");
+                            echo("<option value='$year2'>$year2</option>");
+                            ?>
+                        </select>    
+                    </td>
+                </tr> 
+            </table>                  
+        </div>
 
-    <div class="right">   
-        <table class="noAction">    
-            <tr>
-                <td>Coach</td>  
-                <td>
-                    <select class="selectFullSize"> 
-                    </select>    
-                </td>
-            </tr>          
-            <tr>
-                <td>Blok</td>  
-                <td>
-                    <select class="selectFullSize">
-                    </select>    
-                </td>
-            </tr>
-        </table>     
+        <div class="right">   
+            <table class="noAction">    
+                <tr>
+                    <td>Coach</td>  
+                    <td>
+                        <select name="coach" class="selectFullSize"> 
+                        </select>    
+                    </td>
+                </tr>          
+                <tr>
+                    <td>Blok</td>  
+                    <td>
+                        <select name="block" class="selectFullSize">
+                            <?php
+                            foreach ($blokken as $row) {
+                                echo("<option value='".$row["id"]."'>".$row["bloknummer"]." - ".$row["naam"]."</option>");
+                            }
+                            ?>
+                        </select>    
+                    </td>
+                </tr>
+            </table>     
+        </div>
     </div>
-</div>      
-
+</form>
 
 <div style="clear: both">          
     <h2>Studenten</h2>
 
     <div alt="listItem">
-        <ul class="listView" alt="left">
+        <ul class="listView" id="list1" alt="left">
             <?php
             foreach ($students as $row) {
-                echo("<li class='listItem'>".$row["studentid"]. " | " .$row["studentnaam"]."</li>");
+                echo("<li id='".$row["studentid"]."' class='listItem'>".$row["studentid"]. " | " .$row["studentnaam"]."</li>");
             }
             ?>
         </ul>     
@@ -78,4 +86,4 @@
         <ul class="listView" alt="right"> 
         </ul> 
     </div>
-</div>  
+</div>
