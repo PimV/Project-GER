@@ -30,14 +30,26 @@ class KlasEditController {
         }
         
         $students = array();
+        $classCode = "";
+        $coachID = "";
+        $blockID = "";
+        $isEditable = true;
+        $schoolYear = "";
         
         if(isset($_GET["id"])){
             $this->klasModel = $this->klassenModel->getClass($_GET["id"]);
             $students = $this->klasModel->getStudents(); 
+            $classCode = $this->klasModel->getClassCode();
+            $coachID = $this->klasModel->getCoachID();
+            $blockID = $this->klasModel->getBlockID();
+            $schoolYear = $this->klasModel->getSchoolYear();
+            $isEditable = $this->klasModel->isChangePossible();
         }
         
-        $year1 = date("Y")." - ".(date("Y")+1);
-        $year2 = (date("Y")+1)." - ".(date("Y")+2);
+        $yearChoices = array();
+        array_push($yearChoices, date("Y")."-".(date("Y")+1));
+        array_push($yearChoices, (date("Y")+1)."-".(date("Y")+2));
+        
         $blokken = $this->blokkenModel->getAllBlocks();
         $classLessStudents = $this->studentenModel->getClasslessStudents();
         

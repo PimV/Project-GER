@@ -24,15 +24,20 @@
             <table class="noAction">
                 <tr>
                     <td>Code</td>  
-                    <td><input name="code" type="text"/></td>
+                    <td><input name="code" type="text" value="<?php echo($classCode) ?>"/></td>
                 </tr>        
                 <tr>
                     <td>Schooljaar</td>  
                     <td>
                         <select name="schoolyear" class="selectFullSize">
                             <?php
-                            echo("<option value='$year1'>$year1</option>");
-                            echo("<option value='$year2'>$year2</option>");
+                            foreach ($yearChoices as $year) {
+                                $selected = "";
+                                if($year == $schoolYear) {
+                                    $selected = "selected";
+                                }
+                                echo("<option $selected value='$year'>$year</option>");
+                            }
                             ?>
                         </select>    
                     </td>
@@ -46,6 +51,7 @@
                     <td>Coach</td>  
                     <td>
                         <select name="coach" class="selectFullSize"> 
+                            <!--TODO: Coaches moeten gevuld worden. -->
                         </select>    
                     </td>
                 </tr>          
@@ -55,7 +61,11 @@
                         <select name="block" class="selectFullSize">
                             <?php
                             foreach ($blokken as $row) {
-                                echo("<option value='".$row["id"]."'>".$row["bloknummer"]." - ".$row["naam"]."</option>");
+                                $selected = "";
+                                if($row["id"] == $blockID){
+                                    $selected = "selected";
+                                }
+                                echo("<option $selected value='".$row["id"]."'>".$row["bloknummer"]." - ".$row["naam"]."</option>");
                             }
                             ?>
                         </select>    

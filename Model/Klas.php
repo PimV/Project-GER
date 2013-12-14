@@ -46,33 +46,21 @@ class Klas {
         $this->students = $studentQuery;
     }
     
-    public function setClassCode($classCode) {
-        $this->classCode = $classCode;
-    }
-    
-    public function setCoach($coachId) {
-        $this->coachId = $coachId;
-    }
-    
-    public function setBlock($blockId) {
-        $this->blockId = $blockId;
-    }
-    
-    public function setSchoolYear($schoolYear) {
-        $this->schoolYear = $schoolYear;
-    }
-    
-    public function setReviewDeadline($date) {
-        $this->reviewDeadline = $date;
-    }
-    
-    public function setStudents($studentIds = array()) {
-        $this->newStudents = $studentIds;
-    }
-    
-    public function getStudents() {
-        return $this->students;
-    }
+    //Setters
+    public function setClassCode($classCode) { $this->classCode = $classCode; }
+    public function setCoach($coachId) { $this->coachId = $coachId; }
+    public function setBlock($blockId) { $this->blockId = $blockId; }
+    public function setSchoolYear($schoolYear) { $this->schoolYear = $schoolYear; }
+    public function setReviewDeadline($date) { $this->reviewDeadline = $date; }
+    public function setStudents($studentIds = array()) { $this->newStudents = $studentIds; }
+
+    //Getters
+    public function getClassCode() { return $this->classCode; }
+    public function getCoachID() { return $this->coachId; }
+    public function getBlockID() { return $this->blockId; }
+    public function getSchoolYear() { return $this->schoolYear; }
+    public function getReviewDeadline() { return $this->reviewDeadline; }
+    public function getStudents() { return $this->students; }
     
     public function isChangePossible(){
         if(!empty($this->reviewDeadline)) {
