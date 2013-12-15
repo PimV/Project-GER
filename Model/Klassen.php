@@ -10,7 +10,7 @@ class Klassen {
     public function __construct() {
     }
     
-    public function addClass() {
+    public function addClass($classCode, $blockID, $schoolyear, $coachID, $students = array()) {
         $newClass = new Klas();
         
         //$newClass->saveToDB();
