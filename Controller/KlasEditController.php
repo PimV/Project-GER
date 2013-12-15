@@ -13,10 +13,10 @@ class KlasEditController {
     private $klasModel;
     
     public function __construct() {
-        include_once 'Model/Klassen.php';
-        include_once 'Model/Blokken.php';
-        include_once 'Model/Studenten.php';
-        include_once 'Model/Klas.php';
+        include_once 'Model'.DIRECTORY_SEPARATOR.'Klassen.php';
+        include_once 'Model'.DIRECTORY_SEPARATOR.'Blokken.php';
+        include_once 'Model'.DIRECTORY_SEPARATOR.'Studenten.php';
+        include_once 'Model'.DIRECTORY_SEPARATOR.'Klas.php';
         $this->klassenModel = new Klassen();
         $this->blokkenModel = new Blokken();
         $this->studentenModel = new Studenten();
@@ -58,9 +58,9 @@ class KlasEditController {
         $blokken = $this->blokkenModel->getAllBlocks();
         $classLessStudents = $this->studentenModel->getClasslessStudents();
         
-        $page = "View/KlasEdit.php";
-        $head = "View/KlasEditHead.php";
-        include_once 'View/Template.php';
+        $page = "View".DIRECTORY_SEPARATOR."KlasEdit.php";
+        $head = "View".DIRECTORY_SEPARATOR."KlasEditHead.php";
+        include_once 'View'.DIRECTORY_SEPARATOR.'Template.php';
     }
 }
 
