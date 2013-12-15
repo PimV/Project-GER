@@ -56,7 +56,7 @@ foreach ($array as $arrayPage)
     }
     else
     {
-        echo("This is not the page you are looking for.");
+        echo("This is not the page you are looking for!");
     }
 }
 
