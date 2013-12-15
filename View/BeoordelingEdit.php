@@ -9,7 +9,7 @@
             Opslaan
         </div>
     </div>
-    <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling&id=' showId()">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling&id='+showId()">
         <div class="fontIcon">
             &#xe0f9;
         </div>  
