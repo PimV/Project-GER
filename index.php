@@ -28,13 +28,13 @@ $array = array(
     "beoordeling",
     "beoordelingedit",
     "groep",
-    "groepEdit",
-    "studentSearch",
+    "groepedit",
+    "studentsearch",
     "student",
-    "studentEdit",
+    "studentedit",
     "resultaat",
     "klas",
-    "klasEdit",
+    "klasedit",
     "rubriek",
     "rubriekedit",
     "ajaxresultaatklassencontroller",
@@ -53,10 +53,6 @@ foreach ($array as $arrayPage)
         include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
         $displayPage = new $page();
         $displayPage->invoke();
-    }
-    else
-    {
-        echo("This is not the page you are looking for!");
     }
 }
 
