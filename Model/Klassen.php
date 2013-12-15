@@ -11,7 +11,9 @@ class Klassen {
     }
     
     public function addClass() {
+        $newClass = new Klas();
         
+        //$newClass->saveToDB();
     }
 
     /**
@@ -108,7 +110,7 @@ class Klassen {
      * Haal een specifieke klas op.
      * 
      * @param int $classID Het ID van de klas om op te halen.
-     * @return \Klas
+     * @return Klas
      */
     public function getClass($classID) {
         return new Klas($classID);

@@ -26,6 +26,13 @@ class KlasEditController {
         if(!empty($_POST))
         {
             //TODO: Save the class
+            if(isset($_GET["id"])){
+                //Update class.
+            }
+            else {
+                //Create new class.
+            }
+            
             header("location: index.php?p=klas");
         }
         
@@ -33,7 +40,6 @@ class KlasEditController {
         $classCode = "";
         $coachID = "";
         $blockID = "";
-        $isEditable = true;
         $schoolYear = "";
         
         if(isset($_GET["id"])){
@@ -43,7 +49,6 @@ class KlasEditController {
             $coachID = $this->klasModel->getCoachID();
             $blockID = $this->klasModel->getBlockID();
             $schoolYear = $this->klasModel->getSchoolYear();
-            $isEditable = $this->klasModel->isChangePossible();
         }
         
         $yearChoices = array();

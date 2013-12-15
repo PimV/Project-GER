@@ -6,6 +6,7 @@
  */
 class Klas {
     
+    //Database variables
     private $classId;
     private $classCode;
     private $coachId;
@@ -13,18 +14,28 @@ class Klas {
     private $schoolYear;
     private $reviewDeadline;
     private $students = array();
+    
+    //Model variables
     private $newStudents = array();
+    private $createNewClass = false;
     
     public function __construct($classID = null) {
-        if(!is_null($classID))
-        {
+        //If a classId has been entered, retrieve class info (for editing). 
+        //If not, this will be a new class.
+        if(!is_null($classID)) {
             $this->classId = $classID;
             $this->loadClassData();
         }
+        else {
+            $this->createNewClass = true;
+        }
     }
     
+    /**
+     * Load class data.
+     */
     private function loadClassData() {
-        $classQuery = "SELECT k.*
+        $classQuery = "SELECT k.*, DATE_FORMAT(beoordeling_deadline,'%d-%m-%Y') AS beoordeling_deadline_dmY
                     FROM klas k
                     WHERE k.id = ?";
         
@@ -42,17 +53,22 @@ class Klas {
         $this->coachId = $classQuery[0]["coach_id"];
         $this->blockId = $classQuery[0]["blok_id"];
         $this->schoolYear = $classQuery[0]["schooljaar"];
-        $this->reviewDeadline = $classQuery[0]["beoordeling_deadline"];
+        $this->reviewDeadline = $classQuery[0]["beoordeling_deadline_dmY"];
         $this->students = $studentQuery;
     }
     
     //Setters
     public function setClassCode($classCode) { $this->classCode = $classCode; }
     public function setCoach($coachId) { $this->coachId = $coachId; }
-    public function setBlock($blockId) { $this->blockId = $blockId; }
     public function setSchoolYear($schoolYear) { $this->schoolYear = $schoolYear; }
     public function setReviewDeadline($date) { $this->reviewDeadline = $date; }
     public function setStudents($studentIds = array()) { $this->newStudents = $studentIds; }
+    public function setBlock($blockId) {
+        if($blockId != $this->blockId) {
+            $this->createNewClass = true;
+        }
+        $this->blockId = $blockId; 
+    }
 
     //Getters
     public function getClassCode() { return $this->classCode; }
@@ -62,20 +78,44 @@ class Klas {
     public function getReviewDeadline() { return $this->reviewDeadline; }
     public function getStudents() { return $this->students; }
     
-    public function isChangePossible(){
-        if(!empty($this->reviewDeadline)) {
-            return true;
+    
+    public function saveToDB() {
+        if($this->createNewClass) {
+            
+            //If new students have been set, put those in the students var. There is no need here for old and new student comparison.
+            $this->students = (!empty($this->newStudents) ? $this->newStudents : $this->students);
+            
+            //Create new class.
+            $query = "INSERT INTO klas (klascode, coach_id, blok_id, schooljaar)
+                        VALUES (?, ?, ?, ?)";
+            $parameters = array($this->classCode, 
+                                $this->coachId,
+                                $this->blockId,
+                                $this->schoolYear);
+            
+            DatabaseConnector::executeQuery($query, $parameters);
+            $this->classId = DatabaseConnector::getLastInsertID();
+            
+            //Connect all the students to the new class.
+            if(!empty($this->students)){
+                $query = "INSERT INTO klas_student (klas_id, student_id) VALUES ";
+                $parameters = array();
+                foreach ($saveStudents as $row[]) {
+                    $query .= "($this->classId, ?)";
+                    array_push($parameters, $row["id"]);
+                }
+                DatabaseConnector::executeQuery($query, $parameters);
+            }
+
         }
         else {
-            return false;
+            //STR_TO_DATE(datestring, '%d-%m-%Y')
+            //Compare the new student list with the old one. 
+            //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
+            if(!empty($this->newStudents)) {
+                
+            }
         }
-    }
-    
-    //Compare the new student list with the old one. 
-    //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
-    //If new block, create new class record.
-    public function saveToDB() {
-        
     }
     
 }

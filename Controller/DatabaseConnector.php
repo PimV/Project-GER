@@ -92,6 +92,28 @@ class DatabaseConnector {
         }
     }
     
+    /**
+     * Get the last inserted ID from the current connection. 
+     * Use this to get the ID of just inserted records with an auto-increment ID.
+     * 
+     * @return int The ID of the last inserted record.
+     */
+    public static function getLastInsertID()
+    {
+        return self::$connection->insert_id;
+    }
+    
+    /**
+     * Get the Mysqli connection object that this class uses for query executions.
+     * Only use in case you need something that this static connector class doesn't offer.
+     * 
+     * @return Mysqli
+     */
+    public static function getConnectionObject()
+    {
+        return self::$connection;
+    }
+    
     public static function closeConnection()
     {
         if(self::$connection != null)
