@@ -13,12 +13,15 @@ class Klassen {
     public function addClass() {
         
     }
-    
-    public function getAllClasses() {
-        
-    }
 
-    //1 = pak alle klassen (admin) 
+    /**
+     * Pak alle HUIDIGE klassen. (admin klas overzicht)
+     * Klassen uit het verleden (al beoordeeld) en klassen die momenteel beoordeeld worden, worden niet opgehaald.
+     * Deze klassen mogen namelijk niet meer bewerkt worden. (wel mogelijk op te halen via de $noHistory parameter)
+     * 
+     * @param boolean $noHistory Default op true, wanneer false haalt hij ook klassen uit het verleden op. (en klassen die momenteel beoordeeld worden.)
+     * @return array[][] Bevat alle klassen inclusief student aantallen.
+     */
     public function getAllClasses_array($noHistory = true){
         $query = "SELECT k.id, k.klascode, b.naam, b.bloknummer, COUNT(s.id) AS studenten
                     FROM klas k 
@@ -27,8 +30,7 @@ class Klassen {
                     WHERE k.verwijderd = false ";
 
         if($noHistory) {
-            $query .= "AND (beoordeling_deadline IS NULL 
-                        OR beoordeling_deadline > NOW()) ";
+            $query .= "AND beoordeling_deadline IS NULL ";
         }
         $query .= "GROUP BY k.id
                     ORDER BY k.schooljaar ASC, b.bloknummer ASC";
@@ -37,8 +39,12 @@ class Klassen {
         return $result; 
     }
     
-    //2 = Pak alle klassen met een ingevulde deadline die nog NIET voorbij is (docent beoordeling)
-    //mag de regel met IS NOT NULL niet gewoon weg?
+    /**
+     * Pak alle klassen die open staan om beoordeeld te worden. (docent beoordeling)
+     * 
+     * @param int $studentId Optioneel. 
+     * @return array[][] Bevat alle klassen inclusief student aantallen.
+     */
     public function getAllClassesReviewing_array($studentId = null){
         $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
@@ -50,8 +56,7 @@ class Klassen {
             $query .= "AND s.student_id = ? ";
         }
         
-        $query .= "AND beoordeling_deadline IS NOT NULL
-                    AND beoordeling_deadline > NOW()
+        $query .= "AND beoordeling_deadline > NOW()
                     GROUP BY k.id
                     ORDER BY k.schooljaar ASC, b.bloknummer ASC";
         if(!is_null($studentId)) {
@@ -63,25 +68,35 @@ class Klassen {
         
         return $result; 
     }
-    //3 = pak alle klassen waar docent coach is met een ingevulde deadline die WEL voorbij is (coach)
-    //mag de regel met IS NOT NULL niet gewoon weg?
-    public function getAllClassesRating_array($coachId, $studentId = null){
-        $parameters = array($coachId);
+    
+    /**
+     * Pak alle klassen met een ingevulde deadline die voorbij is. Eventueel met een specifieke coach en/of student. (coach)
+     * 
+     * @param int $coachId Optioneel. Haal alleen klassen op van deze coach.
+     * @param int $studentId Optioneel. Haal alleen klassen op van deze student.
+     * @return array[][] Bevat alle klassen inclusief student aantallen.
+     */
+    public function getAllClassesRating_array($coachId = null, $studentId = null){
+        $parameters = array();
         
         $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
-                    WHERE k.verwijderd = false
-                    AND k.coach_id = ? "; 
+                    WHERE k.verwijderd = false"; 
+        
+        if(!is_null($coachId))
+        {
+            $query .= "AND k.coach_id = ? ";
+            array_push($parameters, $coachId);
+        }
         
         if(!is_null($studentId)) {
             $query .= "AND s.student_id = ? ";
             array_push($parameters, $studentId);
         }
         
-        $query .= "AND beoordeling_deadline IS NOT NULL
-                    AND beoordeling_deadline < NOW()
+        $query .= "AND beoordeling_deadline < NOW()
                     GROUP BY k.id
                     ORDER BY k.schooljaar ASC, b.bloknummer ASC";
         
@@ -89,10 +104,21 @@ class Klassen {
         return $result; 
     }
         
+    /**
+     * Haal een specifieke klas op.
+     * 
+     * @param int $classID Het ID van de klas om op te halen.
+     * @return \Klas
+     */
     public function getClass($classID) {
         return new Klas($classID);
     }
     
+    /**
+     * Verwijdern een klas.
+     * 
+     * @param int $classID De klas om te verwijderen.
+     */
     public function removeClass($classID) {
         $query = "UPDATE klas SET verwijderd = true WHERE id = ?";
         DatabaseConnector::executeQuery($query, array($classID));
