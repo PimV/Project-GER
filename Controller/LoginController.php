@@ -7,13 +7,28 @@ class LoginController
 
     public function __construct()
         {
-        include_once "Model" . DIRECTORY_SEPARATOR . "Account.php";
-        $this->loginModel = new login();
+        include_once 'Model' . DIRECTORY_SEPARATOR . 'Account.php';
+        $this->loginModel = new Account();
+
+        if (!empty($_POST))
+        {
+            echo "blabla";
+            $this->validateLoginRequest();
+        }
         }
 
     public function validateLoginRequest()
         {
-        // vraag model om te valideren
+        $loginpassed = $this->loginModel->validateLogin($_POST['username'], $_POST['password']);
+
+        if ($loginpassed === true)
+        {
+            header("location: index.php?p=home");
+        }
+        else
+        {
+            
+        }
         }
 
     public function changePasswordRequest()
