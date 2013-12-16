@@ -26,6 +26,7 @@ class Account
 
         if ($this->CheckIfUserExcists() === true)
         {
+            //doe iets enzo
             return true;
         }
         else
