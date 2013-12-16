@@ -31,11 +31,12 @@
         <table class="noAction">
             <tr>
                 <td>Naam</td>  
-                <td><input disabled="disabled" type="text" value="<?php echo $student[0]["voornaam"] . " " . $student[0]["tussenvoegsel"] . " " . $student[0]["achternaam"] ; ?>"/></td>
+                <td><input disabled="disabled" type="text" value="<?php echo $student->getVoornaam() . " " .  $student->getTussenvoegsel() . " " . $student->getAchternaam();?>"/></td>
+
             </tr>  
             <tr>
                 <td>Student nummer</td>  
-                <td><input disabled="disabled" type="text" value="<?php echo $student[0]["id"]; ?>"/></td>
+                <td><input disabled="disabled" type="text" value="<?php echo $student->getStudentId(); ?>"/></td>
             </tr>   
         </table>         
     </div>

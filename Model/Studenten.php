@@ -8,7 +8,7 @@
 class Studenten {
 
     public function __construct() {
-        
+        include_once 'Student.php';
     }
 
     public function addStudent() {

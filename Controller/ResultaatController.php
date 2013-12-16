@@ -20,7 +20,6 @@ class ResultaatController {
 
         $student = $this->studentenModel->getStudent($studentId);
 
-
         if ($_SESSION['admin']) {
             $schooljaren = $this->studentenModel->getAllSchoolYearsOfStudent_array($studentId);
             if (count($schooljaren) > 0)
