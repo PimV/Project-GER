@@ -14,15 +14,22 @@
 class BeoordelingEditController {
 
     private $studentenModel;
+    private $rubriekenModel;
 
     public function __construct() {
         include_once('Model' . DIRECTORY_SEPARATOR . 'Studenten.php');
+        include_once('Model' . DIRECTORY_SEPARATOR . 'Rubrieken.php');
         $this->studentenModel = new Studenten();
+        $this->rubriekenModel = new Rubrieken();
     }
 
     public function invoke() {
         $page = "View" . DIRECTORY_SEPARATOR . "BeoordelingEdit.php";
-        $studenten = $this->studentenModel->getAllStudents_array();
+        $rubrieken = $this->rubriekenModel->getAllRubrics();
+        $studenten = $this->studentenModel->getStudentsFromClass($_GET["id"]);
+
+
+
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 
