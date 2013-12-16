@@ -30,6 +30,7 @@ $array = array(
     "student",
     "studentedit",
     "resultaat",
+    "export",
     "klas",
     "klasedit",
     "rubriek",
