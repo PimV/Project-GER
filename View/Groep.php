@@ -1,3 +1,9 @@
+<?php        
+    include_once("Model/Groepen.php");
+    $groups = new Groepen;
+    $groupList = $groups->getAllGroups();
+?>
+
 <h1>Rollen</h1>          
 <div class="ribbon">     
     <div class="item" onclick="javascript:location.href='index.php?p=home'">
@@ -17,7 +23,7 @@
         </div>
     </div>
     <div class="item">
-        <div class="fontIcon">
+        <div class="fontIcon" onclick="javascript:location.href='index.php?p=groepedit&id='+getSelectedItemId() ">
             &#xe006;
         </div>  
         <div class="text">
@@ -42,17 +48,13 @@
     <tbody>
         <?php
         
-        include_once("Model/Groepen.php");
-        $groups = new Groepen;
-        $groupList = $groups->getAllGroups();
-        
         $even = true;
         foreach ($groupList as $value){
             echo "<tr id=" . $value['id'];
             
-            if($even == true){
+            if($even === true){
                 $even = false;      
-                echo "class='unEven'>";
+                echo " class='unEven'>";
             }
             else{
                 $even = true;    
@@ -65,31 +67,5 @@
         }
         
         ?>
-        
-        <tr class="unEven">
-            <td>Nederlands</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>    
-        <tr>                   
-            <td>Engels</td>
-            <td>1</td>
-            <td>2</td>
-        </tr>
-        <tr class="unEven">     
-            <td>Scheikunde</td>
-            <td>2</td>
-            <td>2</td>
-        </tr>
-        <tr>                   
-            <td>Natuurkunde</td>
-            <td>1</td>
-            <td>3</td>
-        </tr>
-        <tr class="unEven">   
-            <td>Biologie</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
     </tbody>
 </table>

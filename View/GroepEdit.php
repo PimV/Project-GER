@@ -1,3 +1,22 @@
+<?php      
+
+    if (isset($_GET["id"]) && !empty($_GET["id"])) {
+        $editId = $_GET["id"];
+        
+        include_once("Model/Groep.php");
+        $group = new Groep;
+        $groupList = $group->getGroup($editId);
+        
+        $leftRubricList = $group->getEnabledRubics($editId);
+        $rigtRubricList = $group->getDisabledRubics($editId);
+    } 
+    else{
+        include_once("Model/Rubrieken.php");
+        $rubrieken = new Rubrieken;
+        $rigtRubricList = $rubrieken->getAllRubrics();
+    }
+?>
+
 <h1>Rol bewerken</h1>          
 <div class="ribbon">     
     <div class="item">
@@ -23,7 +42,12 @@
         <table class="noAction">
             <tr>
                 <td>Naam</td>  
-                <td><input type="text"/></td>
+                <td><input type="text" value="
+                    <?php if(isset($groupList))
+                    { 
+                        echo $groupList['0']['naam'];                                
+                    }?>"/>
+                </td>
             </tr>     
         </table>              
 
@@ -31,8 +55,14 @@
 
         <div alt="listItem">
             <ul class="listView" alt="left">
-                <li class="listItem">Vakinhoudelijke kennis en vaardigheden</li>      
-                <li class="listItem">Technische vaardigheden</li>
+                <?php
+                if(isset($leftRubricList))
+                    { 
+                        foreach ($leftRubricList AS $value){
+                            echo "<li class='listItem' alt=" . $value["id"] . ">" . $value["naam"] . "</li>";  
+                        }
+                    }
+                ?>
             </ul>     
 
             <div class="listViewControl">
@@ -41,15 +71,13 @@
             </div>    
 
             <ul class="listView" alt="right">
-                <li class="listItem">Exact</li>        
-                <li class="listItem">Kwaliteit en zorgvuldigheid</li>    
-                <li class="listItem">Communicatie</li>    
-                <li class="listItem">Sociale vaardigheden</li>    
-                <li class="listItem">Plannen en organiseren</li>    
-                <li class="listItem">Ondernemerschap</li>    
-                <li class="listItem">Verantwoordelijkheid</li>    
-                <li class="listItem">Zelfstandigheid</li>                  
-                <li class="listItem">Transfervaardigheid</li>    
+                <?php
+                
+                foreach ($rigtRubricList AS $value){
+                    echo "<li class='listItem' alt=" . $value["id"] . ">" . $value["naam"] . "</li>";  
+                }
+                
+                ?>  
             </ul> 
         </div>
     </div>
@@ -58,7 +86,12 @@
         <table class="noAction">
             <tr>
                 <td>Omschrijving</td>  
-                <td><input type="text"/></td>
+                <td><input type="text"  value=" 
+                    <?php if(isset($groupList))
+                        { 
+                        echo $groupList['0']['omschrijving'];                        
+                        } ?>"/>
+                </td>
             </tr>     
         </table>     
     </div>
