@@ -33,12 +33,13 @@ $array = array(
     "student",
     "studentedit",
     "resultaat",
+    "export",
     "klas",
     "klasedit",
     "rubriek",
     "rubriekedit",
-    "ajaxresultaatklassencontroller",
-    "ajaxresultaatresultatencontroller",
+    "ajaxresultaatklassen",
+    "ajaxresultaatresultaten",
     "blok",
     "blokedit"
 );
@@ -47,13 +48,15 @@ foreach ($array as $arrayPage)
 {
     if ($page == $arrayPage)
     {
-        $page .= "Controller";
-        include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
-        $displayPage = new $page();
-        $displayPage->invoke();
-        return;
+        if ($page == $arrayPage)
+        {
+            $page .= "Controller";
+            include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
+            $displayPage = new $page();
+            $displayPage->invoke();
+            return;
+        }
     }
 }
-
 DatabaseConnector::closeConnection();
 ?>

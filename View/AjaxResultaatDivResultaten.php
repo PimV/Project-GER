@@ -18,7 +18,7 @@
     </thead>      
     <tbody>
         <tr class="unEven">     
-            <td>Henk de Boer</td>
+            <td>Truusje van den Boomen</td>
             <td>2</td>      
             <td>4</td>
             <td>3</td>
