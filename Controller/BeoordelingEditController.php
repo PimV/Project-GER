@@ -18,9 +18,7 @@ class BeoordelingEditController {
     }
 
     public function invoke() {
-        //$klasId = $_GET["klas_id"];
         $page = "View" . DIRECTORY_SEPARATOR . "BeoordelingEdit.php";
-        $pagehead = "BeoordelingHead.php";
 
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
