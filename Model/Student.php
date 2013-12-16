@@ -30,10 +30,10 @@ class Student {
      }
 
      // Setters
-     public function setVoornaam($voornaam) { $this->voornaam = $voornaam; };
-     public function setAchternaam($achternaam) { $this->achternaam = $achternaam; };
-     public function setTussenvoegsel($tussenvoegsel) { $this->tussenvoegsel = $tussenvoegsel; };
-     public function setMail($mail) { $this->mail = $mail; };
+     public function setVoornaam($voornaam) { $this->voornaam = $voornaam; }
+     public function setAchternaam($achternaam) { $this->achternaam = $achternaam; }
+     public function setTussenvoegsel($tussenvoegsel) { $this->tussenvoegsel = $tussenvoegsel; }
+     public function setMail($mail) { $this->mail = $mail; }
 
      // Getters
      public function getStudentId() { return $this->studentId; } 
