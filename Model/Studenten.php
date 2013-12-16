@@ -11,11 +11,7 @@ class Studenten {
     }
     
     public function addStudent() {
-        
-    }
-    
-    public function getAllStudents() {
-        
+        //
     }
     
     public function getAllStudents_array() {
@@ -25,12 +21,8 @@ class Studenten {
         return $result;  
     }
     
-    //TODO: moet een 'student' model returnen.
     public function getStudent($studentId) {
-        $query = "SELECT * from student WHERE id = ?";
-        
-        $result = DatabaseConnector::executeQuery($query, array($studentId));
-        return $result;
+        return new Student($studentId);
     }
 
     public function removeStudent($studentID) {
@@ -53,6 +45,8 @@ class Studenten {
         return $result;
     }
     
+    // Bas -----
+
     //TODO: moet verplaatst worden naar 'student' model.
     //Word gebruikt op de result pagina om alle klassen van een student op te halen voor wanneer de admin is ingelogd
     //en coach id kan daar nog bij worden opgegeven wanneer een docent is ingelogd 
