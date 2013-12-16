@@ -47,7 +47,7 @@ class AjaxResultaatResultatenController {
             $r = json_encode($rubrieken);
             $p = json_encode($punten);
         
-        include('View/Ajax/AjaxResultaatDivResultaten.php');
+        include('View/AjaxResultaatDivResultaten.php');
         
         //Voer de methode uit om de ggraph te generate, en de methode om de imageUrl te maken
         echo "<script type='text/javascript'> createChart($r, $p, $maximaal); createUrl(); </script>";

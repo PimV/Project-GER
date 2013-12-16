@@ -28,7 +28,7 @@ class AjaxResultaatKlassenController {
             $klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaar, $coachId);
         }
         
-        include('View/Ajax/AjaxResultaatComboKlassen.php');
+        include('View/AjaxResultaatComboKlassen.php');
     }
 }
 
