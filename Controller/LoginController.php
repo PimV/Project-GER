@@ -23,7 +23,7 @@ class LoginController
 
         if ($loginpassed === true)
         {
-            header("location: index.php?p=home");
+            
         }
         else
         {
