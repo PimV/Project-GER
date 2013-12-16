@@ -13,13 +13,16 @@
  */
 class BeoordelingController {
 
+    private $klassen;
+
     public function __construct() {
-        
+        include_once('Model'.DIRECTORY_SEPARATOR.'Klassen.php');
+        $this->klassen = new Klassen();
     }
 
     public function invoke() {
         $page = "View" . DIRECTORY_SEPARATOR . "Beoordeling.php";
-
+        $klassen_view = $this->klassen->getAllClassesNoResult_array();
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 

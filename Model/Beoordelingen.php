@@ -12,35 +12,11 @@ class Klassen {
     }
 
     public function addClass() {
-        $newClass = new Klas();
+        
 
-        //$newClass->saveToDB();
     }
 
-    /**
-     * Pak alle HUIDIGE klassen. (admin klas overzicht)
-     * Klassen uit het verleden (al beoordeeld) en klassen die momenteel beoordeeld worden, worden niet opgehaald.
-     * Deze klassen mogen namelijk niet meer bewerkt worden. (wel mogelijk op te halen via de $noHistory parameter)
-     * 
-     * @param boolean $noHistory Default op true, wanneer false haalt hij ook klassen uit het verleden op. (en klassen die momenteel beoordeeld worden.)
-     * @return array[][] Bevat alle klassen inclusief student aantallen.
-     */
-    public function getAllClasses_array($noHistory = true) {
-        $query = "SELECT k.id, k.klascode, b.naam, b.bloknummer, COUNT(s.id) AS studenten
-                    FROM klas k 
-                    LEFT JOIN klas_student s ON s.klas_id = k.id 
-                    LEFT JOIN blok b ON b.id = k.blok_id
-                    WHERE k.verwijderd = false ";
-
-        if ($noHistory) {
-            $query .= "AND beoordeling_deadline IS NULL ";
-        }
-        $query .= "GROUP BY k.id
-                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
-
-        $result = DatabaseConnector::executeQuery($query);
-        return $result;
-    }
+   
 
     /**
      * Pak alle klassen die open staan om beoordeeld te worden. (docent beoordeling)
@@ -48,28 +24,7 @@ class Klassen {
      * @param int $studentId Optioneel. 
      * @return array[][] Bevat alle klassen inclusief student aantallen.
      */
-    public function getAllClassesReviewing_array($studentId = null) {
-        $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
-                    FROM klas k 
-                    LEFT JOIN klas_student s ON s.klas_id = k.id 
-                    LEFT JOIN blok b ON b.id = k.blok_id
-                    WHERE k.verwijderd = false ";
-
-        if (!is_null($studentId)) {
-            $query .= "AND s.student_id = ? ";
-        }
-
-        $query .= "AND beoordeling_deadline > NOW()
-                    GROUP BY k.id
-                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
-        if (!is_null($studentId)) {
-            $result = DatabaseConnector::executeQuery($query, array($studentId));
-        } else {
-            $result = DatabaseConnector::executeQuery($query);
-        }
-
-        return $result;
-    }
+    
 
     /**
      * Pak alle klassen met een ingevulde deadline die voorbij is. Eventueel met een specifieke coach en/of student. (coach)

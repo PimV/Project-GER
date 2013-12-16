@@ -13,13 +13,16 @@
  */
 class BeoordelingEditController {
 
+    private $studentenModel;
+
     public function __construct() {
-        
+        include_once('Model' . DIRECTORY_SEPARATOR . 'Studenten.php');
+        $this->studentenModel = new Studenten();
     }
 
     public function invoke() {
         $page = "View" . DIRECTORY_SEPARATOR . "BeoordelingEdit.php";
-
+        $studenten = $this->studentenModel->getAllStudents_array();
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 
