@@ -7,7 +7,7 @@
 
 <h1>Studenten zoeken</h1>          
 <div class="ribbon">     
-    <div class="item" onclick="javascript:location.href = 'index.php'">
+    <div class="item" onclick="javascript:location.href = 'index.php?=home'">
         <div class="fontIcon"> 
             &#xe126;
         </div>  
