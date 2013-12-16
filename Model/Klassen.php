@@ -120,6 +120,14 @@ class Klassen {
         return $result;
     }
 
+    public function getClassesStudent($studentId, $classId) {
+        $query = "SELECT id AS id FROM klas_student WHERE klas_id = $classId AND student_id = $studentId";
+
+        $result = DatabaseConnector::executeQuery($query);
+
+        return $result;
+    }
+
     /**
      * Haal een specifieke klas op.
      * 
