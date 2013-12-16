@@ -24,7 +24,7 @@ class ResultaatController {
         if ($_SESSION['admin']) {
             $schooljaren = $this->studentenModel->getAllSchoolYearsOfStudent_array($studentId);
             if (count($schooljaren) > 0)
-            $klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaren[count($schooljaren) - 1]["leerjaar"]);
+                $klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaren[count($schooljaren) - 1]["leerjaar"]);
         } else {
             $schooljaren = $this->studentenModel->getAllSchoolYearsOfStudent_array($studentId, $coachId);
             $klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaren[count($schooljaren) - 1]["leerjaar"], $coachId);
