@@ -10,15 +10,11 @@ class Klassen {
     public function __construct() {
         
     }
-    
-    public function addClass($classCode, $blockID, $schoolyear, $coachID, $students = array()) {
+
+    public function addClass() {
         $newClass = new Klas();
-        $newClass->setClassCode($classCode);
-        $newClass->setBlock($blockID);
-        $newClass->setSchoolYear($schoolyear);
-        $newClass->setCoach($coachID);
-        $newClass->setStudents($students);
-        $newClass->saveToDB();
+
+        //$newClass->saveToDB();
     }
 
     /**
@@ -30,7 +26,7 @@ class Klassen {
      * @return array[][] Bevat alle klassen inclusief student aantallen.
      */
     public function getAllClasses_array($noHistory = true) {
-        $query = "SELECT k.id, k.klascode, b.naam, b.bloknummer, COUNT(s.id) AS studenten
+        $query = "SELECT k.id, k.klascode, b.naam, b.bloknummer, b.id AS blokid, COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
@@ -89,7 +85,7 @@ class Klassen {
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
-                    WHERE k.verwijderd = false";
+                    WHERE k.verwijderd = false ";
 
         if (!is_null($coachId)) {
             $query .= "AND k.coach_id = ? ";
@@ -148,10 +144,8 @@ class Klassen {
      * @param int $classID De klas om te verwijderen.
      */
     public function removeClass($classID) {
-        $query = "DELETE FROM klas_student WHERE klas_id = ?";
-        $query2 = "DELETE FROM klas WHERE id = ?";
+        $query = "UPDATE klas SET verwijderd = true WHERE id = ?";
         DatabaseConnector::executeQuery($query, array($classID));
-        DatabaseConnector::executeQuery($query2, array($classID));
     }
 
 }

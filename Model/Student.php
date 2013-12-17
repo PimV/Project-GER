@@ -56,35 +56,88 @@ class Student {
         DatabaseConnector::executeQuery($query, $parameters);
     }
     
-    //DE METHODES HIER ONDER ZIJN WORK IN PROGRESS!!! WEL VAST GEPUSHT OM GEEN PROBLEMEN MET JAMES TE KRIJGEN
-    public function saveFinalResults(){
+    
+    //Zou moeten werken. Alleen nog maar via workbench getest!
+    //Haal de punten voor een student uit een blok op per docent
+    public function getResultsClass($klas){
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, w.waardering, CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS docent
+                    FROM resultaat r
+                    LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
+                    LEFT JOIN docent d ON r.docent_id = d.id
+                    LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
+                    LEFT JOIN waardering w ON r.waardering_id = w.id
+                    WHERE ks.student_id = ?
+                    AND ks.klas_id = ?";
         
+        $result = DatabaseConnector::executeQuery($query, array($studentId, $klas));
+        return $result;
     }
     
-    public function getResults(){ // REKING HOUDEN MET EVENTUEEL CHECKEN OP LEERJAAR IPV KLAS ( ALLE KLASSEN UIT DAT LEERJAAR)
-        $query = "  SELECT r.rubriek_id AS rubriek, ru.naam, ROUND(AVG(w.waardering),0) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS Spreiding
+    //Zou moeten werken. Alleen nog maar via workbench getest!
+    //Haal het gemiddelde voor een student op uit een leerjaar (max 4 blokken) per docent
+    public function getResultsYear($leerjaar){
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),2) AS waardering, CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS docent
+                    FROM resultaat r
+                    LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
+                    LEFT JOIN docent d ON r.docent_id = d.id
+                    LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
+                    LEFT JOIN waardering w ON r.waardering_id = w.id
+                    LEFT JOIN klas k ON ks.klas_id = k.id
+                    LEFT JOIN blok b ON k.blok_id = b.id
+                    WHERE ks.student_id = ?
+                    AND b.leerjaar = ?
+                    GROUP BY d.id, ru.id";
+        
+        $result = DatabaseConnector::executeQuery($query, array($studentId, $leerjaar));
+        return $result;
+    }
+    
+    //Zou moeten werken. Alleen nog maar via workbench getest!
+    //Haal het gemiddelde voor een student op uit een blok
+    public function getAverageResultClass($klas){
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
                     LEFT JOIN waardering w ON r.waardering_id = w.id
-                    WHERE ks.student_id = 3 
-                    AND ks.klas_id = 5
+                    WHERE ks.student_id = ? 
+                    AND ks.klas_id = ?
                     GROUP BY ru.id";
 
-        if ($noHistory) {
-            $query .= "AND beoordeling_deadline IS NULL ";
-        }
-        $query .= "GROUP BY k.id
-                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
-
-        $result = DatabaseConnector::executeQuery($query);
+        $result = DatabaseConnector::executeQuery($query, array($studentId, $klas));
         return $result;
     }
     
-    public function getFinalResults(){
+    //Zou moeten werken. Alleen nog maar via workbench getest!
+    //Haal het gemiddelde voor een student op uit een leerjaar (max 4 blokken)
+    public function getAverageResultYear($leerjaar){
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),2) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding
+                    FROM resultaat r
+                    LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
+                    LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
+                    LEFT JOIN waardering w ON r.waardering_id = w.id
+                    LEFT JOIN klas k ON ks.klas_id = k.id
+                    LEFT JOIN blok b ON k.blok_id = b.id
+                    WHERE ks.student_id = ?
+                    AND b.leerjaar = ?
+                    GROUP BY ru.id";
+
+        $result = DatabaseConnector::executeQuery($query, array($studentId, $leerjaar));
+        return $result;
+    }
+    
+    //Haal de eindrestultaten van een student uit een bepaald blok op    
+    public function getFinalResults($klas){
         
     }
     
+    //Sla de eindresultaten van een student uit een bepaald blok op
+    public function saveFinalResults($klas){
+        
+    }
+    
+    //Zou moeten werken. Alleen nog maar via workbench getest!
+    //Controleer of die student in een bepaalde klas al een eindbeoordeling heeft.
     public function hasFinalResult($blok) {
         $query = "SELECT CASE WHEN EXISTS(
                         SELECT *

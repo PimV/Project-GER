@@ -1,6 +1,7 @@
 <select id="comboKlas" class="selectFullSize" onchange="reloadDivAjaxResults(<?php echo $studentId; ?>)" >
-    <option> Alle klassen</option> 
+    
     <?php
+    if(count($klassen) > 1){ echo "<option> Alle klassen</option>";}
     $i = 0;
         foreach ($klassen as $row) {
             $selected = "";
