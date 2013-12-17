@@ -69,14 +69,14 @@ class Student {
                     WHERE ks.student_id = ?
                     AND ks.klas_id = ?";
         
-        $result = DatabaseConnector::executeQuery($query, array($studentId, $klas));
+        $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $klas));
         return $result;
     }
     
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal het gemiddelde voor een student op uit een leerjaar (max 4 blokken) per docent
     public function getResultsYear($leerjaar){
-        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),2) AS waardering, CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS docent
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS waardering, CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS docent
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN docent d ON r.docent_id = d.id
@@ -88,7 +88,7 @@ class Student {
                     AND b.leerjaar = ?
                     GROUP BY d.id, ru.id";
         
-        $result = DatabaseConnector::executeQuery($query, array($studentId, $leerjaar));
+        $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $leerjaar));
         return $result;
     }
     
@@ -104,14 +104,14 @@ class Student {
                     AND ks.klas_id = ?
                     GROUP BY ru.id";
 
-        $result = DatabaseConnector::executeQuery($query, array($studentId, $klas));
+        $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $klas));
         return $result;
     }
     
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal het gemiddelde voor een student op uit een leerjaar (max 4 blokken)
     public function getAverageResultYear($leerjaar){
-        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),2) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS gemiddelde
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
@@ -122,7 +122,7 @@ class Student {
                     AND b.leerjaar = ?
                     GROUP BY ru.id";
 
-        $result = DatabaseConnector::executeQuery($query, array($studentId, $leerjaar));
+        $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $leerjaar));
         return $result;
     }
     
@@ -143,14 +143,14 @@ class Student {
                         SELECT *
                             FROM resultaat_definitief rd
                             LEFT JOIN klas_student ks ON rd.klas_student_id =  ks.id
-                            WHERE ks.klas_id = 5
-                            AND ks.student_id = 3
+                            WHERE ks.student_id = ?
+                            AND ks.klas_id = ?
                     )
                     THEN TRUE
                     ELSE FALSE END
                     AS hasfinal";
         
-        $result = DatabaseConnector::executeQuery($query);// ARRAY MEEGEVEN
+        $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $blok));
         
         return $result[0]["hasfinal"];
     }
