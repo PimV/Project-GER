@@ -44,7 +44,7 @@
         
         
             //Laat de gemiddelde punten zien. //geef hier ook de spreiding aan
-            echo "<tr height='100px'><td>Gemiddelde</td>";    
+            echo "<tr height='50px' class='noHover'><td>Gemiddelde</td>";    
             if($type == "klas"){
                 foreach($average as $row){
                     echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
@@ -54,22 +54,26 @@
                     echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
                 }
             }
-            echo "</tr></tbody>";
+            echo "</tr>";
         
-        }
         
-        //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
-        if(isset($hasfinal)){
-            //Als de student al een eindbeoordeling heeft, laat deze zien in labels
-            if($hasfinal){
-                
-            }
-            //Als de student nog geen eindbeorodeling heeft, laat deze zien in dropdowns zodat ze kunnen worden opgeslagen. De inhoud van de combo's is gelijk aan de average
-            else{
-                
+        
+            //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
+            if($type == "klas"){
+                echo "<tr height='50px' class='noHover'><td><b>Eindbeoordeling</b></td>";
+                //Als de student al een eindbeoordeling heeft, laat deze zien in labels
+                if($hasfinal){
+
+                }
+                //Als de student nog geen eindbeorodeling heeft, laat deze zien in dropdowns zodat ze kunnen worden opgeslagen. De inhoud van de combo's is gelijk aan de average
+                else{
+
+                }
             }
         }
     ?>
+    </tr>   
+    </tbody>
 </table>
 
 <br>
