@@ -103,8 +103,13 @@ function addTranserListsToForm(formID, listID)
             $(this).remove();
         });
         
-        for (var j = 0; j < listids.length; j++){
-            $("#"+formID).append("<input type='hidden' name='"+arguments[i]+"[]' value='"+listids[j]+"'/>");
+        if (listids.length == 0) {
+            $("#"+formID).append("<input type='hidden' name='"+arguments[i]+"'/>");
+        }
+        else {
+            for (var j = 0; j < listids.length; j++){
+                $("#"+formID).append("<input type='hidden' name='"+arguments[i]+"[]' value='"+listids[j]+"'/>");
+            }
         }
     }
 }
