@@ -1,16 +1,3 @@
-<?php
-
-	if(isset($_GET['del'])) {
-		// Assign id
-		$id = $_GET['del'];
-		// Include Rubrieken.php en maak Rubrieken klasse aan
-		include_once("Model/Rubrieken.php");
-		$rubrics = new Rubrieken;
-		// Delete rubriek met id
-		$rubrics->removeRubric($id);	
-	}
-
-?>
 <h1>Rubrieken</h1>          
 	<div class="ribbon">     
 		<div class="item" onclick="javascript:location.href='index.php?p=home'">
@@ -55,9 +42,21 @@
 			<?php 
 			include_once("Model/Rubrieken.php");
 			$rubrics = new Rubrieken;
-			$arr = $rubrics->getAllRubrics();				
+			$arr = $rubrics->getAllRubrics();	
+			
+			$unEven = true;
 			foreach ($arr as &$value) {
-				echo "<tr id=".$value['id']." class='unEven'><td>".$value['naam']."</td></tr>";
+				echo "<tr id=".$value['id']." ";
+				
+				if ($unEven == true) {
+					echo "class='unEven'";
+					$unEven = false;
+				} else {
+					$unEven = true;
+				}
+				echo ">";
+				echo "<td>".$value['naam']."</td></tr>";
+
 			}
 			?>
 		</tbody>

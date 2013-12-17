@@ -231,6 +231,11 @@ table {
        color: #ffffff;      
        background-color: #008080;
    }
+   
+   .noHover:hover {
+       color: black;
+       background-color: #ffffff;
+   }
 
    table tr.unEven {
        background-color: #ededed;
@@ -334,7 +339,7 @@ input[type=password] {
    height: 30px;
    padding: 3px;
 }         
-input[type=button] {
+input[type=submit] {
    margin-top: 10px;
    float: right;
    -ms-border-radius: 5px;

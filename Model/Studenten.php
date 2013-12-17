@@ -8,15 +8,11 @@
 class Studenten {
 
     public function __construct() {
-        
+        include_once 'Student.php';
     }
 
     public function addStudent() {
-        
-    }
-
-    public function getAllStudents() {
-        
+        //
     }
 
     public function getAllStudents_array() {
@@ -25,13 +21,9 @@ class Studenten {
         $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
-
-    //TODO: moet een 'student' model returnen.
+    
     public function getStudent($studentId) {
-        $query = "SELECT * from student WHERE id = ?";
-
-        $result = DatabaseConnector::executeQuery($query, array($studentId));
-        return $result;
+        return new Student($studentId);
     }
 
     public function removeStudent($studentID) {
@@ -40,20 +32,27 @@ class Studenten {
     }
 
     //TODO: studenten die van school af zijn?
-    public function getClasslessStudents() {
+    public function getClasslessStudents($blockID = null) {
+        
+        $blockLimit = "";
+        if(!is_null($blockID)) {
+            $blockLimit = "AND k.blok_id = $blockID";
+        }
+        
         $query = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
                     FROM student s
                     WHERE s.id NOT IN (
                         SELECT ks.student_id
-                        FROM klas k
-                        LEFT JOIN klas_student ks ON ks.klas_id = k.id
+                        FROM klas_student ks
+                        LEFT JOIN klas k ON ks.klas_id = k.id
                         WHERE k.beoordeling_deadline IS NULL
+                        $blockLimit
                     )";
 
         $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
-
+    
     //TODO: moet verplaatst worden naar 'student' model.
     //Word gebruikt op de result pagina om alle klassen van een student op te halen voor wanneer de admin is ingelogd
     //en coach id kan daar nog bij worden opgegeven wanneer een docent is ingelogd 
@@ -111,7 +110,7 @@ class Studenten {
     }
 
     public function getStudentsFromClass($classId) {
-        $query = "  SELECT s.id AS id, s.voornaam AS voornaam, s.achternaam AS achternaam, s.tussenvoegsel AS tussenvoegsel FROM student s
+        $query = "  SELECT ks.id AS klas_student_id, s.id AS id, s.voornaam AS voornaam, s.achternaam AS achternaam, s.tussenvoegsel AS tussenvoegsel FROM student s
                     JOIN klas_student ks ON ks.student_id = s.id
                     WHERE ks.klas_id = $classId
                     ORDER BY ks.id";

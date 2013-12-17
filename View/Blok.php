@@ -38,23 +38,34 @@
                 <th>Naam</th>     
                 <th>Omschrijvig</th>     
                 <th>Leerjaar</th>          
-                <th>bloknummer</th>         
+                <th>Bloknummer</th>         
                 <th>Open</th>  
             </thead>    
             <tbody>
 				<?php 
 				include_once("Model/Blokken.php");
 				$blocks = new Blokken;
-				$arr = $blocks->getAllBlocks();				
+				$arr = $blocks->getAllBlocks();	
+				
+				$unEven = true;
 				foreach ($arr as &$value) {
-					echo "<tr id=".$value['id']." class='unEven'>
-						  <td>".$value['naam']."</td>
-						  <td>".$value['omschrijving']."</td>
-						  <td>".$value['leerjaar']."</td>
-						  <td>".$value['bloknummer']."</td>
-						  <td>Nee</td>
-						  </tr>";
+					echo "<tr id=".$value['id']." ";
+					
+					if ($unEven == true) {
+						echo "class='unEven'";
+						$unEven = false;
+					} else {
+						$unEven = true;
+					}
+					echo ">";
+					echo "<td>".$value['naam']."</td>";
+					echo "<td>".$value['omschrijving']."</td>";
+					echo "<td>".$value['leerjaar']."</td>";
+					echo "<td>".$value['bloknummer']."</td>";
+					
+					// TODO: ophalen of blok open staat
+					echo "<td>Nee</td></tr>";
 				}
-				?> 
+				?>			
             </tbody>
         </table>

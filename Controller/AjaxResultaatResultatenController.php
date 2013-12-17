@@ -7,19 +7,32 @@
  */
 class AjaxResultaatResultatenController {
     
-   // private $studentenModel;
+    private $studentenModel;
     
     public function __construct()
     {        
-        //include_once 'model/Studenten.php';
-        //$this->studentenModel = new Studenten();
+        include_once 'model/Studenten.php';
+        $this->studentenModel = new Studenten();
     }
     
     public function invoke()
     {
-        $studentId = $_GET["id"];
+        $student = $this->studentenModel->getStudent($_GET["id"]);
         $klas = $_GET["k"];
-        //indien "ALLE KLASSEN" haal op voor alle klassen uit dat jaar
+        $leerjaar = $_GET["s"];
+        
+        if(is_numeric($klas)){
+            $result = $student->getResultsClass($klas);  
+            $average= $student->getAverageResultClass($klas);
+            $type = "klas";
+            
+            $hasfinal = $student->hasFinalResult($klas);
+        }else{
+            $result = $student->getResultsYear($leerjaar); 
+            $average= $student->getAverageResultYear($leerjaar);
+            $type = "leerjaar";
+        }
+        
         //Pak definitieve resultaten
         
             //Pak alle beoordelingen maar......

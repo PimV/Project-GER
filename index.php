@@ -19,6 +19,8 @@ if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = "login";
 }
 
+
+
 $array = array(
     "login",
     "home",
@@ -30,6 +32,7 @@ $array = array(
     "student",
     "studentedit",
     "resultaat",
+    "export",
     "klas",
     "klasedit",
     "rubriek",
@@ -37,19 +40,24 @@ $array = array(
     "ajaxresultaatklassen",
     "ajaxresultaatresultaten",
     "blok",
-    "blokedit"
+    "blokedit",
+    "docent",
+    "docentedit"
 );
 
-foreach ($array as $arrayPage) {
-
-
-    if ($page == $arrayPage) {
-        $page .= "Controller";
-        include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
-        $displayPage = new $page();
-        $displayPage->invoke();
+foreach ($array as $arrayPage)
+{
+    if ($page == $arrayPage)
+    {
+        if ($page == $arrayPage)
+        {
+            $page .= "Controller";
+            include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
+            $displayPage = new $page();
+            $displayPage->invoke();
+            return;
+        }
     }
 }
-
 DatabaseConnector::closeConnection();
 ?>

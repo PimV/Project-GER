@@ -5,7 +5,7 @@
  *
  * @author Gijs van der Venne
  */
-class Login
+class Account
     {
 
     private $username;
@@ -18,13 +18,13 @@ class Login
      * zo nee: log de gebruiker niet in en geef een error.
      */
 
-    private function validateLogin($inputUsername, $inputPassword)
+    public function validateLogin($inputUsername, $inputPassword)
         {
 
-        $this->$username = $usernameinput;
-        $this->$password = $inputPassword;
+        $this->username = $inputUsername;
+        $this->password = $inputPassword;
 
-        if (CheckIfUserExcists() == true)
+        if ($this->CheckIfUserExcists() === true)
         {
             return true;
         }
@@ -40,16 +40,47 @@ class Login
 
     private function CheckIfUserExcists()
         {
-        $md5pass = md5($password);
 
-        $query = "SELECT * FROM account where gebruikernaam = $username AND wachtwoord = $md5pass";
 
-        if (getEnabled() === true)
+
+
+        $query = "SELECT a.gebruikersnaam FROM account a 
+            WHERE a.gebruikersnaam = '$this->username'";
+
+        $result = DatabaseConnector::executeQuery($query);
+
+        if ($result != null)
         {
-            return true;
+            $this->md5pass = md5($this->password);
+
+            $query = "SELECT a.wachtwoord, a.disabled FROM account a 
+                      WHERE a.wachtwoord = '$this->md5pass' AND a.gebruikersnaam = '$this->username'";
+
+            $result = DatabaseConnector::executeQuery($query);
+
+            if ($result != null)
+            {
+                $this->enabled = $result[0]["disabled"];
+
+                if ($this->getEnabled())
+                {
+
+                    return true;
+                }
+                else
+                {
+                    echo 'Dit account is niet actief';
+                    return false;
+                }
+            }
+            else
+            {
+                echo 'Het wachtwoord is incorrect';
+            }
         }
         else
         {
+            echo 'account niet geregistreet';
             return false;
         }
         }
@@ -64,34 +95,13 @@ class Login
         }
 
     /*
-     * Log de user uit, en sluit de sessie gooi de sessie leeg.
-     */
-
-    private function logoff()
-        {
-        //doe iets
-        }
-
-    /*
-     * Zet de waarde van enabled 
-     * true = account is actief en bruikbaar
-     * false = account is inactief en niet bruikbaar
-     */
-
-    private function setEnabled()
-        {
-        $this->$enabled = $inputEnabled;
-        }
-
-    /*
      * Haalt de waarde op van de variable $enabled.
      */
 
     private function getEnabled()
         {
-        return $enabled;
+        return $this->enabled;
         }
 
     }
-
 ?>

@@ -7,17 +7,25 @@
  */
 class RubriekController {
     
+	private $rubriekenModel;
+	
     public function __construct()
     {
-        
-    }
+		include_once 'Model' . DIRECTORY_SEPARATOR . 'Rubrieken.php';
+        $this->rubriekenModel = new Rubrieken;
+	}
     
     public function invoke()
     {
-        $page = 'Rubriek.php';
-        //$pagehead = 'RubriekHead.php';
+		if(isset($_GET['del'])) {
+			// Assign id
+			$id = $_GET['del'];
+			// Delete rubriek d.m.v. id
+			$this->rubriekenModel->removeRubric($id);	
+		}
 
-        include 'View/Template.php';
+        $page = "View" . DIRECTORY_SEPARATOR . "Rubriek.php";
+        include "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 }
 
