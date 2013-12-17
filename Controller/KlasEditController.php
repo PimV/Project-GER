@@ -73,7 +73,7 @@ class KlasEditController {
             //Create new class.
             $this->klassenModel->addClass($_POST["code"], $_POST["block"], $_POST["schoolyear"], 1, $_POST["list1"]);
         }
-        //header("location: index.php?p=klas");
+        header("location: index.php?p=klas");
     }
 }
 
