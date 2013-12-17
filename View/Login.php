@@ -1,3 +1,11 @@
+<?php
+if(isset($_GET["l"]))
+{
+    echo'destroyed';
+    session_destroy();
+}
+?>
+
 <h1>Login</h1>        
 <div class="centerDiv">
     <form action="#" method="POST">

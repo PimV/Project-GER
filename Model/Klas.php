@@ -60,7 +60,7 @@ class Klas {
         $this->students = $studentResult;
         
         foreach ($this->students as $student) {
-            array_push($this->oldStudentIds, $student["id"]);
+            array_push($this->oldStudentIds, $student["studentid"]);
         }
         $this->newStudentIds = $this->oldStudentIds;
     }
@@ -70,7 +70,14 @@ class Klas {
     public function setCoach($coachId) { $this->coachId = $coachId; }
     public function setSchoolYear($schoolYear) { $this->schoolYear = $schoolYear; }
     public function setReviewDeadline($date) { $this->reviewDeadline = $date; }
-    public function setStudents($studentIds = array()) { $this->newStudentIds = $studentIds; }
+    public function setStudents($studentIds = array()) { 
+        if(empty($studentIds)){
+            $this->newStudentIds = array();
+        }
+        else {
+            $this->newStudentIds = $studentIds;
+        }
+    }
     public function setBlock($blockId) {
         if($blockId != $this->blockId) {
             $this->createNewClass = true;
@@ -113,7 +120,7 @@ class Klas {
             if(!empty($this->newStudentIds)){
                 $query = "INSERT INTO klas_student (klas_id, student_id) VALUES ";
                 $parameters = array();
-                $studentSize = count($saveStudents);
+                $studentSize = count($this->newStudentIds);
                 foreach ($this->newStudentIds as $key => $id) {
                     $query .= "($this->classId, ?)";
                     if($key < $studentSize-1){$query .= ", ";}
@@ -136,13 +143,42 @@ class Klas {
             }
             $query .= "WHERE id = $this->classId ";
             
-            //TODO: Compare the new student list with the old one. 
-            //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
-            if(!empty($this->newStudentIds)) {
-                $removedStudents = array_diff($this->oldStudentIds, $this->newStudentIds);
-                $addedStudents = array_diff($this->newStudentIds, $this->oldStudentIds);
-            }
             DatabaseConnector::executeQuery($query, $parameters);
+            
+            $removedStudents = array_diff($this->oldStudentIds, $this->newStudentIds);
+            $addedStudents = array_diff($this->newStudentIds, $this->oldStudentIds);
+
+            if(!empty($removedStudents)) {
+                $deleteQuery = "DELETE FROM klas_student
+                                WHERE klas_id = $this->classId AND
+                                student_id IN (";
+                $deleteParameters = array();
+                $arraySize = count($removedStudents);
+                $i = 1;
+                foreach ($removedStudents as $key => $id) {
+                    $deleteQuery .= "?";
+                    if($i < $arraySize){$deleteQuery .= ", ";}
+                    else {$deleteQuery .= ")";}
+                    array_push($deleteParameters, $id);
+                    $i++;
+                }
+                DatabaseConnector::executeQuery($deleteQuery, $deleteParameters);
+            }
+
+            if(!empty($addedStudents))
+            {
+                $addQuery = "INSERT INTO klas_student (klas_id, student_id) VALUES ";
+                $addParameters = array();
+                $arraySize = count($addedStudents);
+                $i = 1;
+                foreach ($addedStudents as $key => $id) {
+                    $addQuery .= "($this->classId, ?)";
+                    if($i < $arraySize){$addQuery .= ", ";}
+                    array_push($addParameters, $id);
+                    $i++;
+                }
+                DatabaseConnector::executeQuery($addQuery, $addParameters);
+            }
     }
     
     public function removeClass(){

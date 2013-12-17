@@ -30,9 +30,18 @@ class LoginController
         }
         }
 
+    /*
+     * Log de user uit en gooi de sessie leeg.
+     */
+
+    public function logOut()
+        {
+        session_destroy();
+        }
+
     public function changePasswordRequest()
         {
-        // vraag model om login aan te passen
+// vraag model om login aan te passen
         }
 
     public function invoke()

@@ -11,10 +11,14 @@ class Klassen {
         
     }
 
-    public function addClass() {
+    public function addClass($classCode, $blockID, $schoolyear, $coachID, $students = array()) {
         $newClass = new Klas();
-
-        //$newClass->saveToDB();
+        $newClass->setClassCode($classCode);
+        $newClass->setBlock($blockID);
+        $newClass->setSchoolYear($schoolyear);
+        $newClass->setCoach($coachID);
+        $newClass->setStudents($students);
+        $newClass->saveToDB();
     }
 
     /**
@@ -144,8 +148,10 @@ class Klassen {
      * @param int $classID De klas om te verwijderen.
      */
     public function removeClass($classID) {
-        $query = "UPDATE klas SET verwijderd = true WHERE id = ?";
+        $query = "DELETE FROM klas_student WHERE klas_id = ?";
+        $query2 = "DELETE FROM klas WHERE id = ?";
         DatabaseConnector::executeQuery($query, array($classID));
+        DatabaseConnector::executeQuery($query2, array($classID));
     }
 
 }
