@@ -43,19 +43,32 @@ class Account
         {
         $this->md5pass = md5($this->password);
 
+        echo $this->md5pass;
+
         $query = "SELECT a.gebruikersnaam, a.wachtwoord, a.disabled 
-            FROM account a where a.gebruikersnaam =  $this->username AND a.wachtwoord = $this->md5pass";
-        
+            FROM account a where a.gebruikersnaam = '$this->username' AND a.wachtwoord = '$this->md5pass'";
+
         $result = DatabaseConnector::executeQuery($query);
 
-        $this->enabled = $result[0]["disabled"];
+        var_dump($result);
 
-        if (getEnabled() === true)
+        if ($result != null)
         {
-            return true;
+            $this->enabled = $result[0]["disabled"];
+
+            if ($this->getEnabled())
+            {
+                return true;
+            }
+            else
+            {
+                echo 'Dit account is niet actief';
+                return false;
+            }
         }
         else
         {
+            echo 'account niet geregistreet';
             return false;
         }
         }
@@ -84,7 +97,7 @@ class Account
 
     private function getEnabled()
         {
-        return $enabled;
+        return $this->enabled;
         }
 
     }
