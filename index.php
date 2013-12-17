@@ -19,6 +19,8 @@ if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = "login";
 }
 
+
+
 $array = array(
     "login",
     "home",
