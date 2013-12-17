@@ -12,7 +12,6 @@ class LoginController
 
         if (!empty($_POST))
         {
-            echo "blabla";
             $this->validateLoginRequest();
         }
         }
@@ -23,11 +22,11 @@ class LoginController
 
         if ($loginpassed === true)
         {
-            
+            echo "hoera";
         }
         else
         {
-            
+            echo "boeeee";
         }
         }
 

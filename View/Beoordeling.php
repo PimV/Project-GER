@@ -29,14 +29,20 @@
 <tbody>
     <?php
     //Loop through all classes and populate table
-
+    $unEven = true;
 
     foreach ($klassen_view as $klas) {
-        echo '<tr id=' . $klas['id'] . '>';
+        if ($unEven) {
+            $trClass = 'class="unEven"';
+        } else {
+            $trClass = null;
+        }
+        echo '<tr ' . $trClass . ' id=' . $klas['id'] . '>';
         echo '<td>' . $klas['klascode'] . '</td>';
         echo '<td>' . $klas['studenten'] . '</td>';
 
         echo '</tr>';
+        $unEven = !$unEven;
     }
     ?>
 <!--    <tr class="unEven">

@@ -1,103 +1,78 @@
-
-<?php echo $klas; ?>
 <table cellpadding="0" cellspacing="0" style="width: 94%;">
-    <thead>   
-        <th>Docent</th>   
-        <th>Nr 1</th>
-        <th>Nr 2</th>
-        <th>Nr 3</th>
-        <th>Nr 4</th>
-        <th>Nr 5</th>
-        <th>Nr 6</th>
-        <th>Nr 7</th>   
-        <th>Nr 8</th>
-        <th>Nr 9</th>     
-        <th>Nr 10</th>
-        <th>Nr 11</th>   
-        <th>Nr 12</th>
-    </thead>      
-    <tbody>
-        <tr class="unEven">     
-            <td>Truusje van den Boomen</td>
-            <td>2</td>      
-            <td>4</td>
-            <td>3</td>
-            <td>1</td>
-            <td>1</td>
-            <td>5</td>
-            <td>2</td>
-            <td>3</td>
-            <td>5</td>
-            <td>1</td>
-            <td>2</td>
-            <td>1</td>
-        </tr>    
-        <tr>                
-            <td>Jan Haas</td>
-            <td>4</td>      
-            <td>5</td>
-            <td>2</td>
-            <td>3</td>
-            <td>2</td>
-            <td>4</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>3</td>
-            <td>2</td>
-        </tr>     
-        <tr class="unEven">     
-            <td>Rik Rikken</td> 
-            <td>1</td>      
-            <td>4</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1</td>
-            <td>4</td>
-            <td>2</td>
-            <td>1</td>
-            <td>5</td>
-            <td>3</td>
-            <td>2</td>
-            <td>2</td>
-        </tr>   
-        <tr>               
-            <td>Wim Wimpie</td> 
-            <td>4</td>      
-            <td>5</td>
-            <td>2</td>
-            <td>3</td>
-            <td>2</td>
-            <td>4</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>3</td>
-            <td>2</td>
-        </tr>  
-        <tr class="unEven">       
-            <td>Dirk Dommers</td>   
-            <td>2</td>      
-            <td>4</td>
-            <td>3</td>
-            <td>1</td>
-            <td>1</td>
-            <td>5</td>
-            <td>2</td>
-            <td>3</td>
-            <td>5</td>
-            <td>1</td>
-            <td>2</td>
-            <td>1</td>
-        </tr>   
-    </tbody> 
+    <?php
+    
+        if(empty($result)){
+            echo "<tr><td><b>Er zijn geen resultaten.</b></td></tr>";
+        }else{
+    
+            echo "<thead><th>Docent</th>";
+            $teacher = $result[0]["docent"];
+
+            foreach($result as $row){
+                if($row["docent"] == $teacher){
+                    echo "<th title='". $row["rubriek"] ."' style='text-align: center;'>Nr. ". $row["rubriek_id"]  ."</th>";
+                } 
+            }
+
+            echo "</thead><tbody><tr class='unEven'>";
+
+            $number = 1;
+            $unEven = false;
+            foreach($result as $row){
+
+                if($row["docent"] != $teacher)
+                {
+                    $number = 1;
+                    $teacher = $row["docent"];
+                    if($unEven){
+                        echo "</tr><tr class='unEven'>";
+                    }else{
+                        echo "</tr><tr>";
+                    }
+                }
+
+                if($number == 1){
+                    echo "<td>". $row["docent"] ."</td>";
+                    echo "<td style='text-align: center;'>". $row["waardering"] ."</td>"; 
+                }else{
+                    echo "<td style='text-align: center;'>". $row["waardering"] ."</td>"; 
+                }            
+                $number++;
+            }
+
+            echo "</tbody></tr>";
+        }
+        
+        //Laat de gemiddelde punten zien. //geef hier ook de spreiding aan
+        echo "<tr height='100px'><td>Gemiddelde</td>";    
+        if($type == "klas"){
+            foreach($average as $row){
+                echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
+            }
+        }else{
+            foreach($average as $row){
+                echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
+            }
+        }
+        echo "<tr>";
+        
+        //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
+        if(isset($hasfinal)){
+            //Als de student al een eindbeoordeling heeft, laat deze zien in labels
+            if($hasfinal){
+                
+            }
+            //Als de student nog geen eindbeorodeling heeft, laat deze zien in dropdowns zodat ze kunnen worden opgeslagen. De inhoud van de combo's is gelijk aan de average
+            else{
+                
+            }
+        }
+    ?>
 </table>
 
 <br>
 
-<!--Check of de ingelogde docent de coach is, en er nog geen eindoordeel vast gezet is, laat dan onderstaande tabel zien.-->
+<!--Check of de ingelogde docent de coach is, en er nog geen eindoordeel vast gezet is, laat dan onderstaande tabel zien.
 <table class="noAction" style="width: 94%; border: 1px solid black;">
     <thead>
         <th>Nr 1</th>
@@ -236,6 +211,6 @@
             </select>
         </td>
     </tr>  
-</table>
+</table>-->
 
 <canvas hidden="true" id="cvs" width="700" height="500">[No canvas support]</canvas>

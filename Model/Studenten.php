@@ -103,7 +103,7 @@ class Studenten {
     }
 
     public function getStudentsFromClass($classId) {
-        $query = "  SELECT s.id AS id, s.voornaam AS voornaam, s.achternaam AS achternaam, s.tussenvoegsel AS tussenvoegsel FROM student s
+        $query = "  SELECT ks.id AS klas_student_id, s.id AS id, s.voornaam AS voornaam, s.achternaam AS achternaam, s.tussenvoegsel AS tussenvoegsel FROM student s
                     JOIN klas_student ks ON ks.student_id = s.id
                     WHERE ks.klas_id = $classId
                     ORDER BY ks.id";

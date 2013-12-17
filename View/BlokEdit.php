@@ -25,7 +25,8 @@
 				<tr>
 					<td>Naam</td>  
 					<td>
-					<?php if(isset($name)) {
+					<?php 
+					if(isset($name)) {
 						echo "<input type='text' name='name' value='".$name."'/>";
 					} else {
 						echo "<input type='text' name='name' />";
@@ -36,7 +37,8 @@
 				<tr>
 					<td>Omschrijving</td>  
 					<td>
-					<?php if(isset($description)) {
+					<?php 
+					if(isset($description)) {
 						echo "<input type='text' name='description' value='".$description."'/>";
 					} else {
 						echo "<input type='text' name='description' />";
@@ -80,15 +82,22 @@
 				<tr>     
 					<td>Open</td>  
 					<td>
-						<select class="selectFullSize">   
-							<option>Nee</option>
-							<option>Ja</option>     
+						<select class="selectFullSize" name="open">  
+							<option <?php echo (!isset($deadline)) ? 'selected="selected"' : ''; ?> value="false">Nee</option>
+							<option <?php echo (isset($deadline)) ? 'selected="selected"' : ''; ?> value="true">Ja</option>				  
 						</select>
 					</td>  
 				</tr>          
 				<tr>
 					<td>Einddatum</td>  
-					<td><input type="text"/></td>
+					<td>
+					<?php 
+					if(isset($deadline)) {
+						echo "<input type='text' name='deadline' value='".$deadline."'/> (yyyy-MM-dd)";
+					} else {
+						echo "<input type='text' name='deadline' value='' /> (yyyy-MM-dd)";
+					}
+					?>
 				</tr> 
 			</table>     
 		</div>
