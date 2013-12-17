@@ -1,4 +1,4 @@
-<h1>Beoordelingen klas <?php //klasnaam                                     ?></h1>  
+<h1>Beoordelingen klas <?php //klasnaam                                                              ?></h1>  
 
 <div class="ribbon">       
     <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling';
@@ -43,23 +43,28 @@
 
     <?php
     foreach ($studenten as $student) {
+
+
         echo '<input type="hidden" name="classId" value=' . $_GET['id'] . '/>';
-        $student_id = $student['id'];
+        $studentId = $student['id'];
         $student_name = $student['voornaam'];
         if (isset($student['tussenvoegsel'])) {
             $student_name .= ' ' . $student['tussenvoegsel'];
         }
         $student_name .= ' ' . $student['achternaam'];
 
-        echo '<tr class=' . $student_id . '>';
-        echo '<td>' . $student_id . '</td>';
+        echo '<tr class=' . $studentId . '>';
+        echo '<td>' . $studentId . '</td>';
 
         echo '<td>' . $student_name . '</td>';
 
+        $rubricCount = -1;
         foreach ($rubrieken as $rubriek) {
-            $rubriek_id = $rubriek['id'];
-            echo '<td>
-                   <select name=' . "score[$student_id][$rubriek_id]" . '>
+            $rubricCount++;
+            if ($isBeoordeeld === false) {
+                $rubriekId = $rubriek['id'];
+                echo '<td>
+                   <select name=' . "score[$studentId][$rubriekId]" . '>
                         <option>0</option>
                         <option>1</option>
                         <option>2</option>
@@ -68,9 +73,12 @@
                         <option>5</option>
                     </select>
                 </td>';
+            } else {
+                echo '<td>' . $totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering_id'] . '</td>';
+            }
         }
-        echo '</tr>';
     }
+    echo '</tr>';
     ?>
 </form>
 
