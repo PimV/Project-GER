@@ -40,21 +40,23 @@
                 $number++;
             }
 
-            echo "</tbody></tr>";
-        }
+            echo "</tr>";
         
-        //Laat de gemiddelde punten zien. //geef hier ook de spreiding aan
-        echo "<tr height='100px'><td>Gemiddelde</td>";    
-        if($type == "klas"){
-            foreach($average as $row){
-                echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
+        
+            //Laat de gemiddelde punten zien. //geef hier ook de spreiding aan
+            echo "<tr height='100px'><td>Gemiddelde</td>";    
+            if($type == "klas"){
+                foreach($average as $row){
+                    echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
+                }
+            }else{
+                foreach($average as $row){
+                    echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
+                }
             }
-        }else{
-            foreach($average as $row){
-                echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
-            }
+            echo "</tr></tbody>";
+        
         }
-        echo "<tr>";
         
         //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
         if(isset($hasfinal)){
