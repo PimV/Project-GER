@@ -1,9 +1,9 @@
 <h1>Home</h1>       
 <div class="beheerMenu">
     <div class="menuRow">
-        <div class="menuItem">
+        <div class="menuItem" onclick="javascript:location.href = 'index.php?p=docent'">
             <div class="fontIcon">&#xe075;</div>      
-            <div class="text">Docententen</div>
+            <div class="text">Docenten</div>
         </div>      
         <div class="menuItem" onclick="javascript:location.href = 'index.php?p=groep'">
             <div class="fontIcon">&#xe006;</div>      
