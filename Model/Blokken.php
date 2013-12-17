@@ -8,7 +8,7 @@
 class Blokken {
 
 	public function __construct() {
-
+		include_once('Model/Blok.php');
 	}
 	
 	/**
@@ -30,6 +30,14 @@ class Blokken {
 		DatabaseConnector::executeQuery("UPDATE blok
 										 SET verwijderd = 1
 										 WHERE id = ?", array($id));
+	}
+	
+	/**
+	 * Haal een specifiek blok op d.m.v. het id
+	 *
+	 */
+	public function getBlock($id) {
+		return new Blok($id);
 	}
 	
 	/**
