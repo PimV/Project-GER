@@ -36,15 +36,17 @@ class Klas {
      */
     private function loadClassData() {
         $classQuery = "SELECT k.*, DATE_FORMAT(beoordeling_deadline,'%d-%m-%Y') AS beoordeling_deadline_dmY
-                    FROM klas k
-                    WHERE k.id = ?";
+                        FROM klas k
+                        WHERE k.id = ?";
         
-        $studentQuery = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
-                    FROM student s
-                    LEFT JOIN klas_student ks ON ks.student_id = s.id
-                    LEFT JOIN klas k ON ks.klas_id = k.id
-                    WHERE k.id = ?
-                    ORDER BY s.id ASC";
+        $studentQuery = "SELECT s.id AS studentid, 
+                        CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam,
+                        ks.id AS klas_student
+                        FROM student s
+                        LEFT JOIN klas_student ks ON ks.student_id = s.id
+                        LEFT JOIN klas k ON ks.klas_id = k.id
+                        WHERE k.id = ?
+                        ORDER BY s.id ASC";
         
         $classQuery = DatabaseConnector::executeQuery($classQuery, array($this->classId));
         $studentQuery = DatabaseConnector::executeQuery($studentQuery, array($this->classId));
@@ -82,10 +84,18 @@ class Klas {
     public function saveToDB() {
         if($this->createNewClass) {
             
-            //If new students have been set, put those in the students var. There is no need here for old and new student comparison.
-            $this->students = (!empty($this->newStudents) ? $this->newStudents : $this->students);
+            //Get the id's of the students. Either from the newStudents array or students array.
+            $saveStudents = array();
+            if(empty($this->newStudents)) {
+                foreach ($this->students as $student) {
+                    array_push($saveStudents, $student["id"]);
+                }
+            }
+            else {
+                $saveStudents = $this->newStudents;
+            }
             
-            //Create new class.
+            //Nieuwe klas maken.
             $query = "INSERT INTO klas (klascode, coach_id, blok_id, schooljaar)
                         VALUES (?, ?, ?, ?)";
             $parameters = array($this->classCode, 
@@ -96,28 +106,48 @@ class Klas {
             DatabaseConnector::executeQuery($query, $parameters);
             $this->classId = DatabaseConnector::getLastInsertID();
             
-            //Connect all the students to the new class.
-            if(!empty($this->students)){
+            //Studenten aan klas koppelen.
+            if(!empty($saveStudents)){
                 $query = "INSERT INTO klas_student (klas_id, student_id) VALUES ";
                 $parameters = array();
-                foreach ($saveStudents as $row[]) {
+                $studentSize = count($saveStudents);
+                foreach ($saveStudents as $key => $id) {
                     $query .= "($this->classId, ?)";
-                    array_push($parameters, $row["id"]);
+                    if($key < $studentSize-1){$query .= ", ";}
+                    array_push($parameters, $id);
                 }
                 DatabaseConnector::executeQuery($query, $parameters);
             }
 
         }
         else {
-            //STR_TO_DATE(datestring, '%d-%m-%Y')
+            $query = "UPDATE klas SET klascode = ?, coach_id = ?, blok_id = ?, schooljaar = ? ";
+            $parameters = array($this->classCode, 
+                                $this->coachId,
+                                $this->blockId,
+                                $this->schoolYear);
+            
+            if(!empty($this->reviewDeadline)){
+                $query .= ", beoordeling_deadline = STR_TO_DATE($this->reviewDeadline, '%d-%m-%Y') ";
+                array_push($parameters, $this->reviewDeadline);
+            }
+            $query .= "WHERE id = $this->classId ";
+            
             //Compare the new student list with the old one. 
             //Records should be deleted, added or left alone depending on which students are removed, added or kept in the class.
             if(!empty($this->newStudents)) {
                 
             }
+            DatabaseConnector::executeQuery($query, $parameters);
         }
     }
     
+    public function removeClass(){
+        $query = "DELETE FROM klas_student WHERE klas_id = $this->classId";
+        $query2 = "DELETE FROM klas WHERE id = $this->classId";
+        DatabaseConnector::executeQuery($query);
+        DatabaseConnector::executeQuery($query2);
+    }
 }
 
 ?>
