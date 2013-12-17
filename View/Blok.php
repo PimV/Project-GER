@@ -1,3 +1,16 @@
+<?php
+
+	if(isset($_GET['del'])) {
+		// Assign id
+		$id = $_GET['del'];
+		// Include Blokken.php en maak Blokken klasse aan
+		include_once("Model/Blokken.php");
+		$blocks = new Blokken;
+		// Delete rubriek met id
+		$blocks->removeBlock($id);	
+	}
+
+?>
 <h1>Blokken</h1>          
         <div class="ribbon">     
             <div class="item" onclick="javascript:location.href='index.php?p=home'">

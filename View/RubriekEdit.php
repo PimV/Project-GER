@@ -11,7 +11,12 @@
 		// d.m.v het id en unset de sessie 'rubric'
 		if(isset($_SESSION['rubric'])) {
 			$id = $_SESSION['rubric'];
-			$rubrics->updateRubric($name, $description, $id);
+			$rubric = $rubrics->getRubric($id);	
+			//$rubrics->updateRubric($name, $description, $id);
+			$rubric->setName = $name;
+			$rubric->setDescription = $description;
+			$rubric->setId = $id;
+			$rubric->saveToDB();
 			unset($_SESSION['rubric']);
 		} else { 
 			// Sessie 'rubric' bestaat niet, voeg nieuwe rubriek toe
@@ -27,10 +32,10 @@
 		include_once("Model/Rubrieken.php");
 		$rubrics = new Rubrieken;
 		// Get rubriek met id
-		$result = $rubrics->getRubric($id);	
+		$rubric = $rubrics->getRubric($id);
 		// Set naam & omschrijving variabelen
-		$name = $result[0]['naam'];
-		$description = $result[0]['omschrijving'];
+		$name = $rubric->getName();
+		$description = $rubric->getDescription();
 		// Maak sessie met rubriek id
 		$_SESSION['rubric'] = $id;
 	} 
