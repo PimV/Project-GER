@@ -6,7 +6,7 @@ function reloadComboAjaxClass(studentId){
     var schooljaar = e.options[e.selectedIndex].value;
     
     $.ajax({
-        url: "index.php?p=ajaxresultaatklassencontroller&id=" + studentId + "&l=" + schooljaar,
+        url: "index.php?p=ajaxresultaatklassen&id=" + studentId + "&l=" + schooljaar,
         success: function(data) {
             $("#tdComboAjaxClass").html(data);
            }
@@ -22,7 +22,7 @@ function reloadDivAjaxResults(studentId){
     var klas = e.options[e.selectedIndex].value;
     
     $.ajax({
-        url: "index.php?p=ajaxresultaatresultatencontroller&id=" + studentId + "&k=" + klas,
+        url: "index.php?p=ajaxresultaatresultaten&id=" + studentId + "&k=" + klas,
         success: function(data) {
             $("#divTableAjaxResult").html(data);
            }

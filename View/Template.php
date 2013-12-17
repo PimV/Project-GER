@@ -4,10 +4,12 @@
         <!-- Libraries -->
         <script src="Libraries/jQuery/jquery-1.10.2.min.js"></script>
         <script src="JavaScript/Template.js"></script>
-        
+
         <!-- Head overrides & additions -->
-        <?php if (isset($pagehead)){include_once($pagehead);} ?>
-        
+        <?php if (isset($pagehead)) {
+            include_once($pagehead);
+        } ?>
+
         <!-- Default head -->
         <title>GER</title>
         <meta charset="ISO-8859-15"/>
@@ -15,7 +17,7 @@
         <meta name="keywords" content="GER, student, beoordeling"/>
         <link rel="stylesheet" type="text/css" href="Styles/TemplateStyle.css"/>
         <link rel="icon" href="favicon.ico"/>
-        
+
     </head>
     <body>
         <div id="wrapper" style="position: absolute;width: 100%; height: 100%;">

@@ -1,6 +1,6 @@
 <h1>Rollen</h1>          
 <div class="ribbon">     
-    <div class="item" onclick="javascript:location.href='index.php'">
+    <div class="item" onclick="javascript:location.href='index.php?p=home'">
         <div class="fontIcon">
              &#xe126;
         </div>  
@@ -40,6 +40,32 @@
         <th>Rubrieken</th>
     </thead>    
     <tbody>
+        <?php
+        
+        include_once("Model/Groepen.php");
+        $groups = new Groepen;
+        $groupList = $groups->getAllGroups();
+        
+        $even = true;
+        foreach ($groupList as $value){
+            echo "<tr id=" . $value['id'];
+            
+            if($even == true){
+                $even = false;      
+                echo "class='unEven'>";
+            }
+            else{
+                $even = true;    
+                echo ">";            
+            }
+            echo "<td>" . $value['naam'] . "</td>";
+            echo "<td>" . $value['docenten'] . "</td>";
+            echo "<td>" . $value['rubrieken'] . "</td>";
+            echo "</tr>";
+        }
+        
+        ?>
+        
         <tr class="unEven">
             <td>Nederlands</td>
             <td>2</td>

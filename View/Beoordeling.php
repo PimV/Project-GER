@@ -10,7 +10,7 @@
             Terug
         </div>
     </div> 
-    <div class="item" onclick="javascript:location.href = 'index.php?p=beoordelingedit&id='">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=beoordelingedit&id=' + getSelectedItemId()">
 
         <div class="fontIcon">
             &#xe0b3;
@@ -23,25 +23,23 @@
 
 <table cellpadding="0" cellspacing="0">
     <thead>
-    <th>Klas</th>     
+    <th>Klascode</th>     
     <th>Aantal studenten</th>   
-    <th>Beoordeeld</th>
 </thead>    
 <tbody>
     <?php
     //Loop through all classes and populate table
 
-    /*
-     *  foreach($klassen as $klas) {
-     *      <tr class="unEven">
-      <td>$klas->getCode()</td>
-      <td>$klas->getStudentAmount()</td>
-      <td>$klas->getToDo()</td>
-      </tr>
-     *  }
-     */
+
+    foreach ($klassen_view as $klas) {
+        echo '<tr id=' . $klas['id'] . '>';
+        echo '<td>' . $klas['klascode'] . '</td>';
+        echo '<td>' . $klas['studenten'] . '</td>';
+
+        echo '</tr>';
+    }
     ?>
-    <tr class="unEven">
+<!--    <tr class="unEven">
         <td>45sad12</td>       
         <td>22</td>
         <td>Nee</td>
@@ -65,7 +63,7 @@
         <td>15sad12</td>       
         <td>29</td>
         <td>Nee</td>
-    </tr>
+    </tr>-->
 </tbody>
 </table>
 

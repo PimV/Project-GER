@@ -5,7 +5,7 @@
  *
  * @author Gijs van der Venne
  */
-class Login
+class Account
     {
 
     private $username;
@@ -18,14 +18,15 @@ class Login
      * zo nee: log de gebruiker niet in en geef een error.
      */
 
-    private function validateLogin($inputUsername, $inputPassword)
+    public function validateLogin($inputUsername, $inputPassword)
         {
 
-        $this->$username = $usernameinput;
-        $this->$password = $inputPassword;
+        $this->username = $inputUsername;
+        $this->password = $inputPassword;
 
-        if (CheckIfUserExcists() == true)
+        if ($this->CheckIfUserExcists() === true)
         {
+            //doe iets enzo
             return true;
         }
         else
@@ -40,9 +41,14 @@ class Login
 
     private function CheckIfUserExcists()
         {
-        $md5pass = md5($password);
+        $this->md5pass = md5($this->password);
 
-        $query = "SELECT * FROM account where gebruikernaam = $username AND wachtwoord = $md5pass";
+        $query = "SELECT a.gebruikersnaam, a.wachtwoord, a.disabled 
+            FROM account a where a.gebruikersnaam =  $this->username AND a.wachtwoord = $this->md5pass";
+        
+        $result = DatabaseConnector::executeQuery($query);
+
+        $this->enabled = $result[0]["disabled"];
 
         if (getEnabled() === true)
         {
@@ -70,17 +76,6 @@ class Login
     private function logoff()
         {
         //doe iets
-        }
-
-    /*
-     * Zet de waarde van enabled 
-     * true = account is actief en bruikbaar
-     * false = account is inactief en niet bruikbaar
-     */
-
-    private function setEnabled()
-        {
-        $this->$enabled = $inputEnabled;
         }
 
     /*

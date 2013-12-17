@@ -20,5 +20,3 @@ class HomeController {
         include 'View/Template.php';
     }
 }
-
-?>

@@ -13,12 +13,9 @@ $_SESSION["docentId"] = 0;
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
 //Get the page to open. Homepage default if none specified. 
-if (isset($_GET["p"]) && !empty($_GET["p"]))
-{
+if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = $_GET["p"];
-}
-else
-{
+} else {
     $page = "login";
 }
 
@@ -33,28 +30,30 @@ $array = array(
     "student",
     "studentedit",
     "resultaat",
+    "export",
     "klas",
     "klasedit",
     "rubriek",
     "rubriekedit",
-    "ajaxresultaatklassencontroller",
-    "ajaxresultaatresultatencontroller",
+    "ajaxresultaatklassen",
+    "ajaxresultaatresultaten",
     "blok",
     "blokedit"
 );
 
 foreach ($array as $arrayPage)
 {
-
-
     if ($page == $arrayPage)
     {
-        $page .= "Controller";
-        include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
-        $displayPage = new $page();
-        $displayPage->invoke();
+        if ($page == $arrayPage)
+        {
+            $page .= "Controller";
+            include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
+            $displayPage = new $page();
+            $displayPage->invoke();
+            return;
+        }
     }
 }
-
 DatabaseConnector::closeConnection();
 ?>
