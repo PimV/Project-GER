@@ -12,10 +12,8 @@
 		if(isset($_SESSION['rubric'])) {
 			$id = $_SESSION['rubric'];
 			$rubric = $rubrics->getRubric($id);	
-			//$rubrics->updateRubric($name, $description, $id);
-			$rubric->setName = $name;
-			$rubric->setDescription = $description;
-			$rubric->setId = $id;
+			$rubric->setName($name);
+			$rubric->setDescription($description);
 			$rubric->saveToDB();
 			unset($_SESSION['rubric']);
 		} else { 

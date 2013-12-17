@@ -42,10 +42,10 @@ class Rubriek {
 	 * Haalt alle gegevens op d.m.v. het id van de rubriek
 	 * 
 	 */
-	private function loadRubricData($id) {
+	private function loadRubricData() {
 		$query = "SELECT * FROM rubriek WHERE id = ?";
 		
-		$result = DatabaseConnector::executeQuery($query, array($id));
+		$result = DatabaseConnector::executeQuery($query, array($this->id));
 		
 		//$this->id = $result[0]['id'];
 		$this->name = $result[0]['naam'];
@@ -53,12 +53,13 @@ class Rubriek {
 	}
 	
 	public function saveToDB() {
-		echo "SaveToDB - UPDATE";
-		//$array = array($name, $description, $id);
+		$array = array($this->name, 
+					   $this->description, 
+					   $this->id);
 		
-		//DatabaseConnector::executeQuery("UPDATE rubriek
-										 //SET naam = ?, omschrijving = ?
-										 //WHERE id = ?", $array);
+		DatabaseConnector::executeQuery("UPDATE rubriek
+										 SET naam = ?, omschrijving = ?
+										 WHERE id = ?", $array);
 	}
 	
 }
