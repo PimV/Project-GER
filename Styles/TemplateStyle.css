@@ -231,6 +231,11 @@ table {
        color: #ffffff;      
        background-color: #008080;
    }
+   
+   .noHover:hover {
+       color: black;
+       background-color: #ffffff;
+   }
 
    table tr.unEven {
        background-color: #ededed;

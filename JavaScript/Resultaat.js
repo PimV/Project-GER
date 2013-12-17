@@ -21,8 +21,11 @@ function reloadDivAjaxResults(studentId){
     var e = document.getElementById("comboKlas");
     var klas = e.options[e.selectedIndex].value;
     
+    var d = document.getElementById("comboJaar");
+    var jaar = d.options[d.selectedIndex].value;
+    
     $.ajax({
-        url: "index.php?p=ajaxresultaatresultaten&id=" + studentId + "&k=" + klas,
+        url: "index.php?p=ajaxresultaatresultaten&id=" + studentId + "&k=" + klas + "&s=" + jaar,
         success: function(data) {
             $("#divTableAjaxResult").html(data);
            }

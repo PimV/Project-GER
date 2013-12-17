@@ -1,21 +1,30 @@
 <table cellpadding="0" cellspacing="0" style="width: 94%;">
     <?php
-    
+        //Indien er geen resultaten zijn om te laten zien, geef een simpele melding
         if(empty($result)){
             echo "<tr><td><b>Er zijn geen resultaten.</b></td></tr>";
-        }else{
+        }
+        //Indien er resultaten zijn, laat deze zien met daarbij het gemiddelde en de eindbeoordeling
+        else{
     
-            echo "<thead><th>Docent</th>";
+            //Maak de table headers aan
+            echo "<thead>";
+            echo "<th>Docent</th>";
+            
+            //Stel voor de foreach loopS in met welke leraar het begint
             $teacher = $result[0]["docent"];
 
+            //Loop door alle rijen van de eerste leraar heen zodat je alle rubrieken waarop beoordeelt is als head kan instellen
             foreach($result as $row){
                 if($row["docent"] == $teacher){
                     echo "<th title='". $row["rubriek"] ."' style='text-align: center;'>Nr. ". $row["rubriek_id"]  ."</th>";
                 } 
             }
 
-            echo "</thead><tbody><tr class='unEven'>";
+            echo "</thead>";
+            echo "<tbody><tr class='unEven'>";
 
+            //Loop door alle records en maak per docent een nieuwe row aan
             $number = 1;
             $unEven = false;
             foreach($result as $row){
@@ -40,34 +49,42 @@
                 $number++;
             }
 
-            echo "</tbody></tr>";
-        }
+            echo "</tr>";
         
-        //Laat de gemiddelde punten zien. //geef hier ook de spreiding aan
-        echo "<tr height='100px'><td>Gemiddelde</td>";    
-        if($type == "klas"){
-            foreach($average as $row){
-                echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
-            }
-        }else{
-            foreach($average as $row){
-                echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
-            }
-        }
-        echo "<tr>";
         
-        //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
-        if(isset($hasfinal)){
-            //Als de student al een eindbeoordeling heeft, laat deze zien in labels
-            if($hasfinal){
-                
+            //Laat de gemiddelde punten zien
+            //TODO: geef hier ook de spreiding aan
+            echo "<tr height='50px' class='noHover'>";
+            echo "<td>Gemiddelde</td>"; 
+            
+            if($type == "klas"){
+                foreach($average as $row){
+                    echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
+                }
+            }else{
+                foreach($average as $row){
+                    echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
+                }
             }
-            //Als de student nog geen eindbeorodeling heeft, laat deze zien in dropdowns zodat ze kunnen worden opgeslagen. De inhoud van de combo's is gelijk aan de average
-            else{
-                
+            
+            echo "</tr>";        
+        
+            //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
+            if($type == "klas"){
+                echo "<tr height='50px' class='noHover'><td><b>Eindbeoordeling</b></td>";
+                //Als de student al een eindbeoordeling heeft, laat deze zien in labels
+                if($hasfinal){
+
+                }
+                //Als de student nog geen eindbeorodeling heeft, laat deze zien in dropdowns zodat ze kunnen worden opgeslagen. De inhoud van de combo's is gelijk aan de average
+                else{
+
+                }
             }
         }
     ?>
+        </tr>   
+    </tbody>
 </table>
 
 <br>
