@@ -23,11 +23,16 @@ class StudentSearchController {
         $page = 'StudentSearch.php';
         $pagehead = 'StudentSearchHead.php';   
         
-        $studenten = $this->studentenModel->getAllStudents_array();
-        
-        //ALS admin is ingelogd vul $klassen aan de hand van getAllClasses
-        //ALS COACH is ingelogd vul $klassen aan de hand van getAlClassesRating met daarbij docent_id als parameter
-        $klassen = $this->klassenModel->getAllClasses_array();
+        //Admin ingelogd
+        if ($_SESSION['admin']){
+            $studenten = $this->studentenModel->getAllStudents_array();
+            $klassen = $this->klassenModel->getAllClasses_array();
+        }
+        //Docent ingelogd
+        else{
+            $coachId = $_SESSION["docentId"];
+            $klassen = $this->klassenModel->getAllClassesRating_array($coachId);
+        }
 
         include 'View/Template.php';
     }
