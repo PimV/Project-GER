@@ -1,21 +1,30 @@
 <table cellpadding="0" cellspacing="0" style="width: 94%;">
     <?php
-    
+        //Indien er geen resultaten zijn om te laten zien, geef een simpele melding
         if(empty($result)){
             echo "<tr><td><b>Er zijn geen resultaten.</b></td></tr>";
-        }else{
+        }
+        //Indien er resultaten zijn, laat deze zien met daarbij het gemiddelde en de eindbeoordeling
+        else{
     
-            echo "<thead><th>Docent</th>";
+            //Maak de table headers aan
+            echo "<thead>";
+            echo "<th>Docent</th>";
+            
+            //Stel voor de foreach loopS in met welke leraar het begint
             $teacher = $result[0]["docent"];
 
+            //Loop door alle rijen van de eerste leraar heen zodat je alle rubrieken waarop beoordeelt is als head kan instellen
             foreach($result as $row){
                 if($row["docent"] == $teacher){
                     echo "<th title='". $row["rubriek"] ."' style='text-align: center;'>Nr. ". $row["rubriek_id"]  ."</th>";
                 } 
             }
 
-            echo "</thead><tbody><tr class='unEven'>";
+            echo "</thead>";
+            echo "<tbody><tr class='unEven'>";
 
+            //Loop door alle records en maak per docent een nieuwe row aan
             $number = 1;
             $unEven = false;
             foreach($result as $row){
@@ -43,8 +52,11 @@
             echo "</tr>";
         
         
-            //Laat de gemiddelde punten zien. //geef hier ook de spreiding aan
-            echo "<tr height='50px' class='noHover'><td>Gemiddelde</td>";    
+            //Laat de gemiddelde punten zien
+            //TODO: geef hier ook de spreiding aan
+            echo "<tr height='50px' class='noHover'>";
+            echo "<td>Gemiddelde</td>"; 
+            
             if($type == "klas"){
                 foreach($average as $row){
                     echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
@@ -54,9 +66,8 @@
                     echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
                 }
             }
-            echo "</tr>";
-        
-        
+            
+            echo "</tr>";        
         
             //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
             if($type == "klas"){
@@ -72,7 +83,7 @@
             }
         }
     ?>
-    </tr>   
+        </tr>   
     </tbody>
 </table>
 
