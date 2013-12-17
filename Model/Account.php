@@ -26,7 +26,6 @@ class Account
 
         if ($this->CheckIfUserExcists() === true)
         {
-            //doe iets enzo
             return true;
         }
         else
@@ -41,29 +40,42 @@ class Account
 
     private function CheckIfUserExcists()
         {
-        $this->md5pass = md5($this->password);
 
-        echo $this->md5pass;
 
-        $query = "SELECT a.gebruikersnaam, a.wachtwoord, a.disabled 
-            FROM account a where a.gebruikersnaam = '$this->username' AND a.wachtwoord = '$this->md5pass'";
+
+
+        $query = "SELECT a.gebruikersnaam FROM account a 
+            WHERE a.gebruikersnaam = '$this->username'";
 
         $result = DatabaseConnector::executeQuery($query);
 
-        var_dump($result);
-
         if ($result != null)
         {
-            $this->enabled = $result[0]["disabled"];
+            $this->md5pass = md5($this->password);
 
-            if ($this->getEnabled())
+            $query = "SELECT a.wachtwoord, a.disabled FROM account a 
+                      WHERE a.wachtwoord = '$this->md5pass' AND a.gebruikersnaam = '$this->username'";
+
+            $result = DatabaseConnector::executeQuery($query);
+
+            if ($result != null)
             {
-                return true;
+                $this->enabled = $result[0]["disabled"];
+
+                if ($this->getEnabled())
+                {
+
+                    return true;
+                }
+                else
+                {
+                    echo 'Dit account is niet actief';
+                    return false;
+                }
             }
             else
             {
-                echo 'Dit account is niet actief';
-                return false;
+                echo 'Het wachtwoord is incorrect';
             }
         }
         else
@@ -83,15 +95,6 @@ class Account
         }
 
     /*
-     * Log de user uit, en sluit de sessie gooi de sessie leeg.
-     */
-
-    private function logoff()
-        {
-        //doe iets
-        }
-
-    /*
      * Haalt de waarde op van de variable $enabled.
      */
 
@@ -101,5 +104,4 @@ class Account
         }
 
     }
-
 ?>
