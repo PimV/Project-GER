@@ -11,6 +11,10 @@ class Blok {
     private $description;
     private $schoolYear;
     private $blockNumber;
+	private $open;
+	private $deadline;
+	
+	private $classArray = array();
     
 	/**
 	 * Constructor voor blok
@@ -32,7 +36,10 @@ class Blok {
     public function setDescription($description) { $this->description = $description; }
 	public function setSchoolYear($schoolYear) { $this->schoolYear = $schoolYear; }
     public function setBlockNumber($blockNumber) { $this->blockNumber = $blockNumber; }
-	
+	public function setOpen($open) { $this->open = $open; }
+	public function setDeadline($deadline) { $this->deadline = $deadline; }
+	public function setClassArray($classArray) { $this->classArray = $classArray; }
+
 	/**
 	 * Methodes voor het opvragen van de klasse variabelen
 	 * 
@@ -42,13 +49,20 @@ class Blok {
 	public function getDescription() { return $this->description; }
     public function getSchoolYear() { return $this->schoolYear; }
 	public function getBlockNumber() { return $this->blockNumber; }
+	public function getOpen() { return $this->open; }
+	public function getDeadline() { return $this->deadline; }
+	public function getClassArray() { return $this->classArray; }
 	
 	/**
 	 * Haalt alle gegevens op d.m.v. het id van het blok
 	 * 
 	 */
 	private function loadBlockData() {
-		$query = "SELECT * FROM blok WHERE id = ?";
+		$query = "SELECT b.naam, b.omschrijving, b.leerjaar, b.bloknummer, k.beoordeling_deadline
+				  FROM blok AS b
+				  JOIN klas AS k ON b.id = k.blok_id
+				  WHERE b.id = ?
+				  GROUP BY b.id";
 		
 		$result = DatabaseConnector::executeQuery($query, array($this->id));
 		
@@ -56,6 +70,7 @@ class Blok {
 		$this->description = $result[0]['omschrijving'];
 		$this->schoolYear = $result[0]['leerjaar'];
 		$this->blockNumber = $result[0]['bloknummer'];
+		$this->deadline = $result[0]['beoordeling_deadline'];
 	}
 	
 	/**
@@ -75,6 +90,23 @@ class Blok {
 										 leerjaar = ?,
 										 bloknummer = ?
 										 WHERE id = ?", $array);
+		
+		
+		if($this->open == true) {
+			foreach($this->classArray as $value) {
+				if($value['blokid'] == $this->id) {
+					$query = "UPDATE klas SET beoordeling_deadline = ? 
+							  WHERE blok_id = ? AND klascode = ?";
+					$array = array($this->deadline,
+								   $this->id,
+								   $value['klascode']);
+			
+					DatabaseConnector::executeQuery($query, $array);
+				}
+			}
+
+		}
+		
     }
     
 }

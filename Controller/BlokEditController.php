@@ -8,12 +8,15 @@
 class BlokEditController {
     
 	private $blokkenModel;
+	private $klassenModel;
 	private $blokModel;
 	
     public function __construct()
     {
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Blokken.php';
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Blok.php';
+		include_once 'Model' . DIRECTORY_SEPARATOR . 'Klassen.php';
+		$this->klassenModel = new Klassen;
         $this->blokkenModel = new Blokken;
 		$this->blokModel = new Blok;
 		
@@ -35,6 +38,9 @@ class BlokEditController {
 			$description = $_POST['description'];
 			$schoolYear = $_POST['schoolYear'];
 			$blockNumber = $_POST['blockNumber'];
+			$deadline = date('Y/m/d', strtotime($_POST['deadline']));
+			$open = $_POST['open'];
+			$classArray = $this->klassenModel->getAllClasses_array();
 			// Check of $_SESSION['blok'] bestaat, als dit het geval is update het huidige blok
 			// d.m.v het id
 			if(isset($_SESSION['blok'])) {
@@ -44,6 +50,9 @@ class BlokEditController {
 				$this->blokModel->setDescription($description);
 				$this->blokModel->setSchoolYear($schoolYear);
 				$this->blokModel->setBlockNumber($blockNumber);
+				$this->blokModel->setDeadline($deadline);
+				$this->blokModel->setOpen($open);
+				$this->blokModel->setClassArray($classArray);
 				$this->blokModel->saveToDB();
 				unset($_SESSION['blok']);
 			} else { 
@@ -58,6 +67,7 @@ class BlokEditController {
 		$description = $this->blokModel->getDescription();
 		$schoolYear = $this->blokModel->getSchoolYear();
 		$blockNumber = $this->blokModel->getBlockNumber();
+		$deadline = $this->blokModel->getDeadline();
 		
 		$page = "View" . DIRECTORY_SEPARATOR . "BlokEdit.php";
         include "View" . DIRECTORY_SEPARATOR . "Template.php";
