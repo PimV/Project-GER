@@ -30,14 +30,6 @@ class Rubrieken {
 										 WHERE id = ?", array($id));
 	}
 	
-	public function updateRubric($name, $description, $id) {
-		$rubric = new Rubriek;
-		$rubric->setName($name);
-		$rubric->setDescription($description);
-		$rubric->setId($id);
-		$rubric->saveToDB();
-	}
-	
 	/**
 	 * Haal een specifieke rubriek op d.m.v. het id
 	 *
