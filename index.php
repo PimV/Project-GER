@@ -38,7 +38,9 @@ $array = array(
     "ajaxresultaatklassen",
     "ajaxresultaatresultaten",
     "blok",
-    "blokedit"
+    "blokedit",
+    "docent",
+    "docentedit"
 );
 
 foreach ($array as $arrayPage)

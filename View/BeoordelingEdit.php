@@ -1,4 +1,4 @@
-<h1>Beoordelingen klas <?php //klasnaam                                                              ?></h1>  
+<h1>Beoordelingen klas <?php //klasnaam                                                               ?></h1>  
 
 <div class="ribbon">       
     <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling';
@@ -42,8 +42,13 @@
 <form id="results" action="index.php?p=beoordeling" name="saveBoxes" method="POST">
 
     <?php
+    $unEven = true;
     foreach ($studenten as $student) {
-
+        if ($unEven) {
+            $trClass = 'class="unEven"';
+        } else {
+            $trClass = null;
+        }
 
         echo '<input type="hidden" name="classId" value=' . $_GET['id'] . '/>';
         $studentId = $student['id'];
@@ -53,7 +58,7 @@
         }
         $student_name .= ' ' . $student['achternaam'];
 
-        echo '<tr class=' . $studentId . '>';
+        echo '<tr ' . $trClass . ' id=' . $studentId . '>';
         echo '<td>' . $studentId . '</td>';
 
         echo '<td>' . $student_name . '</td>';
@@ -77,6 +82,7 @@
                 echo '<td>' . $totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering_id'] . '</td>';
             }
         }
+        $unEven = !$unEven;
     }
     echo '</tr>';
     ?>

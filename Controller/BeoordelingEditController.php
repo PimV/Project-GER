@@ -42,10 +42,8 @@ class BeoordelingEditController {
 
         $isBeoordeeld = false;
         if (count($totaalBeoordelingen) <= 0) {
-            echo 'GEEN BEOORDELINGEN!';
             $isBeoordeeld = false;
         } else {
-            echo 'WEL BEOORDELINGEN!';
             $isBeoordeeld = true;
         }
 
