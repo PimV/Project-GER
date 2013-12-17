@@ -74,6 +74,9 @@ class Klas {
         if(empty($studentIds)){
             $this->newStudentIds = array();
         }
+        else {
+            $this->newStudentIds = $studentIds;
+        }
     }
     public function setBlock($blockId) {
         if($blockId != $this->blockId) {

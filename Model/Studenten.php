@@ -36,10 +36,10 @@ class Studenten {
         $query = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
                     FROM student s
                     WHERE s.id NOT IN (
-                        SELECT ks.student_id
-                        FROM klas k
-                        LEFT JOIN klas_student ks ON ks.klas_id = k.id
-                        WHERE k.beoordeling_deadline IS NULL
+                    SELECT ks.student_id
+                    FROM klas_student ks
+                    LEFT JOIN klas k ON ks.klas_id = k.id
+                    WHERE k.beoordeling_deadline IS NULL
                     )";
 
         $result = DatabaseConnector::executeQuery($query);
