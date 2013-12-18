@@ -1,6 +1,19 @@
 var currentlySelected = Array();
 
 /*
+ * For opening and closing cover
+ * requires cover object id as string
+ */
+function openCover(coverId){
+    $('#' + coverId).fadeIn("slow");
+}
+
+function closeCover(coverId){
+    $('#' + coverId).fadeOut("slow");
+}
+
+
+/*
  * Selection scripts
  * Enables selecting of items
  * -Lists

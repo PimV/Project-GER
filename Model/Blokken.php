@@ -15,11 +15,24 @@ class Blokken {
 	 * Voeg een nieuw blok toe
 	 *
 	 */
-	public function addBlock($name, $description, $schoolYear, $blockNumber) {
+	public function addBlock($name, $description, $schoolYear, $blockNumber, $deadline = null) {
 		$array = array($name, $description, $schoolYear, $blockNumber);
 		DatabaseConnector::executeQuery("INSERT INTO blok(naam, omschrijving, 
 										 leerjaar, bloknummer) 
 										 VALUES(?, ?, ?, ?)", $array);
+		
+		// Bij aanmaken blok deadline instellen?
+		/*
+		if(!is_null($deadline)) {
+			$id = DatabaseConnector::executeQuery("SELECT id FROM blok WHERE naam = ? AND omschrijving = ?
+											       AND leerjaar = ? AND bloknummer = ?", array($array));
+												   
+			$blokModel = $this->getBlock($id);
+			$blokModel->setOpen(true);
+			$blokModel->setDeadline($deadline);
+			$blokModel->saveToDB();
+		}
+		*/
 	}
 	
 	/**
@@ -41,11 +54,17 @@ class Blokken {
 	}
 	
 	/**
-	 * Haal alle blokken op
+	 * Haal alle blokken met eventuele deadlines op
 	 *
 	 */
 	public function getAllBlocks() {
-		$result = DatabaseConnector::executeQuery("SELECT * FROM blok WHERE verwijderd = 0");
+		$query = "SELECT b.id, b.naam, b.omschrijving, b.leerjaar, b.bloknummer, k.beoordeling_deadline
+				  FROM blok AS b
+				  LEFT JOIN klas AS k ON b.id = k.blok_id
+				  WHERE b.verwijderd = 0
+				  GROUP BY b.id;";
+				  
+		$result = DatabaseConnector::executeQuery($query);
 		return $result;
 	}
 	

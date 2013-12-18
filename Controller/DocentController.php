@@ -21,11 +21,17 @@ class DocentController {
     }
 
     public function invoke() {
+
+        if (isset($_GET["del"])) {
+            $this->docentenModel->removeTeacher($_GET["del"]);
+            header("Location: index.php?p=docent");
+        }
+
         $page = "View" . DIRECTORY_SEPARATOR . "Docent.php";
-        
+
         $docenten = $this->docentenModel->getAllTeachers();
-        
-        
+
+
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 

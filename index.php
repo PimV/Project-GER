@@ -41,7 +41,8 @@ $array = array(
     "blok",
     "blokedit",
     "docent",
-    "docentedit"
+    "docentedit",
+    "profiel"
 );
 
 foreach ($array as $arrayPage)

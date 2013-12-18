@@ -46,9 +46,36 @@ class Groep {
     
 // </editor-fold>
 
-    public function getGroup(){
+    public function getGroup($groupId){
+        $result = DatabaseConnector::executeQuery(
+                "SELECT 
+                    id, naam, omschrijving                    
+                    FROM rol                       
+                    WHERE id = " . $groupId);
+        return $result;
     }
-
+    
+    public function getEnabledRubics($groupId){
+        $result = DatabaseConnector::executeQuery(
+                "SELECT DISTINCT 
+                    rb.id AS id, rb.naam AS naam                   
+                    FROM rol_rubriek rr
+                    LEFT JOIN rubriek rb ON rb.id = rr.rubriek_id
+                    WHERE verwijderd = 0 && rr.rol_id = " . $groupId);
+        return $result;
+    }
+    
+    public function getDisabledRubics($groupId){
+        $result = DatabaseConnector::executeQuery(
+                "SELECT DiSTINCT 
+                    rb.id AS id, rb.naam AS naam
+                    FROM rubriek rb
+                    WHERE verwijderd = 0 && rb.id NOT IN(
+                        SELECT rr.rubriek_id
+                        FROM rol_rubriek rr
+                        WHERE rr.rol_id = ". $groupId .")");
+        return $result;
+    }
 
     public function addRubic($rubicId){
         

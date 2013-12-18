@@ -24,7 +24,7 @@
             Bewerken
         </div>
     </div> 
-    <div class="item">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=docent&del=' + getSelectedItemId();">
         <div class="fontIcon">
             &#xe0a8;
         </div>  

@@ -1,7 +1,6 @@
 <?php
 if(isset($_GET["l"]))
 {
-    echo'destroyed';
     session_destroy();
 }
 ?>

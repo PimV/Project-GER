@@ -42,13 +42,9 @@
                 <th>Open</th>  
             </thead>    
             <tbody>
-				<?php 
-				include_once("Model/Blokken.php");
-				$blocks = new Blokken;
-				$arr = $blocks->getAllBlocks();	
-				
+				<?php 			
 				$unEven = true;
-				foreach ($arr as &$value) {
+				foreach ($blockArray as &$value) {
 					echo "<tr id=".$value['id']." ";
 					
 					if ($unEven == true) {
@@ -63,8 +59,12 @@
 					echo "<td>".$value['leerjaar']."</td>";
 					echo "<td>".$value['bloknummer']."</td>";
 					
-					// TODO: ophalen of blok open staat
-					echo "<td>Nee</td></tr>";
+					// Check of blok open staat
+					if(!is_null($value['beoordeling_deadline'])) {
+						echo "<td>Ja</td></tr>";
+					} else {
+						echo "<td>Nee</td></tr>";
+					}
 				}
 				?>			
             </tbody>

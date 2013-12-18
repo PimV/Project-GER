@@ -81,23 +81,61 @@ class Docent {
     }
 
     public function save() {
-        $parameters = array(
-            $this->getId(),
-            $this->getFirstName(),
-            $this->getInsert(),
-            $this->getLastName(),
-            $this->getMail()
-        );
+        $query = "INSERT INTO docent (voornaam, tussenvoegsel, achternaam, mail) "
+                . "VALUES ('" . $this->getFirstName() . "', '" . $this->getInsert() . "', '" . $this->getLastName() . "', '" . $this->getMail() . "')";
+
+        DatabaseConnector::executeQuery($query);
+
+
+        $this->setId(DatabaseConnector::getConnectionObject()->insert_id);
+        $this->saveRubrics();
+        $this->saveRollen();
     }
 
     public function update() {
-        $parameters = array(
-            $this->getId(),
-            $this->getFirstName(),
-            $this->getInsert(),
-            $this->getLastName(),
-            $this->getMail()
-        );
+        $query = "UPDATE docent SET "
+                . "voornaam = '" . $this->getFirstName() . "', "
+                . "tussenvoegsel = '" . $this->getInsert() . "', "
+                . "achternaam = '" . $this->getLastName() . "', "
+                . "mail = '" . $this->getMail() . "' "
+                . "WHERE id = '" . $this->getId() . "'";
+
+        DatabaseConnector::executeQuery($query);
+        $this->saveRubrics();
+        $this->saveRollen();
     }
+
+    public function saveRubrics() {
+        include_once "Model" . DIRECTORY_SEPARATOR . "Rubrieken.php";
+        $rubriekenModel = new Rubrieken();
+        $rubrieken = $rubriekenModel->getAllRubrics();
+        foreach ($rubrieken as $rubriek) {
+            $query = "DELETE FROM docent_rubriek WHERE docent_id = '" . $this->getId() . "' AND rubriek_id = '" . $rubriek['id'] . "'";
+            DatabaseConnector::executeQuery($query);
+        }
+        
+        foreach ($this->getRubrics() as $rubriek) {
+            $query = "INSERT INTO docent_rubriek (rubriek_id, docent_id) VALUES ('" . $rubriek . "', '" . $this->getId() . "')";
+            DatabaseConnector::executeQuery($query);
+        }
+    }
+
+    public function saveRollen() {
+        include_once "Model" . DIRECTORY_SEPARATOR . "Groepen.php";
+        $rollenModel = new Groepen();
+        $rollen = $rollenModel->getAllGroups();
+        foreach ($rollen as $rol) {
+            $query = "DELETE FROM docent_rol WHERE docent_id = '" . $this->getId() . "' AND rol_id = '" . $rol['id'] . "'";
+            DatabaseConnector::executeQuery($query);
+        }
+
+        foreach ($this->getRollen() as $rol) {
+
+            $query = "INSERT INTO docent_rol (docent_id, rol_id) VALUES ('" . $this->getId() . "', '" . $rol . "')";
+            DatabaseConnector::executeQuery($query);
+        }
+    }
+    
+    
 
 }
