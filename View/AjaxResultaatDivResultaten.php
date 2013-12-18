@@ -7,7 +7,7 @@
         else{
             
             echo "<form id='formFinalResults' action='#' method='POST'>";
-            if($type == "klas"){
+            if($this->type == "klas"){
                 echo "<input hidden='true' type='text' name='k' value='".$average[0]["klas_student_id"]."'/>"; 
             }
             
@@ -62,7 +62,7 @@
             echo "<tr height='50px' class='noHover'>";
             echo "<td>Gemiddelde</td>"; 
             
-            if($type == "klas"){
+            if($this->type == "klas"){
                 foreach($average as $row){
                     //Maak een kleur aan voor de spreiding
                     $spreiding = $row["spreiding"];
@@ -89,7 +89,7 @@
             echo "</tr>";        
         
             //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
-            if($type == "klas"){
+            if($this->type == "klas"){
                 echo "<tr height='60px' class='noHover'><td><b>Eindbeoordeling</b></td>";
                 //Als de student al een eindbeoordeling heeft, laat deze zien in labels
                 if($hasfinal){

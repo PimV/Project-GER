@@ -10,6 +10,11 @@ class AjaxResultaatResultatenController {
     private $studentenModel;
     private $klasModel;
     private $blokModel;
+    private $student;
+    private $type;
+    private $leerjaar;
+    //Maak een array aan welke gebruikt word op de FPDF pagina
+    private $chartData = array();
     
     public function __construct()
     {        
@@ -21,23 +26,23 @@ class AjaxResultaatResultatenController {
     
     public function invoke()
     {
-        $student = $this->studentenModel->getStudent($_GET["id"]);
+        $this->student = $this->studentenModel->getStudent($_GET["id"]);
         $klas = $_GET["k"];
-        $leerjaar = $_GET["s"];
+        $this->leerjaar = $_GET["s"];
             
         $saveAllowed = false;
         $hasfinal = false;
         $exportAllowed = true;
         
         if(is_numeric($klas)){
-            $type = "klas";
-            $result = $student->getResultsClass($klas);  
+            $this->type = "klas";
+            $result = $this->student->getResultsClass($klas);  
                     
             if(!empty($result)){
-                $average= $student->getAverageResultClass($klas);            
-                $hasfinal = $student->hasFinalResult($klas); 
+                $average= $this->student->getAverageResultClass($klas);            
+                $hasfinal = $this->student->hasFinalResult($klas); 
                 if($hasfinal){
-                    $finalresults = $student->getFinalResults($klas);                                       
+                    $finalresults = $this->student->getFinalResults($klas);                                       
                 }else{
                     $saveAllowed = true;  
                 }
@@ -56,35 +61,59 @@ class AjaxResultaatResultatenController {
             $this->klasModel = new Klas($klas);
             $this->blokModel = new Blok($this->klasModel->getBlockID());
         }else{
-            $type = "leerjaar";
-            $result = $student->getResultsYear($leerjaar); 
-            $average= $student->getAverageResultYear($leerjaar);
+            $this->type = "leerjaar";
+            $result = $student->getResultsYear($this->leerjaar); 
+            $average= $student->getAverageResultYear($this->leerjaar);
         }
+               
         
-        //Zet de gegevens klaar om de chart te maken
-        $chartData = array();
+        include('View/AjaxResultaatDivResultaten.php');
         
+        $save = intval($saveAllowed);
+        $export = intval($exportAllowed);
+        echo "<script type='text/javascript'> saveAllowed = $save; exportAllowed = $export;</script>";
+        
+        //Voer de methode uit om de ggraph te generate, en de methode om de imageUrl te maken
         if(!empty($result)){
-            //voeg gegeven beoordeling toe aan array voor pdf bestand
-            array_push($chartData, $result);
+            $this->createChart("cvs1", $result, $average);
+        }
+        if($hasfinal){
+            $this->createChart("cvs2", $finalresults);
+        }
+    }
+    
+    private function createChart($canvas, $result, $average = NULL){
+            array_push($this->chartData, $result);
             
+            //Vul de gemiddelde punten array            
+            $punten = array();
             //Vul de rubrieken array
             $rubrieken = array(); 
-            $docent = $result[0]["docent"];
-            foreach($result as $row){
-                if($row["docent"] == $docent)
-                array_push($rubrieken, $row["rubriek"]);
+            if(!is_null($average)){   
+                $docent = $result[0]["docent"];
+                foreach($result as $row){
+                    if($row["docent"] == $docent)
+                    array_push($rubrieken, $row["rubriek"]);
+                }
+                
+                foreach($average as $row){
+                    array_push($punten, intval($row["gemiddelde"]));
+                }
+            }else{
+                foreach($result as $row){            
+                    array_push($punten, intval($row["waardering"]));
+                    array_push($rubrieken, $row["rubriek"]);
+                }
             }
             
-            //Vul de gemiddelde punten array
-            $punten = array();
-            foreach($average as $row){
-                array_push($punten, intval($row["gemiddelde"]));
-            }
-            
-            $naam = $student->getVoornaam() . " " . $student->getTussenvoegsel() . " " . $student->getAchternaam() . " - Leerjaar " . $leerjaar;            
-            if($type == "klas"){
-                $naam .= " - " . $this->klasModel->getClassCode() . " - " . $this->blokModel->getName();    
+            //Zet de naam van de chart goed
+            if(is_null($average)){
+               $name = "Eindbeoordeling: " . $this->student->getVoornaam() . " " . $this->student->getTussenvoegsel() . " " . $this->student->getAchternaam() . " - Leerjaar " . $this->leerjaar; 
+            }else{
+               $name = $this->student->getVoornaam() . " " . $this->student->getTussenvoegsel() . " " . $this->student->getAchternaam() . " - Leerjaar " . $this->leerjaar;    
+            }         
+            if($this->type == "klas"){
+                $name .= " - " . $this->klasModel->getClassCode() . " - " . $this->blokModel->getName();    
             }            
             
             //Uit model halen
@@ -94,48 +123,7 @@ class AjaxResultaatResultatenController {
             $r = json_encode($rubrieken);
             $p = json_encode($punten);
             
-            if($hasfinal){
-                //voeg gegeven eindbeoordeling toe aan array voor pdf bestand
-                array_push($chartData, $finalresults);
-
-                //Vul de rubrieken array
-                $rubrieken2 = array(); 
-                //Vul de gemiddelde punten array
-                $punten2 = array();
-                foreach($finalresults as $row){
-                    array_push($rubrieken2, $row["rubriek"]);
-                    array_push($punten2, intval($row["waardering"]));
-                }
-
-                $naam2 = "Eindbeoordeling: " . $student->getVoornaam() . " " . $student->getTussenvoegsel() . " " . $student->getAchternaam() . " - Leerjaar " . $leerjaar;            
-                if($type == "klas"){
-                    $naam2 .= " - " . $this->klasModel->getClassCode() . " - " . $this->blokModel->getName();    
-                }            
-
-                //Uit model halen
-                $maximaal2 = 5;
-
-                //Maak van de arrays eens javascript
-                $r2 = json_encode($rubrieken2);
-                $p2 = json_encode($punten2);
-            
-            }
-        }
-        
-        include('View/AjaxResultaatDivResultaten.php');
-        
-        $save = intval($saveAllowed);
-        $export = intval($exportAllowed);
-        echo $export;
-        //Voer de methode uit om de ggraph te generate, en de methode om de imageUrl te maken
-        echo "<script type='text/javascript'> saveAllowed = $save; exportAllowed = $export;</script>";
-        if(!empty($result)){
-            echo "<script type='text/javascript'> createChart('cvs1', '$naam', $r, $p, $maximaal); createUrl('cvs1');</script>";
-        }
-        if($hasfinal){
-            echo "<script type='text/javascript'> createChart('cvs2', '$naam2', $r2, $p2, $maximaal2); createUrl('cvs2');</script>";
-        }
-        //echo "<script type='text/javascript'>createChart($chartData); createUrl();</script>";
+            echo "<script type='text/javascript'> createChart('$canvas', '$name', $r, $p, $maximaal); createUrl('cvs1');</script>";
     }
 }
 
