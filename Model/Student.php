@@ -128,10 +128,11 @@ class Student {
     
     //Haal de eindrestultaten van een student uit een bepaald blok op    
     public function getFinalResults($klas){
-        $query = "  SELECT *, w.waardering
+        $query = "  SELECT rd.*, w.waardering, r.naam AS rubriek
                     FROM resultaat_definitief rd
                     LEFT JOIN klas_student ks ON rd.klas_student_id =  ks.id
                     LEFT JOIN waardering w ON rd.waardering_id = w.id
+                    LEFT JOIN rubriek r ON rd.rubriek_id = r.id
                     WHERE ks.student_id = ?
                     AND ks.klas_id = ?";
 
