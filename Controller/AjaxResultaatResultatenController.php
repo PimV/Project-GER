@@ -22,15 +22,25 @@ class AjaxResultaatResultatenController {
         $leerjaar = $_GET["s"];
         
         if(is_numeric($klas)){
-            $result = $student->getResultsClass($klas);  
-            $average= $student->getAverageResultClass($klas);
             $type = "klas";
-            
+            $result = $student->getResultsClass($klas);  
+            $average= $student->getAverageResultClass($klas);            
             $hasfinal = $student->hasFinalResult($klas);
+            $finalresults = $student->getFinalResults($klas);
+            
+            //Uit database ophalen?
+            $waarderingen = array(  array(1,0),
+                                    array(2,1),
+                                    array(3,2),
+                                    array(4,3),
+                                    array(5,4),
+                                    array(6,5),
+                                 );
         }else{
+            $type = "leerjaar";
             $result = $student->getResultsYear($leerjaar); 
             $average= $student->getAverageResultYear($leerjaar);
-            $type = "leerjaar";
+            $hasfinal = true;
         }
         
         //Pak definitieve resultaten
@@ -63,7 +73,7 @@ class AjaxResultaatResultatenController {
         include('View/AjaxResultaatDivResultaten.php');
         
         //Voer de methode uit om de ggraph te generate, en de methode om de imageUrl te maken
-        echo "<script type='text/javascript'> createChart($r, $p, $maximaal); createUrl(); </script>";
+        echo "<script type='text/javascript'> hasFinal = $hasfinal; createChart($r, $p, $maximaal); createUrl(); </script>";
     }
 }
 

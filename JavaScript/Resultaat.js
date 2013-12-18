@@ -1,4 +1,5 @@
 var imageUrl;
+var hasFinal = true;
 
 function reloadComboAjaxClass(studentId){
 
@@ -33,7 +34,11 @@ function reloadDivAjaxResults(studentId){
 }
 
 function submitFormTotalRating(){
-    document.forms["eindbeoordeling"].submit();
+    if(!hasFinal){
+        $('#formFinalResults').submit();
+    }else{
+        alert("Ik heb al final result");
+    }
 }
 
 function createChart(rubrieken, punten, maximaal){

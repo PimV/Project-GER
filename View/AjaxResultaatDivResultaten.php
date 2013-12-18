@@ -1,12 +1,18 @@
-<table cellpadding="0" cellspacing="0" style="width: 94%;">
     <?php
         //Indien er geen resultaten zijn om te laten zien, geef een simpele melding
         if(empty($result)){
-            echo "<tr><td><b>Er zijn geen resultaten.</b></td></tr>";
+            echo "<table cellpadding='0' cellspacing='0' style='width: 94%;' ><tr class='noHover'><td><b>Er zijn geen resultaten.</b></td></tr></table>";
         }
         //Indien er resultaten zijn, laat deze zien met daarbij het gemiddelde en de eindbeoordeling
         else{
-    
+            
+            echo "<form id='formFinalResults' action='#' method='POST'>";
+            if($type == "klas"){
+                echo "<input hidden='true' type='text' name='k' value='".$average[0]["klas_student_id"]."'/>"; 
+            }
+            
+            echo "<table cellpadding='0' cellspacing='0' style='width: 94%;'>";
+            
             //Maak de table headers aan
             echo "<thead>";
             echo "<th>Docent</th>";
@@ -53,17 +59,30 @@
         
         
             //Laat de gemiddelde punten zien
-            //TODO: geef hier ook de spreiding aan
             echo "<tr height='50px' class='noHover'>";
             echo "<td>Gemiddelde</td>"; 
             
             if($type == "klas"){
                 foreach($average as $row){
-                    echo "<td style='text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
+                    //Maak een kleur aan voor de spreiding
+                    $spreiding = $row["spreiding"];
+                    
+                    if($spreiding == 0){
+                        $kleur = "greenyellow";
+                    } else if ($spreiding == 1){
+                        $kleur = "greenyellow";
+                    } else if ($spreiding == 2){
+                        $kleur = "yellow";
+                    } else if ($spreiding == 3){
+                        $kleur = "orange";
+                    } else {
+                        $kleur = "red";
+                    }
+                    echo "<td style='background: $kleur; text-align: center;' title='Spreiding: ". $row["spreiding"] ."' >". $row["gemiddelde"] ."</td>";     
                 }
             }else{
                 foreach($average as $row){
-                    echo "<td style='text-align: center;'>". $row["gemiddelde"] ."</td>";     
+                    echo "<td style='text-align: center;'><b>". $row["gemiddelde"] ."</b></td>";     
                 }
             }
             
@@ -71,14 +90,26 @@
         
             //Check of er een klas is geselecteerd. Indien er een leerjaar is geselecteerd bestaan er geen eindresultaten
             if($type == "klas"){
-                echo "<tr height='50px' class='noHover'><td><b>Eindbeoordeling</b></td>";
+                echo "<tr height='60px' class='noHover'><td><b>Eindbeoordeling</b></td>";
                 //Als de student al een eindbeoordeling heeft, laat deze zien in labels
                 if($hasfinal){
-
+                    foreach($finalresults as $row){
+                        echo "<td style='text-align: center;'><b>". $row["waardering"] ."</b></td>";     
+                    }
                 }
                 //Als de student nog geen eindbeorodeling heeft, laat deze zien in dropdowns zodat ze kunnen worden opgeslagen. De inhoud van de combo's is gelijk aan de average
-                else{
-
+                else{                   
+                    foreach($average as $row){
+                        echo "<td style='text-align: center;'><select name='s[".$row["rubriek_id"]."]'>";
+                            foreach($waarderingen as $option){
+                                if($option[1] == $row["gemiddelde"]){
+                                    echo "<option value='$option[0]' selected>$option[1]</option>";                                 
+                                }else{
+                                    echo "<option value='$option[0]'>$option[1]</option>";                                    
+                                }
+                            }
+                        echo "</select></td>";
+                    }
                 }
             }
         }
@@ -86,148 +117,8 @@
         </tr>   
     </tbody>
 </table>
-
-<br>
-
-<!--Check of de ingelogde docent de coach is, en er nog geen eindoordeel vast gezet is, laat dan onderstaande tabel zien.
-<table class="noAction" style="width: 94%; border: 1px solid black;">
-    <thead>
-        <th>Nr 1</th>
-        <th>Nr 2</th>
-        <th>Nr 3</th>
-        <th>Nr 4</th>
-        <th>Nr 5</th>
-        <th>Nr 6</th>
-        <th>Nr 7</th>   
-        <th>Nr 8</th>
-        <th>Nr 9</th>     
-        <th>Nr 10</th>
-        <th>Nr 11</th>   
-        <th>Nr 12</th>
-    </thead>    
-    <tbody>
-    <tr>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>      
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-        <td>
-            <select>
-                <option>0</option>       
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </td>
-    </tr>  
-</table>-->
+<?php
+    echo "</form>";
+?>
 
 <canvas hidden="true" id="cvs" width="700" height="500">[No canvas support]</canvas>

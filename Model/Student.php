@@ -95,7 +95,7 @@ class Student {
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal het gemiddelde voor een student op uit een blok
     public function getAverageResultClass($klas){
-        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding, ks.id AS klas_student_id
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
@@ -128,12 +128,43 @@ class Student {
     
     //Haal de eindrestultaten van een student uit een bepaald blok op    
     public function getFinalResults($klas){
-        
+        $query = "  SELECT *, w.waardering
+                    FROM resultaat_definitief rd
+                    LEFT JOIN klas_student ks ON rd.klas_student_id =  ks.id
+                    LEFT JOIN waardering w ON rd.waardering_id = w.id
+                    WHERE ks.student_id = ?
+                    AND ks.klas_id = ?";
+
+        $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $klas));
+        return $result;
     }
     
     //Sla de eindresultaten van een student uit een bepaald blok op
-    public function saveFinalResults($klas){
+    public function saveFinalResults($beoordeling, $klas_student){
+        $parameter = array();
+        $date = date("Y-m-d");
         
+        //Insert in resultaat definitief
+        $query = "  INSERT INTO resultaat_definitief
+                    (rubriek_id, klas_student_id, datum_beoordeling, waardering_id)
+                    values ";
+        
+        $size = count($beoordeling);
+        $i = 0;
+        foreach($beoordeling as $key => $waarderingid){
+            $query .= "(?, ?, ? , ?)";
+            array_push($parameter, $key);
+            array_push($parameter, $klas_student);
+            array_push($parameter, $date);
+            array_push($parameter, $waarderingid);
+            
+            if($i < $size-1){
+                $query .= ", ";
+            }
+            $i++;
+        }
+        
+        DatabaseConnector::executeQuery($query, $parameter);
     }
     
     //Zou moeten werken. Alleen nog maar via workbench getest!
