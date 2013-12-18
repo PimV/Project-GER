@@ -18,7 +18,6 @@ class Klas {
     //Model variables
     private $oldStudentIds = array();
     private $newStudentIds = array();
-    private $createNewClass = false;
     
     public function __construct($classID = null) {
         //If a classId has been entered, retrieve class info (for editing). 
@@ -26,9 +25,6 @@ class Klas {
         if(!is_null($classID)) {
             $this->classId = $classID;
             $this->loadClassData();
-        }
-        else {
-            $this->createNewClass = true;
         }
     }
     
@@ -68,6 +64,7 @@ class Klas {
     //Setters
     public function setClassCode($classCode) { $this->classCode = $classCode; }
     public function setCoach($coachId) { $this->coachId = $coachId; }
+    public function setBlock($blockId) { $this->blockId = $blockId; }
     public function setSchoolYear($schoolYear) { $this->schoolYear = $schoolYear; }
     public function setReviewDeadline($date) { $this->reviewDeadline = $date; }
     public function setStudents($studentIds = array()) { 
@@ -78,14 +75,9 @@ class Klas {
             $this->newStudentIds = $studentIds;
         }
     }
-    public function setBlock($blockId) {
-        if($blockId != $this->blockId) {
-            $this->createNewClass = true;
-        }
-        $this->blockId = $blockId; 
-    }
 
     //Getters
+    public function getClassID() { return $this->classId; }
     public function getClassCode() { return $this->classCode; }
     public function getCoachID() { return $this->coachId; }
     public function getBlockID() { return $this->blockId; }
@@ -95,7 +87,7 @@ class Klas {
     
     
     public function saveToDB() {
-        if($this->createNewClass) {
+        if(empty($this->classId)) {
             $this->saveNewClass();
         }
         else {
@@ -104,7 +96,6 @@ class Klas {
     }
     
     private function saveNewClass() {
-            
             //Nieuwe klas maken.
             $query = "INSERT INTO klas (klascode, coach_id, blok_id, schooljaar)
                         VALUES (?, ?, ?, ?)";

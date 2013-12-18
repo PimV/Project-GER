@@ -32,12 +32,7 @@ class Studenten {
     }
 
     //TODO: studenten die van school af zijn?
-    public function getClasslessStudents($blockID = null) {
-        
-        $blockLimit = "";
-        if(!is_null($blockID)) {
-            $blockLimit = "AND k.blok_id = $blockID";
-        }
+    public function getClasslessStudents() {
         
         $query = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
                     FROM student s
@@ -46,7 +41,6 @@ class Studenten {
                         FROM klas_student ks
                         LEFT JOIN klas k ON ks.klas_id = k.id
                         WHERE k.beoordeling_deadline IS NULL
-                        $blockLimit
                     )";
 
         $result = DatabaseConnector::executeQuery($query);
