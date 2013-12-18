@@ -71,6 +71,11 @@ class Blok {
 		$this->schoolYear = $result[0]['leerjaar'];
 		$this->blockNumber = $result[0]['bloknummer'];
 		$this->deadline = $result[0]['beoordeling_deadline'];
+		if(isset($this->deadline)) {
+			$this->open = true;
+		} else {
+			$this->open = false;
+		}
 	}
 	
 	/**
@@ -91,8 +96,12 @@ class Blok {
 										 bloknummer = ?
 										 WHERE id = ?", $array);
 		
-		
+		// Ga alleen verder als de combobox open op 'Ja' is gezet
 		if($this->open == true) {
+			// Loop door classArray heen, als het blok_id van een klas in deze array
+			// overeen komt met het id van dit blok update de deadline van die klas
+			
+			// Het updaten van een deadline naar een andere datum is nog NIET mogelijk
 			foreach($this->classArray as $value) {
 				if($value['blokid'] == $this->id) {
 					$query = "UPDATE klas SET beoordeling_deadline = ? 
