@@ -16,6 +16,10 @@ class BlokController {
     
     public function invoke()
     {
+		// Als sessie 'blok' nog bestaat, unset sessie
+		if(isset($_SESSION['blok'])) {
+			unset($_SESSION['blok']);
+		}
 		if(isset($_GET['del'])) {
 			// Assign id
 			$id = $_GET['del'];
