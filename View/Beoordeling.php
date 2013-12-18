@@ -45,31 +45,6 @@
         $unEven = !$unEven;
     }
     ?>
-<!--    <tr class="unEven">
-        <td>45sad12</td>       
-        <td>22</td>
-        <td>Nee</td>
-    </tr>    
-    <tr>                       
-        <td>45sad14</td>       
-        <td>19</td>
-        <td>Ja</td>
-    </tr>
-    <tr class="unEven">     
-        <td>25sad12</td>       
-        <td>25</td>
-        <td>Ja</td>
-    </tr>
-    <tr>                   
-        <td>45sad02</td>       
-        <td>21</td>
-        <td>Nee</td>
-    </tr>
-    <tr class="unEven">       
-        <td>15sad12</td>       
-        <td>29</td>
-        <td>Nee</td>
-    </tr>-->
 </tbody>
 </table>
 

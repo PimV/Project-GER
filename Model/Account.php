@@ -5,8 +5,7 @@
  *
  * @author Gijs van der Venne
  */
-class Account
-    {
+class Account {
 
     private $username;
     private $password;
@@ -18,28 +17,23 @@ class Account
      * zo nee: log de gebruiker niet in en geef een error.
      */
 
-    public function validateLogin($inputUsername, $inputPassword)
-        {
+    public function validateLogin($inputUsername, $inputPassword) {
 
         $this->username = $inputUsername;
         $this->password = $inputPassword;
 
-        if ($this->CheckIfUserExcists() === true)
-        {
+        if ($this->CheckIfUserExcists() === true) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
-        }
+    }
 
     /*
      * Kijkt in de database als de gebruiker wel echt bestaat.
      */
 
-    private function CheckIfUserExcists()
-        {
+    private function CheckIfUserExcists() {
 
 
 
@@ -47,10 +41,10 @@ class Account
         $query = "SELECT a.gebruikersnaam FROM account a 
             WHERE a.gebruikersnaam = '$this->username'";
 
+        var_dump($query);
         $result = DatabaseConnector::executeQuery($query);
 
-        if ($result != null)
-        {
+        if ($result != null) {
             $this->md5pass = md5($this->password);
 
             $query = "SELECT a.wachtwoord, a.disabled FROM account a 
@@ -58,50 +52,41 @@ class Account
 
             $result = DatabaseConnector::executeQuery($query);
 
-            if ($result != null)
-            {
+            if ($result != null) {
                 $this->enabled = $result[0]["disabled"];
 
-                if ($this->getEnabled())
-                {
+                if ($this->getEnabled()) {
 
                     return true;
-                }
-                else
-                {
+                } else {
                     echo 'Dit account is niet actief';
                     return false;
                 }
-            }
-            else
-            {
+            } else {
                 echo 'Het wachtwoord is incorrect';
             }
-        }
-        else
-        {
+        } else {
             echo 'account niet geregistreet';
             return false;
         }
-        }
+    }
 
     /*
      * Verander het passwoord van de gebruiker die ingelogd is.
      */
 
-    private function changeUserPass($username, $password)
-        {
+    private function changeUserPass($username, $password) {
         //doe iets met gegevens
-        }
+    }
 
     /*
      * Haalt de waarde op van de variable $enabled.
      */
 
-    private function getEnabled()
-        {
+    private function getEnabled() {
         return $this->enabled;
-        }
-
     }
+
+}
+
 ?>
