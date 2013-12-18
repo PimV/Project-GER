@@ -43,9 +43,10 @@
 </div> 
 
 <br />
-<div>
-<!--Alleen huidige blok laten zien wanener de coach is ingelogd. Bij beheerder alles.-->
-<!-- binnen de ajax ook de coach van dat blok laten zien!!!!!!!!!!!!!!-->
+
+
+<!--TODO: Alleen huidige blok laten zien wanener de coach is ingelogd. Bij beheerder alles.-->
+<!--TODO:  binnen de ajax ook de coach van dat blok laten zien!!!!!!!!!!!!!!-->
 <table class="noAction" style="width: 94%; border: 1px solid black;">   
     <tr>
         <td>Klas</td>  

@@ -15,9 +15,14 @@ class ResultaatController {
     }
 
     public function invoke() {
-        $studentId = $_GET["id"];
-
-        $student = $this->studentenModel->getStudent($studentId);
+        $studentId = $_GET["id"];        
+        $student = $this->studentenModel->getStudent($studentId);        
+        
+        if(!empty($_POST["s"])){
+           $student->saveFinalResults($_POST["s"], $_POST["k"]);
+           
+           header("location: #");
+        }
 
         //Admin ingelogd
         if ($_SESSION['admin']){
