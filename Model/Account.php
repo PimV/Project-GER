@@ -24,17 +24,14 @@ class Account
         $this->username = $inputUsername;
         $this->password = $inputPassword;
 
-        if ($this->CheckIfUserExcists() === true)
+        if ($this->CheckIfUserExcists() === '1')
         {
             $_SESSION['username'] = $this->username;
             $_SESSION['loggedin'] = 'true';
 
-            return true;
+        
         }
-        else
-        {
-            return false;
-        }
+        return $this->CheckIfUserExcists();
         }
 
     /*
@@ -65,24 +62,22 @@ class Account
                 {
                     $_SESSION['username'] = $this->username;
                     $_SESSION['loggedin'] = true;
-                            
-                    return true;
+                     
+                    return '1';
                 }
                 else
                 {
-                    echo 'Dit account is niet actief';
-                    return false;
+                    return '2';
                 }
             }
             else
             {
-                echo 'Het wachtwoord is incorrect';
+                return '3';
             }
         }
         else
         {
-            echo 'account niet geregistreet';
-            return false;
+            return '4';
         }
         }
 
