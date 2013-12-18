@@ -1,5 +1,5 @@
 var imageUrl;
-var hasFinal = true;
+var saveAllowed = false;
 
 function reloadComboAjaxClass(studentId){
 
@@ -33,12 +33,14 @@ function reloadDivAjaxResults(studentId){
     }); 
 }
 
-function submitFormTotalRating(){
-    if(!hasFinal){
-        $('#formFinalResults').submit();
-    }else{
-        alert("Ik heb al final result");
+function saveButtonClicked(){
+    if(saveAllowed){
+        openCover('cover')
     }
+}
+
+function submitFormTotalRating(){
+    $('#formFinalResults').submit();
 }
 
 function createChart(rubrieken, punten, maximaal){

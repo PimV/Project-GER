@@ -1,3 +1,15 @@
+<div class="coverBg" id="cover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            Weet u zeker dat u deze klas wil verwijderen?<br/>
+            <input type="button" value="Ja" onclick="javascript:location.href='index.php?p=klas&del='+getSelectedItemId();"/><input type="button" value="Nee" onclick="closeCover('cover')"/>
+        </div>
+    </div>
+</div>
+
 <h1>Klassen</h1>          
 <div class="ribbon">     
     <div class="item" onclick="javascript:location.href='index.php?p=home'">
@@ -24,7 +36,7 @@
             Bewerken
         </div>
     </div> 
-    <div class="item" onclick="javascript:location.href='index.php?p=klas&del='+getSelectedItemId();">
+    <div class="item" onclick="getSelectedItemId();openCover('cover');">
         <div class="fontIcon">
             &#xe0a8;
         </div>  
