@@ -50,8 +50,7 @@
                 <tr>
                     <td>Coach</td>  
                     <td>
-                        <select name="coach" class="selectFullSize"> 
-                            <option></option>
+                        <select name="coach" class="selectFullSize">
                             <?php
                             foreach ($docenten as $docent) {
                                 $selected = "";
