@@ -134,6 +134,13 @@ function addTranserListsToForm(formID, listID)
  * @returns {elementID} The ID of the selected list item. 
  */
 function getSelectedItemId(tableID){
-    if(tableID === undefined || tableID === null || tableID === ""){}
     return currentlySelected[tableID].id;
 }
+
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+

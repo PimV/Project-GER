@@ -16,20 +16,24 @@ class BeoordelingEditController {
     private $studentenModel;
     private $rubriekenModel;
     private $beoordelingenModel;
+    private $waarderingenModel;
 
     public function __construct() {
         include_once('Model' . DIRECTORY_SEPARATOR . 'Studenten.php');
         include_once('Model' . DIRECTORY_SEPARATOR . 'Rubrieken.php');
         include_once('Model' . DIRECTORY_SEPARATOR . 'Beoordelingen.php');
+        include_once('Model' . DIRECTORY_SEPARATOR . 'Waarderingen.php');
         $this->studentenModel = new Studenten();
         $this->rubriekenModel = new Rubrieken();
         $this->beoordelingenModel = new Beoordelingen();
+        $this->waarderingenModel = new Waarderingen();
     }
 
     public function invoke() {
         $page = "View" . DIRECTORY_SEPARATOR . "BeoordelingEdit.php";
         $rubrieken = $this->rubriekenModel->getAllRubrics();
         $studenten = $this->studentenModel->getStudentsFromClass($_GET["id"]);
+        $waarderingen = $this->waarderingenModel->getAllRatings();
         $totaalBeoordelingen = array();
         foreach ($studenten as $student) {
             $beoordelingen = $this->beoordelingenModel->getAllBeoordelingenByClass($student['klas_student_id'], $_SESSION['docentId']);

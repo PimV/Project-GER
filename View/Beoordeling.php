@@ -2,7 +2,7 @@
 <h1>Beoordelingen</h1>  
 
 <div class="ribbon">       
-    <div class="item">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=home'">
         <div class="fontIcon">
             &#xe126;
         </div>  
