@@ -1,9 +1,29 @@
 <?php
-if(isset($_GET["l"]))
+if (isset($_GET["l"]))
 {
     session_destroy();
 }
+else if(isset($_GET["e"]))
+{
+    
+    // hier moet gezegd worden dat de cover geopent moet worden.
+    openCover('cover');
+}
 ?>
+
+<div class="coverBg" id="cover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            <?php
+            echo $loginErrorMessage;
+            ?>   
+        </div>
+    </div>
+</div>
+
 
 <h1>Login</h1>        
 <div class="centerDiv">

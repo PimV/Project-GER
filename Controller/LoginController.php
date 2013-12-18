@@ -4,6 +4,7 @@ class LoginController
     {
 
     private $loginModel;
+    private $LoginErrorMessage;
 
     public function __construct()
         {
@@ -18,20 +19,33 @@ class LoginController
 
     public function validateLoginRequest()
         {
-        $loginpassed = $this->loginModel->validateLogin($_POST['username'], $_POST['password']);
-
-        if ($loginpassed === true)
+        $loginpassed = (string)$this->loginModel->validateLogin($_POST['username'], $_POST['password']);
+        
+        switch ($loginpassed)
         {
-            header("location: index.php?p=home");
-        }
-        else
-        {
-            echo "boeeee";
+            case '1':
+                header("location: index.php?p=home");
+                break;
+            case '2':
+                $this->LoginErrorMessage = "Dit account is niet actief";
+                header("location: index.php?p=login&e=error");
+                break;
+            case '3':
+                $this->LoginErrorMessage = "Het wachtwoord is incorrect";
+                header("location: index.php?p=login&e=error");
+                break;
+            case '4':
+                $this->LoginErrorMessage = "Dit account is niet geregistreert";
+                header("location: index.php?p=login&e=error");
+                break;
+            default:
+                break;
         }
         }
 
     public function invoke()
         {
+
         $page = "View" . DIRECTORY_SEPARATOR . "Login.php";
 
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
