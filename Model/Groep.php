@@ -57,7 +57,7 @@ class Groep {
     
     public function getEnabledRubics($groupId){
         $result = DatabaseConnector::executeQuery(
-                "SELECT 
+                "SELECT DISTINCT 
                     rb.id AS id, rb.naam AS naam                   
                     FROM rol_rubriek rr
                     LEFT JOIN rubriek rb ON rb.id = rr.rubriek_id
@@ -67,10 +67,11 @@ class Groep {
     
     public function getDisabledRubics($groupId){
         $result = DatabaseConnector::executeQuery(
-                "SELECT rb.id AS ID, rb.naam AS naam
+                "SELECT DiSTINCT 
+                    rb.id AS id, rb.naam AS naam
                     FROM rubriek rb
-                    WHERE rb.id NOT IN(
-                        SELECT rr.rol_id
+                    WHERE verwijderd = 0 && rb.id NOT IN(
+                        SELECT rr.rubriek_id
                         FROM rol_rubriek rr
                         WHERE rr.rol_id = ". $groupId .")");
         return $result;

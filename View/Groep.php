@@ -4,6 +4,26 @@
     $groupList = $groups->getAllGroups();
 ?>
 
+<div class="coverBg" id="cover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+            Bla<br>
+        </div>
+    </div>
+</div>
+
 <h1>Rollen</h1>          
 <div class="ribbon">     
     <div class="item" onclick="javascript:location.href='index.php?p=home'">

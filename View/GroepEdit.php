@@ -42,8 +42,7 @@
         <table class="noAction">
             <tr>
                 <td>Naam</td>  
-                <td><input type="text" value="
-                    <?php if(isset($groupList))
+                <td><input type="text" value="<?php if(isset($groupList))
                     { 
                         echo $groupList['0']['naam'];                                
                     }?>"/>
@@ -54,9 +53,7 @@
         <h2>Rubrieken</h2>
 
         <div alt="listItem">
-            <ul class="listView" alt="left">
-                <?php
-                if(isset($leftRubricList))
+            <ul class="listView" alt="left"><?php if(isset($leftRubricList))
                     { 
                         foreach ($leftRubricList AS $value){
                             echo "<li class='listItem' alt=" . $value["id"] . ">" . $value["naam"] . "</li>";  
@@ -70,13 +67,10 @@
                 <div name="Right" class="fontIcon">&#xe112;</div>      
             </div>    
 
-            <ul class="listView" alt="right">
-                <?php
-                
+            <ul class="listView" alt="right"><?php
                 foreach ($rigtRubricList AS $value){
                     echo "<li class='listItem' alt=" . $value["id"] . ">" . $value["naam"] . "</li>";  
-                }
-                
+                }                
                 ?>  
             </ul> 
         </div>
@@ -86,8 +80,7 @@
         <table class="noAction">
             <tr>
                 <td>Omschrijving</td>  
-                <td><input type="text"  value=" 
-                    <?php if(isset($groupList))
+                <td><input type="text"  value="<?php if(isset($groupList))
                         { 
                         echo $groupList['0']['omschrijving'];                        
                         } ?>"/>
