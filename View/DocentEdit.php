@@ -1,11 +1,10 @@
-<?php
-if (isset($docent)) {
-    
-}
-?>
+
 <h1>Docent bewerken</h1>          
 <div class="ribbon">     
-    <div class="item">
+    <div class="item" onclick="
+            addTranserListsToForm('form', 'rollen');
+            addTranserListsToForm('form', 'rubrieken');
+            $('#form').submit();">
         <div class="fontIcon">
             &#xe060;
         </div>  
@@ -22,7 +21,7 @@ if (isset($docent)) {
         </div>
     </div>
 </div>  
-<form>
+<form action="#" id="form" method="POST">
     <div class="splitScreen">
         <div class="left">
             <table class="noAction">
@@ -54,7 +53,7 @@ if (isset($docent)) {
 
             <h2>Rollen</h2>
 
-            <ul class="listView" alt="left">
+            <ul id="rollen" class="listView" alt="left">
                 <?php
                 if (isset($docent)) {
                     foreach ($docent->getRollen() as $rol) {
@@ -82,7 +81,7 @@ if (isset($docent)) {
             <table class="noAction">
                 <tr>
                     <td>E-mail</td>  
-                    <td><input type="text" value="<?php
+                    <td><input name="mail" type="text" value="<?php
                         if (isset($docent)) {
                             echo $docent->getMail();
                         }
@@ -100,7 +99,7 @@ if (isset($docent)) {
 
             <h2>Rubrieken</h2>
 
-            <ul class="listView" alt="left">
+            <ul id="rubrieken" class="listView" alt="left">
                 <?php
                 if (isset($docent)) {
                     foreach ($docent->getRubrics() as $rubriek) {

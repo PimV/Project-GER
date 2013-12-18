@@ -16,6 +16,17 @@ class Docenten {
         
     }
 
+    public function addTeacher($voornaam, $tussenvoegsel, $achternaam, $mail, $rollen, $rubrieken) {
+        $newTeacher = new Docent();
+        $newTeacher->setFirstName($voornaam);
+        $newTeacher->setInsert($tussenvoegsel);
+        $newTeacher->setLastName($achternaam);
+        $newTeacher->setMail($mail);
+        $newTeacher->setRollen($rollen);
+        $newTeacher->setRubrics($rubrieken);
+        $newTeacher->save();
+    }
+
     public function getAllTeachers() {
         $query = "SELECT d.id, d.voornaam, d.achternaam, d.tussenvoegsel, d.mail FROM docent d WHERE d.verwijderd = 0";
 
@@ -40,10 +51,15 @@ class Docenten {
         return $result;
     }
 
-    public function getRubricsNotAssignedByTeacher($docentId) {
-        $query = "SELECT * FROM rubriek "
-                . "WHERE id NOT IN "
-                . "(SELECT id FROM rubriek JOIN docent_rubriek ON rubriek.id = docent_rubriek.rubriek_id WHERE docent_id = '$docentId')";
+    public function getRubricsNotAssignedByTeacher($docentId = null) {
+        if (isset($docentId)) {
+            $query = "SELECT * FROM rubriek "
+                    . "WHERE id NOT IN "
+                    . "(SELECT id FROM rubriek JOIN docent_rubriek ON rubriek.id = docent_rubriek.rubriek_id WHERE docent_id = '$docentId')";
+        } else {
+
+            $query = "SELECT * FROM rubriek";
+        }
 
         $result = DatabaseConnector::executeQuery($query);
 
@@ -58,12 +74,21 @@ class Docenten {
         return $result;
     }
 
-    public function getRollenNotAssignedByTeacher($docentId) {
-        $query = "SELECT * FROM rol WHERE id NOT IN (SELECT id FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId')";
+    public function getRollenNotAssignedByTeacher($docentId = null) {
+        if (isset($docentId)) {
+            $query = "SELECT * FROM rol WHERE id NOT IN (SELECT id FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId')";
+        } else {
+            $query = "SELECT * FROM rol";
+        }
 
         $result = DatabaseConnector::executeQuery($query);
 
         return $result;
+    }
+
+    public function removeTeacher($teacherId) {
+        $query = "UPDATE docent SET verwijderd = 1 WHERE id = '$teacherId'";
+        DatabaseConnector::executeQuery($query);
     }
 
 }
