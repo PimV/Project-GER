@@ -29,10 +29,11 @@ class AjaxResultaatResultatenController {
                     
             if(!empty($result)){
                 $average= $student->getAverageResultClass($klas);            
-                $hasfinal = $student->hasFinalResult($klas);
-                $finalresults = $student->getFinalResults($klas);  
-                if(!$hasfinal){
-                    $saveAllowed = true;                    
+                $hasfinal = $student->hasFinalResult($klas); 
+                if($hasfinal){
+                    $finalresults = $student->getFinalResults($klas);                                       
+                }else{
+                    $saveAllowed = true;  
                 }
             }
             
@@ -51,7 +52,10 @@ class AjaxResultaatResultatenController {
             $saveAllowed = false;
         }
         
-        //Pak definitieve resultaten
+        //Zet de gegevens klaar om de chart te maken
+        $chartData = array();
+        
+        
         
             //Pak alle beoordelingen maar......
             //$klassen = $this->studentenModel->getAllClassesOfStudent_array($studentId, $schooljaar);
