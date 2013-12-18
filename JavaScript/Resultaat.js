@@ -1,5 +1,7 @@
 var imageUrl;
+var imageUrl2;
 var saveAllowed = false;
+var exportAllowed = true;
 
 function reloadComboAjaxClass(studentId){
 
@@ -43,12 +45,12 @@ function submitFormTotalRating(){
     $('#formFinalResults').submit();
 }
 
-function createChart(rubrieken, punten, maximaal){
+function createChart(canvas, naam, rubrieken, punten, maximaal){
     //TODO: naam, leerjaar en blok meegeven aan methode
-    var rose = new RGraph.Rose('cvs', punten)
+    var rose = new RGraph.Rose(canvas, punten)
     .Set('labels', rubrieken)
     .Set('labels.axes', 'n')
-    .Set('title', 'Piet Jansen, leerjaar 1 e41a blok wind')
+    .Set('title', naam)
     .Set('title.y', 20)
     .Set('background.axes', false)
     .Set('colors.sequential', true)
@@ -62,11 +64,17 @@ function createChart(rubrieken, punten, maximaal){
     .Draw();
 };	
 
-function createUrl(){	
-    var canvas = document.getElementById('cvs');
-    imageUrl = canvas.toDataURL();
+function createUrl(naam){	
+    var canvas = document.getElementById(naam);
+    if(naam == "cvs1"){
+        imageUrl = canvas.toDataURL();        
+    }else{
+        imageUrl2 = canvas.toDataURL();
+    }
 };
 
 function exportClicked(){
-    $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='i' value='" + imageUrl + "'></form>").appendTo('body').submit();
+    if(exportAllowed){
+        $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='i' value='" + imageUrl + "'></form>").appendTo('body').submit();
+    }
 }
