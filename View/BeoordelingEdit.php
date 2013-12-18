@@ -1,4 +1,4 @@
-<h1>Beoordelingen klas <?php //klasnaam                                                               ?></h1>  
+<h1>Beoordelingen klas <?php //klasnaam                                                                      ?></h1>  
 
 <div class="ribbon">       
     <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling';
@@ -68,18 +68,16 @@
             $rubricCount++;
             if ($isBeoordeeld === false) {
                 $rubriekId = $rubriek['id'];
-                echo '<td>
-                   <select name=' . "score[$studentId][$rubriekId]" . '>
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+
+                echo '<td>';
+                echo '<select name=' . "score[$studentId][$rubriekId]" . '>';
+                foreach ($waarderingen as $waardering) {
+                    echo '<option value=' . $waardering['id'] . '>' . $waardering['waardering'] . '</option>';
+                }
+                echo '</select>
                 </td>';
             } else {
-                echo '<td>' . $totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering_id'] . '</td>';
+                echo '<td>' . $totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering'] . '</td>';
             }
         }
         $unEven = !$unEven;
