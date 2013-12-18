@@ -27,6 +27,8 @@ class BlokController {
 			$this->blokkenModel->removeBlock($id);	
 		}
 		
+		$blockArray = $this->blokkenModel->getAllBlocks();
+		
 		$page = "View" . DIRECTORY_SEPARATOR . "Blok.php";
         include "View" . DIRECTORY_SEPARATOR . "Template.php";
     }

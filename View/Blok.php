@@ -42,11 +42,7 @@
                 <th>Open</th>  
             </thead>    
             <tbody>
-				<?php 
-				include_once("Model/Blokken.php");
-				$blokkenModel = new Blokken;
-				$blockArray = $blokkenModel->getAllBlocks();	
-				
+				<?php 			
 				$unEven = true;
 				foreach ($blockArray as &$value) {
 					echo "<tr id=".$value['id']." ";
