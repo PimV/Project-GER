@@ -62,8 +62,8 @@ class AjaxResultaatResultatenController {
             $this->blokModel = new Blok($this->klasModel->getBlockID());
         }else{
             $this->type = "leerjaar";
-            $result = $student->getResultsYear($this->leerjaar); 
-            $average= $student->getAverageResultYear($this->leerjaar);
+            $result = $this->student->getResultsYear($this->leerjaar); 
+            $average= $this->student->getAverageResultYear($this->leerjaar);
         }
                
         
