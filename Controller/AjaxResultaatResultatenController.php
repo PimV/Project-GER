@@ -59,7 +59,6 @@ class AjaxResultaatResultatenController {
             $type = "leerjaar";
             $result = $student->getResultsYear($leerjaar); 
             $average= $student->getAverageResultYear($leerjaar);
-            $saveAllowed = false;
         }
         
         //Zet de gegevens klaar om de chart te maken
@@ -125,11 +124,11 @@ class AjaxResultaatResultatenController {
         
         include('View/AjaxResultaatDivResultaten.php');
         
-        $bool = intval($saveAllowed);
+        $save = intval($saveAllowed);
         $export = intval($exportAllowed);
         echo $export;
         //Voer de methode uit om de ggraph te generate, en de methode om de imageUrl te maken
-        echo "<script type='text/javascript'> saveAllowed = $bool; exportAllowed = $exportAllowed;</script>";
+        echo "<script type='text/javascript'> saveAllowed = $save; exportAllowed = $export;</script>";
         if(!empty($result)){
             echo "<script type='text/javascript'> createChart('cvs1', '$naam', $r, $p, $maximaal); createUrl('cvs1');</script>";
         }
