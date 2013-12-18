@@ -28,14 +28,17 @@ class LoginController
                 break;
             case '2':
                 $this->LoginErrorMessage = "Dit account is niet actief";
+                $_SESSION['loginError'] = $this->LoginErrorMessage;
                 header("location: index.php?p=login&e=error");
                 break;
             case '3':
                 $this->LoginErrorMessage = "Het wachtwoord is incorrect";
+                $_SESSION['loginError'] = $this->LoginErrorMessage;
                 header("location: index.php?p=login&e=error");
                 break;
             case '4':
                 $this->LoginErrorMessage = "Dit account is niet geregistreert";
+                $_SESSION['loginError'] = $this->LoginErrorMessage;
                 header("location: index.php?p=login&e=error");
                 break;
             default:

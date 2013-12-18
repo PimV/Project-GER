@@ -16,7 +16,7 @@
         </div>
         <div class="contentMessage">
             <?php
-                echo $loginErrorMessage;
+                echo $_SESSION['loginError'];
             ?>   
         </div>
     </div>
@@ -25,7 +25,9 @@
 <?php
 if (isset($_GET["l"]))
 {
+    session_unset();
     session_destroy();
+    header("location:index.php");
 }
 else if(isset($_GET["e"]))
 {
