@@ -38,7 +38,12 @@ class BlokEditController {
 			$description = $_POST['description'];
 			$schoolYear = $_POST['schoolYear'];
 			$blockNumber = $_POST['blockNumber'];
-			$deadline = date('Y/m/d', strtotime($_POST['deadline']));
+			$date = date('Y/m/d', strtotime($_POST['deadline']));
+			// Check of ingevoerde datum ($date) ná vandaag ligt, zo niet dan wordt er géén 
+			// deadline ingesteld
+			if (strtotime($date) > time()) {
+				$deadline = date('Y/m/d', strtotime($_POST['deadline']));
+			}
 			$open = $_POST['open'];
 			$classArray = $this->klassenModel->getAllClasses_array();
 			// Check of $_SESSION['blok'] bestaat, als dit het geval is update het huidige blok
@@ -68,6 +73,7 @@ class BlokEditController {
 		$schoolYear = $this->blokModel->getSchoolYear();
 		$blockNumber = $this->blokModel->getBlockNumber();
 		$deadline = $this->blokModel->getDeadline();
+		$open = $this->blokModel->getOpen();
 		
 		$page = "View" . DIRECTORY_SEPARATOR . "BlokEdit.php";
         include "View" . DIRECTORY_SEPARATOR . "Template.php";

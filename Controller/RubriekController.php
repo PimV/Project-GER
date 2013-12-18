@@ -23,6 +23,8 @@ class RubriekController {
 			// Delete rubriek d.m.v. id
 			$this->rubriekenModel->removeRubric($id);	
 		}
+		
+		$rubricArray = $this->rubriekenModel->getAllRubrics();
 
         $page = "View" . DIRECTORY_SEPARATOR . "Rubriek.php";
         include "View" . DIRECTORY_SEPARATOR . "Template.php";

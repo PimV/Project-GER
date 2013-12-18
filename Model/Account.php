@@ -26,6 +26,9 @@ class Account
 
         if ($this->CheckIfUserExcists() === true)
         {
+            $_SESSION['username'] = $this->username;
+            $_SESSION['loggedin'] = 'true';
+
             return true;
         }
         else
@@ -40,10 +43,6 @@ class Account
 
     private function CheckIfUserExcists()
         {
-
-
-
-
         $query = "SELECT a.gebruikersnaam FROM account a 
             WHERE a.gebruikersnaam = '$this->username'";
 
@@ -51,10 +50,10 @@ class Account
 
         if ($result != null)
         {
-            $this->md5pass = md5($this->password);
+            $md5pass = md5($this->password);
 
             $query = "SELECT a.wachtwoord, a.disabled FROM account a 
-                      WHERE a.wachtwoord = '$this->md5pass' AND a.gebruikersnaam = '$this->username'";
+                      WHERE a.wachtwoord = '$md5pass' AND a.gebruikersnaam = '$this->username'";
 
             $result = DatabaseConnector::executeQuery($query);
 
@@ -64,7 +63,9 @@ class Account
 
                 if ($this->getEnabled())
                 {
-
+                    $_SESSION['username'] = $this->username;
+                    $_SESSION['loggedin'] = true;
+                            
                     return true;
                 }
                 else
@@ -89,9 +90,46 @@ class Account
      * Verander het passwoord van de gebruiker die ingelogd is.
      */
 
-    private function changeUserPass($username, $password)
+    public function changeUserPass($inputUsername, $inputPassword, $newPassword, $newPasswordRepeat)
         {
-        //doe iets met gegevens
+        $md5pass = md5($inputPassword);
+
+        $query = "SELECT a.gebruikersnaam, a.wachtwoord FROM account a 
+            WHERE a.gebruikersnaam = '$inputUsername' AND a.wachtwoord = '$md5pass'";
+
+        $result = DatabaseConnector::executeQuery($query);
+
+        if ($result != null)
+        {
+            if ($newPassword == $newPasswordRepeat && $newPassword != $inputPassword)
+            {
+                $newMd5Pass = md5($newPassword);
+
+                $array = array($newMd5Pass, $inputUsername);
+
+                $query = "UPDATE account SET wachtwoord = ? WHERE gebruikersnaam = ?";
+                DatabaseConnector::executeQuery($query, $array);
+
+                return true;
+            }
+            else if ($newPassword == $inputPassword)
+            {
+                echo 'Je mag niet hetzelde wachtwoord gebruiken';
+                return false;
+            }
+            else
+            {
+                echo'De nieuwe wachtwoorden komen niet overeen';
+                return false;
+            }
+        }
+        else
+        {
+
+
+            echo 'Verkeerd wachtwoord ingetypt';
+            return false;
+        }
         }
 
     /*
@@ -104,4 +142,5 @@ class Account
         }
 
     }
+
 ?>

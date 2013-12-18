@@ -56,6 +56,7 @@
                     </td>
                 </tr>          
                 <tr>
+                    <?php if(empty($classID)) { ?>
                     <td>Blok</td>  
                     <td>
                         <select name="block" class="selectFullSize">
@@ -70,6 +71,7 @@
                             ?>
                         </select>    
                     </td>
+                    <?php } ?>
                 </tr>
             </table>     
         </div>

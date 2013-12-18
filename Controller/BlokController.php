@@ -16,12 +16,18 @@ class BlokController {
     
     public function invoke()
     {
+		// Als sessie 'blok' nog bestaat, unset sessie
+		if(isset($_SESSION['blok'])) {
+			unset($_SESSION['blok']);
+		}
 		if(isset($_GET['del'])) {
 			// Assign id
 			$id = $_GET['del'];
 			// Delete blok d.m.v. id
 			$this->blokkenModel->removeBlock($id);	
 		}
+		
+		$blockArray = $this->blokkenModel->getAllBlocks();
 		
 		$page = "View" . DIRECTORY_SEPARATOR . "Blok.php";
         include "View" . DIRECTORY_SEPARATOR . "Template.php";

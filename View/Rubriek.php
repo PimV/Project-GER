@@ -39,13 +39,9 @@
 			<th>Naam</th>   
 		</thead>    
 		<tbody>
-			<?php 
-			include_once("Model/Rubrieken.php");
-			$rubrics = new Rubrieken;
-			$arr = $rubrics->getAllRubrics();	
-			
+			<?php 		
 			$unEven = true;
-			foreach ($arr as &$value) {
+			foreach ($rubricArray as &$value) {
 				echo "<tr id=".$value['id']." ";
 				
 				if ($unEven == true) {
