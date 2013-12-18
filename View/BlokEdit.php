@@ -83,8 +83,8 @@
 					<td>Open</td>  
 					<td>
 						<select class="selectFullSize" name="open">  
-							<option <?php echo (!isset($deadline)) ? 'selected="selected"' : ''; ?> value="false">Nee</option>
-							<option <?php echo (isset($deadline)) ? 'selected="selected"' : ''; ?> value="true">Ja</option>				  
+							<option <?php echo (!isset($deadline)) ? 'selected="selected"' : ''; ?> value=false>Nee</option>
+							<option <?php echo (isset($deadline)) ? 'selected="selected"' : ''; ?> value=true>Ja</option>				  
 						</select>
 					</td>  
 				</tr>          
