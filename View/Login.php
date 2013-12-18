@@ -1,15 +1,13 @@
-<?php
-if (isset($_GET["l"]))
-{
-    session_destroy();
-}
-else if(isset($_GET["e"]))
-{
-    
-    // hier moet gezegd worden dat de cover geopent moet worden.
-    openCover('cover');
-}
-?>
+  
+<!--LAAT DIT BOVEN DE GET STAAN
+    PHP GAAT VA BOVEN NAAR ONDER
+    DIT MOET ER STAAN VOOR DE GET
+--->
+<script type="text/javascript">
+    function run(){
+        openCover('cover');
+    }
+</script>
 
 <div class="coverBg" id="cover">
     <div class="cover">
@@ -18,11 +16,23 @@ else if(isset($_GET["e"]))
         </div>
         <div class="contentMessage">
             <?php
-            echo $loginErrorMessage;
+                echo $loginErrorMessage;
             ?>   
         </div>
     </div>
 </div>
+
+<?php
+if (isset($_GET["l"]))
+{
+    session_destroy();
+}
+else if(isset($_GET["e"]))
+{
+    //JE MOET HIER JAVASCRIPT VAN MAKEN, JE DEED EEN PHP AANROEP
+    echo '<script type="text/javascript">run();</script>';  
+}
+?>
 
 
 <h1>Login</h1>        
