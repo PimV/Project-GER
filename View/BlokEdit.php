@@ -82,7 +82,7 @@
 				<tr>     
 					<td>Open</td>  
 					<td>
-						<select class="selectFullSize" name="open">  
+						<select class="selectFullSize" name="open" <?php echo (!isset($_SESSION['blok'])) ? 'disabled="disabled"' : ''; ?>>  
 							<option <?php echo (!isset($deadline)) ? 'selected="selected"' : ''; ?> value=false>Nee</option>
 							<option <?php echo (isset($deadline)) ? 'selected="selected"' : ''; ?> value=true>Ja</option>				  
 						</select>
@@ -91,11 +91,15 @@
 				<tr>
 					<td>Einddatum</td>  
 					<td>
-					<?php 
-					if(isset($deadline)) {
-						echo "<input type='text' name='deadline' value='".$deadline."'/> (yyyy-MM-dd)";
+					<?php
+					if(!isset($_SESSION['blok'])) {
+						echo "<input type='text' name='deadline' value='' disabled/> (yyyy-MM-dd)";
 					} else {
-						echo "<input type='text' name='deadline' value='' /> (yyyy-MM-dd)";
+						if(isset($deadline)) {
+							echo "<input type='text' name='deadline' value='".$deadline."'/> (yyyy-MM-dd)";
+						} else {
+							echo "<input type='text' name='deadline' value='' /> (yyyy-MM-dd)";
+						}
 					}
 					?>
 				</tr> 
