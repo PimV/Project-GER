@@ -21,7 +21,7 @@
             <div class="fontIcon">&#xe02d;</div>      
             <div class="text">Blokken</div>
         </div>
-    </div>      
+    </div>  
 
     <div class="menuRow">  
         <div class="menuItem" onclick="javascript:location.href = 'index.php?p=studentsearch'">
@@ -42,7 +42,7 @@
 
     <div class="menuRow">  
         <div class="menuItem">
-            <div class="fontIcon">&#xe087;</div>      
+            <div class="fontIcon" onclick="javascript:location.href = 'index.php?p=profiel'">&#xe087;</div>      
             <div class="text">Profiel</div>
         </div>       
     </div>

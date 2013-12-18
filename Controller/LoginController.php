@@ -22,26 +22,12 @@ class LoginController
 
         if ($loginpassed === true)
         {
-            echo "hoera";
+            header("location: index.php?p=home");
         }
         else
         {
             echo "boeeee";
         }
-        }
-
-    /*
-     * Log de user uit en gooi de sessie leeg.
-     */
-
-    public function logOut()
-        {
-        session_destroy();
-        }
-
-    public function changePasswordRequest()
-        {
-// vraag model om login aan te passen
         }
 
     public function invoke()
