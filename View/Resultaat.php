@@ -8,7 +8,7 @@
                     Terug
                 </div>
     </div>
-    <div class="item" onclick="submitFormTotalRating()">
+    <div class="item" onclick="saveButtonClicked()">
         <div class="fontIcon">
              &#xe060;
         </div>  
@@ -78,4 +78,19 @@
 
 <div id="divTableAjaxResult">
     
+</div>
+
+<div class="coverBg" id="cover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            <h2>Weet u zeker dat u de eindbeoordeling definitief wilt opslaan?</h2>
+            <br><br><br><br><br><br><br><br>
+            <input style="height: 40px; width: 180px;" type="button" value="Beoordeling opslaan" onclick="submitFormTotalRating()"/>
+            &nbsp;&nbsp;&nbsp;
+            <input style="height: 40px; width: 100px;" type="button" value="Annuleren" onclick="closeCover('cover')"/>
+        </div>
+    </div>
 </div>
