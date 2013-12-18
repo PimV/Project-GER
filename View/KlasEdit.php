@@ -51,7 +51,16 @@
                     <td>Coach</td>  
                     <td>
                         <select name="coach" class="selectFullSize"> 
-                            <!--TODO: Coaches moeten gevuld worden. -->
+                            <option></option>
+                            <?php
+                            foreach ($docenten as $docent) {
+                                $selected = "";
+                                if($docent["id"] === $coachID) {
+                                    $selected = "selected";
+                                }
+                                echo("<option $selected value='".$docent["id"]."'>".$docent["voornaam"] . " " . $docent["tussenvoegsel"] . " " . $docent["achternaam"] ."</option>");
+                            }
+                            ?>
                         </select>    
                     </td>
                 </tr>          
