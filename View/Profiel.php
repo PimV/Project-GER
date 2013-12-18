@@ -1,5 +1,13 @@
 <h1>Account bewereken</h1>          
-<div class="ribbon">     
+<div class="ribbon">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=home'">
+        <div class="fontIcon">
+            &#xe126;
+        </div>  
+        <div class="text">
+            Terug
+        </div>
+    </div>
     <div class="item">
         <div class="fontIcon" onclick="$('#newPassRequest').submit();">
             &#xe060;
