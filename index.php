@@ -12,7 +12,6 @@ $_SESSION["docentId"] = 0;
 
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
-
 //Get the page to open. Homepage default if none specified. 
 if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = strtolower($_GET["p"]);
@@ -42,15 +41,14 @@ $array = array(
     "blokedit",
     "docent",
     "docentedit",
-    "profiel"
+    "profiel",
+    "waardering",
+    "waarderingedit"
 );
 
-foreach ($array as $arrayPage)
-{
-    if ($page == $arrayPage)
-    {
-        if ($page == $arrayPage)
-        {
+foreach ($array as $arrayPage) {
+    if ($page == $arrayPage) {
+        if ($page == $arrayPage) {
             $page .= "Controller";
             include_once ("Controller" . DIRECTORY_SEPARATOR . "$page.php");
             $displayPage = new $page();

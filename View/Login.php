@@ -1,8 +1,3 @@
-  
-<!--LAAT DIT BOVEN DE GET STAAN
-    PHP GAAT VA BOVEN NAAR ONDER
-    DIT MOET ER STAAN VOOR DE GET
---->
 <script type="text/javascript">
     function run(){
         openCover('cover');
@@ -31,7 +26,6 @@ if (isset($_GET["l"]))
 }
 else if(isset($_GET["e"]))
 {
-    //JE MOET HIER JAVASCRIPT VAN MAKEN, JE DEED EEN PHP AANROEP
     echo '<script type="text/javascript">run();</script>';  
 }
 ?>

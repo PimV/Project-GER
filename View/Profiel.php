@@ -1,3 +1,30 @@
+<script type="text/javascript">
+    function run(){
+        openCover('profielcover');
+    }
+</script>
+
+<div class="coverBg" id="profielcover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('profielcover')"></div>
+        </div>
+        <div class="contentMessage">
+            <?php
+                echo $_SESSION['profielError'];
+            ?>   
+        </div>
+    </div>
+</div>
+
+<?php
+
+if(isset($_GET["e"]))
+{
+    echo '<script type="text/javascript">run();</script>';  
+}
+?>
+
 <h1>Account bewerken</h1>          
 <div class="ribbon">
     <div class="item">

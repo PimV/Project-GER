@@ -4,6 +4,7 @@ class ProfielController
     {
 
     private $loginModel;
+    private $PasswordError;
 
     public function __construct()
         {
@@ -22,18 +23,30 @@ class ProfielController
 
     private function changePassRequest()
         {
-        $passChanged = $this->loginModel->changeUserPass($_SESSION['username'], 
-                                                         $_POST['oldPass'], 
-                                                         $_POST['newPass'], 
-                                                         $_POST['newPassRepeat']);
-        
-        if($passChanged == true)
+        $passChanged = $this->loginModel->changeUserPass($_SESSION['username'], $_POST['oldPass'], $_POST['newPass'], $_POST['newPassRepeat']);
+
+        switch ($passChanged)
         {
-            echo 'pass changed';
-        }
-        else
-        {
-            echo'pass not changed';
+            case '1':
+                $this->PasswordError = "Uw wachtwoord is nu veranderd.";
+                $_SESSION['profielError'] = $this->PasswordError;
+                header("location: index.php?p=profiel&e=error");
+                break;
+            case '2':
+                $this->PasswordError = "Uw nieuw opgegeven wachtwoord is hetzelfde als uw oude wachtwoord.";
+                $_SESSION['profielError'] = $this->PasswordError;
+                header("location: index.php?p=profiel&e=error");
+                break;
+            case '3':
+                $this->PasswordError = "Uw nieuw ingevoerde wachtwoorden komen niet overeen.";
+                $_SESSION['profielError'] = $this->PasswordError;
+                header("location: index.php?p=profiel&e=error");
+                break;
+            case '4':
+                $this->PasswordError = "Uw oude wachtwoord is verkeerd.";
+                $_SESSION['profielError'] = $this->PasswordError;
+                header("location: index.php?p=profiel&e=error");
+                break;
         }
         }
 

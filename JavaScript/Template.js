@@ -4,11 +4,11 @@ var currentlySelected = Array();
  * For opening and closing cover
  * requires cover object id as string
  */
-function openCover(coverId){
+function openCover(coverId) {
     $('#' + coverId).fadeIn("slow");
 }
 
-function closeCover(coverId){
+function closeCover(coverId) {
     $('#' + coverId).fadeOut("slow");
 }
 
@@ -20,32 +20,32 @@ function closeCover(coverId){
  * -Table rows
  */
 
-$( document ).ready(function() {    
+$(document).ready(function() {
     //Makes it possible to select an item in the item lists.
-    $( "table tbody tr" ).click(function() {
+    $("table tbody tr").click(function() {
         var table = $(this).parent().parent();
-        if(!table.hasClass("noAction")){
-            $( currentlySelected[table.id] ).removeClass("selected");
+        if (!table.hasClass("noAction")) {
+            $(currentlySelected[table.id]).removeClass("selected");
             currentlySelected[table.id] = this;
-            $( this ).addClass("selected");
+            $(this).addClass("selected");
         }
     });
-    
+
 });
 
 //TODO: Dit heeft effect op ALLE ul lijsten... Wat als ik nu een normale ul list wil maken zonder dat ze de 'selected' class krijgen wanneer ik er op klik? Denk niet dat we dat zullen
 //doen in dit project, maar in het geval dat, zou het mogelijk wel een probleem kunnen zijn. 
-$( document ).ready(function() {    
+$(document).ready(function() {
     //Makes it possible to select an item in the item lists.
-    $( "ul" ).on('click','li',function() {
-        var controlList = $(this).parent(); 
-        controlList.each(function(){
-            var listItem = $(".selected");   
+    $("ul").on('click', 'li', function() {
+        var controlList = $(this).parent();
+        controlList.each(function() {
+            var listItem = $(".selected");
             listItem.removeClass("selected");
-        });    
-        $( this ).addClass("selected");
+        });
+        $(this).addClass("selected");
     });
-    
+
 });
 
 /*
@@ -56,45 +56,45 @@ $( document ).ready(function() {
  */
 
 //Transfer left
-$( document ).ready(function() {    
+$(document).ready(function() {
     //Makes it possible to select an item in the item lists.
-    $( '.listViewControl [name="Left"]' ).click(function() {        
+    $('.listViewControl [name="Left"]').click(function() {
         var listContainer = $(this).parent().parent();
         var rightList = listContainer.find('[alt="right"]');
         var leftList = listContainer.find('[alt="left"]');
-                
-        rightList.each(function(){
+
+        rightList.each(function() {
             var listItem = $(".selected");
-            if(listItem.text() !== "")
+            if (listItem.text() !== "")
             {
-                if(listItem.parent().attr('alt') !== "left")
+                if (listItem.parent().attr('alt') !== "left")
                 {
                     leftList.append(listItem);
                 }
             }
-        });           
-    });    
+        });
+    });
 });
 
 //Transfer Right
-$( document ).ready(function() {    
+$(document).ready(function() {
     //Makes it possible to select an item in the item lists.
-    $( '.listViewControl [name="Right"]' ).click(function() {   
+    $('.listViewControl [name="Right"]').click(function() {
         var listContainer = $(this).parent().parent();
         var rightList = listContainer.find('[alt="right"]');
         var leftList = listContainer.find('[alt="left"]');
-                
-        leftList.each(function(){
+
+        leftList.each(function() {
             var listItem = $(".selected");
-            if(listItem.text() !== "")
+            if (listItem.text() !== "")
             {
-                if(listItem.parent().attr('alt') !== "right")
+                if (listItem.parent().attr('alt') !== "right")
                 {
                     rightList.append(listItem);
                 }
             }
         });
-    }); 
+    });
 });
 
 
@@ -106,22 +106,22 @@ $( document ).ready(function() {
  */
 function addTranserListsToForm(formID, listID)
 {
-    for (var i = 1; i < arguments.length; i++){
-        
-        var listids = $("#"+arguments[i]+" > li").map(function() {
+    for (var i = 1; i < arguments.length; i++) {
+
+        var listids = $("#" + arguments[i] + " > li").map(function() {
             return this.id;
         }).get();
-        
-        $("#"+formID+" input[name='"+arguments[i]+"[]']").each(function(){
+
+        $("#" + formID + " input[name='" + arguments[i] + "[]']").each(function() {
             $(this).remove();
         });
-        
+
         if (listids.length == 0) {
-            $("#"+formID).append("<input type='hidden' name='"+arguments[i]+"'/>");
+            $("#" + formID).append("<input type='hidden' name='" + arguments[i] + "'/>");
         }
         else {
-            for (var j = 0; j < listids.length; j++){
-                $("#"+formID).append("<input type='hidden' name='"+arguments[i]+"[]' value='"+listids[j]+"'/>");
+            for (var j = 0; j < listids.length; j++) {
+                $("#" + formID).append("<input type='hidden' name='" + arguments[i] + "[]' value='" + listids[j] + "'/>");
             }
         }
     }
@@ -133,14 +133,27 @@ function addTranserListsToForm(formID, listID)
  * @param {elementID} tableID The ID of the list to get the selected item from.
  * @returns {elementID} The ID of the selected list item. 
  */
-function getSelectedItemId(tableID){
-    return currentlySelected[tableID].id;
+function getSelectedItemId(tableID) {
+    if (typeof currentlySelected[tableID].id === 'undefined') {
+        return -1;
+    } else {
+        return currentlySelected[tableID].id;
+    }
+    // return currentlySelected[tableID].id;
 }
 
-function isNumberKey(evt){
+function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
     return true;
+}
+
+function deleteClicked(id) {
+    if (typeof id === 'undefined') {
+
+    } else {
+        openCover('cover');
+    }
 }
 
