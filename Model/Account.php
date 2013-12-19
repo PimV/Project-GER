@@ -105,25 +105,22 @@ class Account
                 $query = "UPDATE account SET wachtwoord = ? WHERE gebruikersnaam = ?";
                 DatabaseConnector::executeQuery($query, $array);
 
-                return true;
+                return '1';
             }
             else if ($newPassword == $inputPassword)
             {
-                echo 'Je mag niet hetzelde wachtwoord gebruiken';
-                return false;
+                return '2';
             }
             else
             {
                 echo'De nieuwe wachtwoorden komen niet overeen';
-                return false;
+                return '3';
             }
         }
         else
         {
-
-
             echo 'Verkeerd wachtwoord ingetypt';
-            return false;
+            return '4';
         }
         }
 
