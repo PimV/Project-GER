@@ -11,8 +11,13 @@ class Studenten {
         include_once 'Student.php';
     }
 
-    public function addStudent() {
-        //
+    public function addStudent($voornaam, $achternaam, $tussenvoegsel, $mail = array()) {
+        $student = new Student();
+        $student->setVoornaam($voornaam);
+        $student->setAchternaam($achternaam);
+        $student->setTussenvoegsel($tussenvoegsel);
+        $student->setMail($mail);
+        $student->saveToDB();
     }
 
     public function getAllStudents_array() {
@@ -26,10 +31,12 @@ class Studenten {
         return new Student($studentId);
     }
 
-    public function removeStudent($studentID) {
+    public function removeStudent($studentId) {
         $query = "DELETE FROM student WHERE id = ?";
         DatabaseConnector::executeQuery($query, array($studentId));
     }
+
+
 
     //TODO: studenten die van school af zijn?
     public function getClasslessStudents() {

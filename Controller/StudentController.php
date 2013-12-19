@@ -12,10 +12,7 @@ class StudentController {
         $this->studentenModel = new Studenten();
     }
     
-    public function invoke() {
-  
-
-      
+    public function invoke() {      
         $page = 'view'.DIRECTORY_SEPARATOR.'student.php';
         include_once 'view'.DIRECTORY_SEPARATOR.'template.php';
     }

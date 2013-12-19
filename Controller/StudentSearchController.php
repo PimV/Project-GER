@@ -12,8 +12,8 @@ class StudentSearchController {
     
     public function __construct()
     {
-        include_once 'model/Studenten.php';
-        include_once 'model/Klassen.php';
+        include_once 'model'.DIRECTORY_SEPARATOR.'studenten.php';
+        include_once 'model'.DIRECTORY_SEPARATOR.'klassen.php';
         $this->studentenModel = new Studenten();
         $this->klassenModel = new Klassen();
     }
@@ -27,6 +27,11 @@ class StudentSearchController {
         if ($_SESSION['admin']){
             $studenten = $this->studentenModel->getAllStudents_array();
             $klassen = $this->klassenModel->getAllClasses_array();
+            
+            if(isset($_GET["del"])){
+                $this->studentenModel->removeStudent($_GET["del"]);
+                header("Location: index.php?p=studentsearch");
+            }
         }
         //Docent ingelogd
         else{
@@ -34,7 +39,7 @@ class StudentSearchController {
             $klassen = $this->klassenModel->getAllClassesRating_array($coachId);
         }
 
-        include 'View/Template.php';
+        include 'view'.DIRECTORY_SEPARATOR.'template.php';
     }
 }
 

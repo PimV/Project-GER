@@ -1,6 +1,6 @@
 <h1>Student bewerken</h1>          
 <div class="ribbon">     
-    <div class="item" onclick=""> <!-- submit form -->
+    <div class="item" onclick="$('#form').submit();">
         <div class="fontIcon">
              &#xe060;
         </div>  
@@ -18,46 +18,34 @@
     </div>    
 </div>  
 
-<div class="splitScreen">
-    <div class="left">
-        <table class="noAction">
-            <tr>
-                <td>Code</td>  
-                <td><input type="text"/></td>
-            </tr>        
-            <tr>
-                <td>Schooljaar</td>  
-                <td>
-                    <select class="selectFullSize">
-                        <option>2013/2014</option>   
-                        <option>2014/2015</option>  
-                    </select>    
-                </td>
-            </tr> 
-        </table>                  
-    </div>
+<form id="form" action="#" method="POST">
+    <div class="splitScreen">
+        <div class="left">
+            <table class="noAction">
+                <tr>
+                    <td>Voornaam</td>  
+                    <td><input name="voornaam" type="text" value="<?php echo($voornaam) ?>"/></td>
+                </tr>        
+                <tr>
+                    <td>Achternaam</td>  
+                    <td> <input name="achternaam" type="text" value="<?php echo($achternaam) ?>"/></td>
+                </tr> 
+            </table>                  
+        </div>
 
-    <div class="right">   
-        <table class="noAction">    
-            <tr>
-                <td>Coach</td>  
-                <td>
-                    <select class="selectFullSize">
-                        <option>Henk de Vries</option>  
-                    </select>    
-                </td>
-            </tr>          
-            <tr>
-                <td>Blok</td>  
-                <td>
-                    <select class="selectFullSize">
-                        <option>1</option>  
-                        <option>2</option>
-                        <option>3</option>
-                    </select>    
-                </td>
-            </tr>
-        </table>     
+        <div class="right">   
+            <table class="noAction">
+                <tr>
+                    <td>Tussenvoegsel</td>  
+                    <td><input name="tussenvoegsel" type="text" value="<?php echo($tussenvoegsel) ?>"/></td>
+                </tr>        
+                <tr>
+                    <td>Mail</td>  
+                    <td> <input name="mail" type="text" value="<?php echo($mail) ?>"/></td>
+                </tr> 
+            </table>     
+        </div>
     </div>
-</div>      
+</form>
+
 
