@@ -6,9 +6,11 @@
         <script src="JavaScript/Template.js"></script>
 
         <!-- Head overrides & additions -->
-        <?php if (isset($pagehead)) {
+        <?php
+        if (isset($pagehead)) {
             include_once($pagehead);
-        } ?>
+        }
+        ?>
 
         <!-- Default head -->
         <title>GER</title>
@@ -24,10 +26,10 @@
             <div id="tmpHeader">
                 <div class="headerMenu">
                     <ul>
-                        <li><div class="icon fontIcon" onclick="javascript:location.href='index.php?p=home'">&#xe001;</div><div class="text">Home</div></li>
-                        <li><div class="icon fontIcon" onclick="javascript:location.href='index.php?p=login&l=logoff'">&#xe104;</div><div class="text">Logout</div>
+                        <li onclick="javascript:location.href = 'index.php?p=home'"><div class="icon fontIcon" >&#xe001;</div><div class="text">Home</div></li>
+                        <li onclick="javascript:location.href = 'index.php?p=login&l=logoff'"><div class="icon fontIcon" >&#xe104;</div><div class="text">Logout</div>
                             </form</li>
-                        
+
                     </ul>
                 </div>
             </div>

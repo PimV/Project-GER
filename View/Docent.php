@@ -68,7 +68,7 @@
             <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
         </div>
         <div class="contentMessage">
-            <h2>Weet u zeker dat u deze docent wilt verwijderen??</h2>
+            <h2>Weet u zeker dat u deze docent wilt verwijderen?</h2>
             <br><br><br><br><br><br><br><br>
             <input style="height: 40px; width: 180px;" type="button" value="Docent verwijderen" onclick="javascript:location.href = 'index.php?p=docent&del=' + getSelectedItemId();"/>
             &nbsp;&nbsp;&nbsp;
