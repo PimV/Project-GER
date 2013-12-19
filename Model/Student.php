@@ -13,9 +13,11 @@ class Student {
     private $tussenvoegsel;
     private $mail;
 
-    public function __construct($studentId) {
-        $this->studentId = $studentId;
-        $this->loadStudentData();
+    public function __construct($studentId = null) {
+        if(!is_null($studentId)) {
+            $this->studentId = $studentId;
+            $this->loadStudentData();
+        }
     }
 
     private function loadStudentData() {
@@ -42,17 +44,37 @@ class Student {
      public function getTussenvoegsel() { return $this->tussenvoegsel; } 
      public function getMail() { return $this->mail; } 
 
-    // Nog niet getest
     public function saveToDB() {
-        $query = "UPDATE student (voornaam, achternaam, tussenvoegsel, mail) 
-                    VALUES (?, ?, ?, ?) WHERE id = ?";
+        if(empty($this->studentId)) {
+            $this->saveNewStudent();
+        } else {
+            $this->updateStudent();
+        }
+    }
+
+    public function saveNewStudent() {
+        $query = "INSERT INTO student (voornaam, achternaam, tussenvoegsel, mail)
+                  VALUES (?, ?, ?, ?)";
+
+        $parameters = array($this->voornaam,
+                            $this->achternaam,
+                            $this->tussenvoegsel,
+                            $this->mail);
+        
+        DatabaseConnector::executeQuery($query, $parameters);
+    }
+
+    public function updateStudent() {
+        $query = "UPDATE student 
+                  SET voornaam = ?, achternaam = ?, tussenvoegsel = ?, mail = ? 
+                  WHERE id = ?";
 
         $parameters = array($this->voornaam,
                             $this->achternaam,
                             $this->tussenvoegsel,
                             $this->mail,
                             $this->studentId);
-        
+
         DatabaseConnector::executeQuery($query, $parameters);
     }
     
