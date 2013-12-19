@@ -1,10 +1,13 @@
-
+<script src="JavaScript/DocentEdit.js"></script>
 <h1>Docent bewerken</h1>          
 <div class="ribbon">     
     <div class="item" onclick="
-            addTranserListsToForm('form', 'rollen');
-            addTranserListsToForm('form', 'rubrieken');
-            $('#form').submit();">
+            if (validateAccountData() === true <?php if ($bestaatAl) { echo ')'; } else { echo '&& allFieldsEntered() === true)';}?> {
+                addTranserListsToForm('form', 'rollen');
+                addTranserListsToForm('form', 'rubrieken');
+                $('#form').submit();
+            }
+            ;">
         <div class="fontIcon">
             &#xe060;
         </div>  
@@ -43,12 +46,20 @@
                 </tr>
                 <tr>
                     <td>Achternaam</td>  
-                    <td><input name="achternaam" type="text" value="<?php
+                    <td><input name="achternaam"  type="text" value="<?php
                         if (isset($docent)) {
                             echo $docent->getLastName();
                         }
                         ?>"/></td>
                 </tr>
+                <tr>
+                    <td>E-mail</td>  
+                    <td><input name="mail" type="text" value="<?php
+                        if (isset($docent)) {
+                            echo $docent->getMail();
+                        }
+                        ?>"/></td>
+                </tr> 
             </table> 
 
             <h2>Rollen</h2>
@@ -80,22 +91,57 @@
         <div class="right">   
             <table class="noAction">
                 <tr>
-                    <td>E-mail</td>  
-                    <td><input name="mail" type="text" value="<?php
-                        if (isset($docent)) {
-                            echo $docent->getMail();
+                    <td>Gebruikersnaam</td>  
+                    <td><input id="minLength" name="username" value="<?php
+                        if (isset($account)) {
+                            echo $account['gebruikersnaam'];
                         }
-                        ?>"/></td>
-                </tr>     
-                <tr>
-                    <td>Wachtwoord</td>  
-                    <td><input type="password"/></td>
+                        ?>" type="text"/></td>
                 </tr>
                 <tr>
-                    <td>Herhaal wachtwoord</td>  
-                    <td><input type="password"/></td>
+                    <td>Nieuw wachtwoord</td>  
+                    <td><input <?php
+                        if ($bestaatAl) {
+                            echo ' required ';
+                        }
+                        ?> class="password"  name="newPass1"type="password"/></td>
+
                 </tr>
-            </table>       
+                <tr>
+                    <td>Herhaal nieuw wachtwoord</td>  
+                    <td><input <?php
+                        if ($bestaatAl) {
+                            echo ' required ';
+                        }
+                        ?> class="password"  name="newPass2" type="password"/></td>
+                </tr>
+                <tr>
+                    <td>Rechten niveau</td>  
+                    <td>
+                        <select style="
+                                -ms-border-radius: 5px; border-radius: 5px;
+                                width: 210px; 
+                                height: 35px; 
+                                padding: 3px;" 
+                                class="dropDownBox" 
+                                name="level">';
+                                    <?php
+                                    foreach ($levels as $level) {
+                                        if (isset($account)) {
+                                            if ($level['id'] == $account['level_id']) {
+                                                echo '<option selected value=' . $level['id'] . '>' . $level['rol'] . '</option>';
+                                            } else {
+                                                echo '<option value=' . $level['id'] . '>' . $level['rol'] . '</option>';
+                                            }
+                                        } else {
+                                            echo '<option value=' . $level['id'] . '>' . $level['rol'] . '</option>';
+                                        }
+                                    }
+                                    echo '</select></td>';
+                                    ?>
+                </tr>
+            </table>  
+
 
             <h2>Rubrieken</h2>
 
@@ -103,7 +149,7 @@
                 <?php
                 if (isset($docent)) {
                     foreach ($docent->getRubrics() as $rubriek) {
-                        echo '<li id="' . $rubriek['id'] . '" class="listItem">' . $rubriek['naam'] . '</li>';
+                        echo '<li id = "' . $rubriek['id'] . '" class = "listItem">' . $rubriek['naam'] . ' </li>';
                     }
                 }
                 ?>
@@ -117,7 +163,7 @@
 
             <ul class="listView" alt="right"><?php
                 foreach ($temp_rubrieken_not_assigned as $rubriek) {
-                    echo '<li id="' . $rubriek['id'] . '" class="listItem">' . $rubriek['naam'] . '</li>';
+                    echo '<li id="' . $rubriek['id'] . '" class = "listItem">' . $rubriek['naam'] . ' </li>';
                 }
                 ?>
             </ul> 

@@ -53,11 +53,11 @@ class Docent {
     }
 
     public function getRollen() {
-        return $this->rollen;
+        return (array) $this->rollen;
     }
 
     public function getRubrics() {
-        return $this->rubrics;
+        return (array) $this->rubrics;
     }
 
     public function getFirstName() {
@@ -113,7 +113,7 @@ class Docent {
             $query = "DELETE FROM docent_rubriek WHERE docent_id = '" . $this->getId() . "' AND rubriek_id = '" . $rubriek['id'] . "'";
             DatabaseConnector::executeQuery($query);
         }
-        
+
         foreach ($this->getRubrics() as $rubriek) {
             $query = "INSERT INTO docent_rubriek (rubriek_id, docent_id) VALUES ('" . $rubriek . "', '" . $this->getId() . "')";
             DatabaseConnector::executeQuery($query);
@@ -135,7 +135,5 @@ class Docent {
             DatabaseConnector::executeQuery($query);
         }
     }
-    
-    
 
 }
