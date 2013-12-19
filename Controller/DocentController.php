@@ -14,16 +14,20 @@
 class DocentController {
 
     private $docentenModel;
+    private $accountenModel;
 
     public function __construct() {
         include_once('Model' . DIRECTORY_SEPARATOR . 'Docenten.php');
+        include_once('Model' . DIRECTORY_SEPARATOR . 'Accounten.php');
         $this->docentenModel = new Docenten();
+        $this->accountenModel = new Accounten();
     }
 
     public function invoke() {
 
         if (isset($_GET["del"])) {
             $this->docentenModel->removeTeacher($_GET["del"]);
+            $this->accountenModel->disableAccount($_GET["del"]);
             header("Location: index.php?p=docent");
         }
 
