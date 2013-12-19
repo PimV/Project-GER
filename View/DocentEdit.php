@@ -7,7 +7,7 @@
                 addTranserListsToForm('form', 'rubrieken');
                 $('#form').submit();
             }
-            ;">
+            ">
         <div class="fontIcon">
             &#xe060;
         </div>  
