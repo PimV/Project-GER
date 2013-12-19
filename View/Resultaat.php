@@ -87,7 +87,8 @@
         </div>
         <div class="contentMessage">
             <h2>Weet u zeker dat u de eindbeoordeling definitief wilt opslaan?</h2>
-            <br><br><br><br><br><br><br><br>
+            <p> De opgeslagen eindbeoordeling kan later niet meer worden aangepast.</p>
+            <br><br><br><br><br><br><br>
             <input style="height: 40px; width: 180px;" type="button" value="Beoordeling opslaan" onclick="submitFormTotalRating()"/>
             &nbsp;&nbsp;&nbsp;
             <input style="height: 40px; width: 100px;" type="button" value="Annuleren" onclick="closeCover('cover')"/>

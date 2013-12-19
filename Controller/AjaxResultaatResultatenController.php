@@ -13,8 +13,6 @@ class AjaxResultaatResultatenController {
     private $student;
     private $type;
     private $leerjaar;
-    //Maak een array aan welke gebruikt word op de FPDF pagina
-    private $chartData = array();
     
     public function __construct()
     {        
@@ -75,6 +73,7 @@ class AjaxResultaatResultatenController {
         
         //Voer de methode uit om de ggraph te generate, en de methode om de imageUrl te maken
         if(!empty($result)){
+            echo "<script type='text/javascript'>imageUrl = new Array(); chartData = new Array();</script>";
             $this->createChart("cvs1", $result, $average);
         }
         if($hasfinal){
@@ -83,7 +82,11 @@ class AjaxResultaatResultatenController {
     }
     
     private function createChart($canvas, $result, $average = NULL){
-            array_push($this->chartData, $result);
+            //Geef de chartData mee naar exportcontroller
+            if($canvas == "cvs1"){
+                $res = json_encode($result);
+                echo "<script type='text/javascript'>chartData = $res;</script>";
+            }
             
             //Vul de gemiddelde punten array            
             $punten = array();
@@ -116,14 +119,14 @@ class AjaxResultaatResultatenController {
                 $name .= " - " . $this->klasModel->getClassCode() . " - " . $this->blokModel->getName();    
             }            
             
-            //Uit model halen
+            //Uit model halen waarderingen
             $maximaal = 5;
 
             //Maak van de arrays eens javascript
             $r = json_encode($rubrieken);
             $p = json_encode($punten);
-            
-            echo "<script type='text/javascript'> createChart('$canvas', '$name', $r, $p, $maximaal); createUrl('cvs1');</script>";
+                        
+            echo "<script type='text/javascript'> createChart('$canvas', '$name', $r, $p, $maximaal); createUrl('$canvas');</script>";
     }
 }
 

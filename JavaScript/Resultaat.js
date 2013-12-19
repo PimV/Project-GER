@@ -1,5 +1,5 @@
-var imageUrl;
-var imageUrl2;
+var imageUrl = new Array();
+var chartData;
 var saveAllowed = false;
 var exportAllowed = true;
 
@@ -66,15 +66,16 @@ function createChart(canvas, naam, rubrieken, punten, maximaal){
 
 function createUrl(naam){	
     var canvas = document.getElementById(naam);
-    if(naam == "cvs1"){
-        imageUrl = canvas.toDataURL();        
-    }else{
-        imageUrl2 = canvas.toDataURL();
-    }
+    imageUrl.push(canvas.toDataURL());
 };
 
 function exportClicked(){
     if(exportAllowed){
-        $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='i' value='" + imageUrl + "'></form>").appendTo('body').submit();
+        if(imageUrl.length === 1)
+        {
+            $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='d' value='" + chartData + "'><input type='hidden' name='i1' value='" + imageUrl[0] + "'></form>").appendTo('body').submit();
+        }else{
+            $("<form method='post' action='index.php?p=export' target='blank'><input type='hidden' name='c' value='resultaat'><input type='hidden' name='d' value='" + chartData + "'><input type='hidden' name='i1' value='" + imageUrl[0] + "'><input type='hidden' name='i2' value='" + imageUrl[1] + "'></form>").appendTo('body').submit();
+        }
     }
 }
