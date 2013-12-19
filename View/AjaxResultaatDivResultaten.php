@@ -121,5 +121,5 @@
     echo "</form>";
 ?>
 
-<canvas id="cvs1" width="700" height="500">[No canvas support]</canvas>
-<canvas id="cvs2" width="700" height="500">[No canvas support]</canvas>
+<canvas hidden="true" id="cvs1" width="700" height="500">[No canvas support]</canvas>
+<canvas hidden="true" id="cvs2" width="700" height="500">[No canvas support]</canvas>

@@ -28,5 +28,11 @@ class Waarderingen {
         $query = "UPDATE waardering SET verwijderd = 1 WHERE id = '$id'";
         DatabaseConnector::executeQuery($query);
     }
+    
+    public function getMaxRating($id) {
+        $query = "SELECT MAX(waardering) FROM waardering";
+        DatabaseConnector::executeQuery($query);
+        return $result;
+    }
 
 }
