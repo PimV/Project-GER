@@ -69,6 +69,15 @@ $(document).ready(function() {
             {
                 if (listItem.parent().attr('alt') !== "left")
                 {
+                    if($(listItem).next().length) {
+                        $(listItem).next().trigger("click");
+                    }
+                    else if ($(listItem).prev().length) {
+                        $(listItem).prev().trigger("click");
+                    }
+                    else {
+                        $(listItem).removeClass("selected");
+                    }
                     leftList.append(listItem);
                 }
             }
@@ -90,6 +99,15 @@ $(document).ready(function() {
             {
                 if (listItem.parent().attr('alt') !== "right")
                 {
+                    if($(listItem).next().length) {
+                        $(listItem).next().trigger("click");
+                    }
+                    else if ($(listItem).prev().length) {
+                        $(listItem).prev().trigger("click");
+                    }
+                    else {
+                        $(listItem).removeClass("selected");
+                    }
                     rightList.append(listItem);
                 }
             }
