@@ -391,6 +391,7 @@ input[type=password] {
     padding: 3px;
 }         
 input[type=submit] {
+    -webkit-appearance: none;
     float: right;
     -ms-border-radius: 5px;
     -webkit-appearance: none;
@@ -412,7 +413,8 @@ input[type=button]:hover {
     height: 35px;
 }
 
-input[type=submit] {      
+input[type=submit]:hover {      
+    -webkit-appearance: none;
     color: #ffffff;
     background-color: #008b8b;
     height: 35px;
