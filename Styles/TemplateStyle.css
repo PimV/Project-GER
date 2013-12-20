@@ -406,9 +406,11 @@ input[type=button] {
 input[type=button]:hover {      
     color: #ffffff;
     background-color: #008b8b;
+    height: 35px;
 }
 
 input[type=submit] {      
     color: #ffffff;
     background-color: #008b8b;
+    height: 35px;
 }
