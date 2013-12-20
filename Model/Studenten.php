@@ -7,6 +7,12 @@
  */
 class Studenten {
 
+    /**
+    @todo StudentID veld toevoegen aan addStudent (ook savetoDB aanpassen) 
+    @todo Query aanpassen van removeStudent (foreign keys verwijderen)
+    @todo Zoeken: Javascript of PHP & SQL
+    @todo Student waarde: op school of niet?
+    */
     public function __construct() {
         include_once 'Student.php';
     }
