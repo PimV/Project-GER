@@ -393,19 +393,22 @@ input[type=password] {
 input[type=submit] {
     float: right;
     -ms-border-radius: 5px;
+    -webkit-appearance: none;
     border-radius: 5px;     
     width: 130px;         
     height: 35px;
     cursor: pointer;
 }  
 input[type=button] {    
+    -webkit-appearance: none;
     width: 130px;         
     height: 35px;
 }     
 
 input[type=button]:hover {      
     color: #ffffff;
-    background-color: #008b8b;
+    background-color: #008b8b;   
+    width: 130px;   
     height: 35px;
 }
 
