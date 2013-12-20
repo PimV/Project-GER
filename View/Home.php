@@ -48,6 +48,10 @@
         <div class="menuItem">
             <div class="fontIcon" onclick="javascript:location.href = 'index.php?p=profiel'">&#xe087;</div>      
             <div class="text">Profiel</div>
-        </div>       
+        </div>   
+         <div class="menuItem">
+            <div class="fontIcon" onclick="javascript:location.href = 'index.php?p=account'">&#xe0c6;</div>      
+            <div class="text">Accounts</div>
+        </div> 
     </div>
 </div>

@@ -44,7 +44,7 @@ class Docenten {
     }
 
     public function getRubricsByTeacher($docentId) {
-        $query = "SELECT * FROM rubriek JOIN docent_rubriek ON rubriek.id = docent_rubriek.rubriek_id WHERE docent_id = '$docentId'";
+        $query = "SELECT * FROM rubriek JOIN docent_rubriek ON rubriek.id = docent_rubriek.rubriek_id WHERE docent_id = '$docentId' AND verwijderd = 0";
 
         $result = DatabaseConnector::executeQuery($query);
 
@@ -55,10 +55,10 @@ class Docenten {
         if (isset($docentId)) {
             $query = "SELECT * FROM rubriek "
                     . "WHERE id NOT IN "
-                    . "(SELECT id FROM rubriek JOIN docent_rubriek ON rubriek.id = docent_rubriek.rubriek_id WHERE docent_id = '$docentId')";
+                    . "(SELECT id FROM rubriek JOIN docent_rubriek ON rubriek.id = docent_rubriek.rubriek_id WHERE docent_id = '$docentId') AND verwijderd = 0";
         } else {
 
-            $query = "SELECT * FROM rubriek";
+            $query = "SELECT * FROM rubriek WHERE verwijderd = 0";
         }
 
         $result = DatabaseConnector::executeQuery($query);
@@ -67,7 +67,7 @@ class Docenten {
     }
 
     public function getRollenByTeacher($docentId) {
-        $query = "SELECT * FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId'";
+        $query = "SELECT * FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId' AND verwijderd = 0";
 
         $result = DatabaseConnector::executeQuery($query);
 
@@ -77,9 +77,9 @@ class Docenten {
     public function getRollenNotAssignedByTeacher($docentId = null) {
         if (isset($docentId)) {
             $parameters =
-            $query = "SELECT * FROM rol WHERE id NOT IN (SELECT id FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId')";
+            $query = "SELECT * FROM rol WHERE id NOT IN (SELECT id FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId') AND verwijderd = 0";
         } else {
-            $query = "SELECT * FROM rol";
+            $query = "SELECT * FROM rol WHERE verwijderd = 0";
         }
 
         $result = DatabaseConnector::executeQuery($query);
