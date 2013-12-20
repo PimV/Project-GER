@@ -323,8 +323,8 @@ table tr td {
     z-index: 600;
     margin: 0 auto;
     width: 540px;
-    min-height: 400px;
-    height: 400px;
+    
+    height: auto;
     background-color: #ffffff;
 }
 
