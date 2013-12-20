@@ -43,7 +43,9 @@ $array = array(
     "docentedit",
     "profiel",
     "waardering",
-    "waarderingedit"
+    "waarderingedit",
+    "account",
+    "accountedit"
 );
 
 foreach ($array as $arrayPage) {
