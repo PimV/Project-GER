@@ -39,8 +39,9 @@ class Groepen {
         return $result;
     }
     
-    public function getAllGroups_Id_Name() {
-        return $this->_groups;
+    public function removeGroep($groepId){
+        DatabaseConnector::executeQuery("DELETE FROM rol_rubriek WHERE rol_id = " . $groepId);
+        DatabaseConnector::executeQuery("UPDATE rol SET verwijderd = 1 WHERE id = " . $groepId);        
     }
 
     

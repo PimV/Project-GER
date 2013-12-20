@@ -12,46 +12,26 @@ class Groep {
     private $_id;
     private $_naam;
     private $_omschrijving;
-    private $_rubics;
+    private $_rubics = array();
     
-    public function __construct() {
-        
+    public function __construct($id = null) {
+        if(!is_null($id)) {
+            $this->id = $id;
+            $this->loadGroup($id);
+        }
     }
 
-// <editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    
-    public function get_id() {
-        return $this->_id;
-    }
-
-    public function get_naam() {
-        return $this->_naam;
-    }
-
-    public function get_omschrijving() {
-        return $this->_omschrijving;
-    }
-
-    public function set_id($_id) {
-        $this->_id = $_id;
-    }
-
-    public function set_naam($_naam) {
-        $this->_naam = $_naam;
-    }
-
-    public function set_omschrijving($_omschrijving) {
-        $this->_omschrijving = $_omschrijving;
-    }
-    
-// </editor-fold>
-
-    public function getGroup($groupId){
+    public function loadGroup($groupId){
         $result = DatabaseConnector::executeQuery(
                 "SELECT 
                     id, naam, omschrijving                    
                     FROM rol                       
                     WHERE id = " . $groupId);
+        
+        $this->_naam = $result[0]['naam'];
+        $this->_omschrijving = $result[0]['omschrijving'];
+        
+        
         return $result;
     }
     
@@ -62,6 +42,7 @@ class Groep {
                     FROM rol_rubriek rr
                     LEFT JOIN rubriek rb ON rb.id = rr.rubriek_id
                     WHERE verwijderd = 0 && rr.rol_id = " . $groupId);
+        $this->_rubics = $result;
         return $result;
     }
     
@@ -76,19 +57,46 @@ class Groep {
                         WHERE rr.rol_id = ". $groupId .")");
         return $result;
     }
-
-    public function addRubic($rubicId){
-        
-    }
-    
-    public function removeRubric($rubicId){
-        
-    }
     
     public function saveToDb(){
-        
+        if(empty($this->_id)) {
+            $this->addGroup();
+        } else {
+            $this->updateGroep();
+        }
     }
     
+    public function addGroup(){
+        DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET "
+                . "(naam, omschrijving, verwijderd) "
+                . "VALUES "
+                . "(" .  $this->_naam . ", " . $this->_omschrijving . ", false)");
+
+        DatabaseConnector::executeQuery("DELET FROM rol_rubriek WHERE rol_id = " . $this->_id);
+        
+        foreach($this->_rubics as $value) {
+            $rol = $value['rolId'];
+            $rubriek = $value['rubriekId'];
+            
+            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET (rol_id, rubriek_id) VALUES (" . $rol . ", " . $rubriek . ")");
+        }
+    }
+
+    public function updateGroep(){
+        DatabaseConnector::executeQuery("UPDATE rol SET naam = " . $this->_naam . ", 
+                                                omschrijving = " . $this->_omschrijving . ",
+                                                verwijderd = false,
+                                                WHERE id = " . $this->_omschrijving);
+
+        DatabaseConnector::executeQuery("DELET FROM rol_rubriek WHERE rol_id = " . $this->_id);
+        
+        foreach($this->_rubics as $value) {
+            $rol = $value['rolId'];
+            $rubriek = $value['rubriekId'];
+            
+            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET (rol_id, rubriek_id) VALUES (" . $rol . ", " . $rubriek . ")");
+        }
+    }    
 }
 
 

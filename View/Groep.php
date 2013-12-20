@@ -1,28 +1,4 @@
-<?php        
-    include_once("Model/Groepen.php");
-    $groups = new Groepen;
-    $groupList = $groups->getAllGroups();
-?>
 
-<div class="coverBg" id="cover">
-    <div class="cover">
-        <div class="header">
-            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
-        </div>
-        <div class="contentMessage">
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-            Bla<br>
-        </div>
-    </div>
-</div>
 
 <h1>Rollen</h1>          
 <div class="ribbon">     
@@ -42,15 +18,15 @@
             Toevoegen
         </div>
     </div>
-    <div class="item">
-        <div class="fontIcon" onclick="javascript:location.href='index.php?p=groepedit&id='+getSelectedItemId() ">
+    <div class="item" onclick="javascript:location.href='index.php?p=groepedit&id='+getSelectedItemId() ">
+        <div class="fontIcon">
             &#xe006;
         </div>  
         <div class="text">
             Bewerken
         </div>
     </div> 
-    <div class="item">
+    <div class="item"  onclick="javascript:location.href='index.php?p=groep&del='+getSelectedItemId() ">
         <div class="fontIcon">
             &#xe0a8;
         </div>  
