@@ -42,6 +42,7 @@ class BeoordelingEditController {
             }
         }
 
+        $rubriekenDocent = $this->rubriekenModel->getAllRubricsInclRole($_SESSION['docentId']);
 
 
         $isBeoordeeld = false;
