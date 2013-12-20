@@ -239,7 +239,7 @@
     $sheet = $objPHPExcel->getSheet(0);
     $highestRow = $sheet->getHighestRow();
 
-    for ($row = 2; $row <= $highestRow; $row++) {
+    for ($row = 1; $row <= $highestRow; $row++) {
 
         $studentId = $sheet->getCell('A' . $row)->getValue();
         $klasId = $sheet->getCell('B' . $row)->getValue();
