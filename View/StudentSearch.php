@@ -10,7 +10,7 @@
             <div class="closeButton fontIcon" onclick="closeCover('coverDel')"></div>
         </div>
         <div class="contentMessage">
-            <h2>Weet u zeker dat u deze student wil verwijderen?</h2>
+            <h2>Weet u zeker dat u deze student wilt verwijderen?</h2>
             <br/><br/><br/><br/>
             <input type="button" value="Ja" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();"/>
             <input type="button" value="Nee" onclick="closeCover('coverDel')"/>
