@@ -1,0 +1,1 @@
+<script src="JavaScript/Klas.js"></script>

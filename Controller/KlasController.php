@@ -10,7 +10,7 @@ class KlasController {
     private $klassenModel;
     
     public function __construct() {
-        include_once 'model'.DIRECTORY_SEPARATOR.'klassen.php';
+        include_once 'Model'.DIRECTORY_SEPARATOR.'Klassen.php';
         $this->klassenModel = new Klassen();
     }
     
@@ -21,10 +21,11 @@ class KlasController {
             header("Location: index.php?p=klas");
         }
         
-        $klassen = $this->klassenModel->getAllClasses_array();
+        $klassen = $this->klassenModel->getAllClasses_array(false, true);
         
-        $page = "view".DIRECTORY_SEPARATOR."klas.php";
-        include_once 'view'.DIRECTORY_SEPARATOR.'template.php';
+        $page = "View".DIRECTORY_SEPARATOR."Klas.php";
+        $pagehead = "View".DIRECTORY_SEPARATOR."KlasHead.php";
+        include_once 'View'.DIRECTORY_SEPARATOR.'Template.php';
     }
 }
 
