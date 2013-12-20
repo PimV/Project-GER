@@ -7,13 +7,13 @@
 <div class="coverBg" id="coverDel">
     <div class="cover">
         <div class="header">
-            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+            <div class="closeButton fontIcon" onclick="closeCover('coverDel')"></div>
         </div>
         <div class="contentMessage">
             <h2>Weet u zeker dat u deze student wil verwijderen?</h2>
             <br/><br/><br/><br/>
             <input style="height: 40px; width: 180px;" type="button" value="Ja" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();"/>
-            <input style="height: 40px; width: 180px;" type="button" value="Nee" onclick="closeCover('cover')"/>
+            <input style="height: 40px; width: 180px;" type="button" value="Nee" onclick="closeCover('coverDel')"/>
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
 <div class="coverBg" id="coverImport">
     <div class="cover">
         <div class="header">
-            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+            <div class="closeButton fontIcon" onclick="closeCover('coverImport')"></div>
         </div>
         <div class="contentMessage">
             <h2>Selecteer het bestand waarin de studenten staan.</h2>
