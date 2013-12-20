@@ -391,21 +391,24 @@ input[type=password] {
     padding: 3px;
 }         
 input[type=submit] {
-    margin-top: 10px;
     float: right;
     -ms-border-radius: 5px;
     border-radius: 5px;     
     width: 130px;         
     height: 35px;
-    color: #ffffff;
-    background-color: #008b8b;
     cursor: pointer;
 }  
-input[type=button] {      
+input[type=button] {    
+    width: 130px;         
     height: 35px;
 }     
 
 input[type=button]:hover {      
+    color: #ffffff;
+    background-color: #008b8b;
+}
+
+input[type=submit] {      
     color: #ffffff;
     background-color: #008b8b;
 }
