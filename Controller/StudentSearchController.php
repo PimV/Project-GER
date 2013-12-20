@@ -32,6 +32,13 @@ class StudentSearchController {
                 $this->studentenModel->removeStudent($_GET["del"]);
                 header("Location: index.php?p=studentsearch");
             }
+
+            // WERKT NOG NIET
+            $importCount = 0;
+            $imports = array();
+            for ($i=$importCount; $i < count($imports); $i++) { 
+                $this->studentenModel->addStudent($imports[$i]["voornaam"], $imports[$i]["achternaam"], $imports[$i]["tussenvoegsel"], $imports[$i]["mail"]);
+            }
         }
         //Docent ingelogd
         else{

@@ -4,6 +4,38 @@
      Als het om een administrator gaat moet alles worden getoond.
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
+<div class="coverBg" id="coverDel">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            <h2>Weet u zeker dat u deze student wil verwijderen?</h2>
+            <br/><br/><br/><br/>
+            <input style="height: 40px; width: 180px;" type="button" value="Ja" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();"/>
+            <input style="height: 40px; width: 180px;" type="button" value="Nee" onclick="closeCover('cover')"/>
+        </div>
+    </div>
+</div>
+
+<div class="coverBg" id="coverImport">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            <h2>Selecteer het bestand waarin de studenten staan.</h2>
+
+            <br/><br/><br/><br/>
+            <form action="index.php?p=studentsearch" method="post" enctype="multipart/form-data">
+                <label for="file">Bestand: </label>
+                <input type="file" name="file" id="file"><br>
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <h1>Studenten zoeken</h1>          
 <div class="ribbon">     
@@ -50,7 +82,7 @@
                 Bewerken
             </div>
         </div> 
-        <div class="item" onclick="javascript:location.href = 'index.php?p=studentsearch&del=' + getSelectedItemId();">
+        <div class="item" onclick="getSelectedItemId();openCover('coverDel');">
             <div class="fontIcon">
                 &#xe0a8;
             </div>  
@@ -58,7 +90,7 @@
                 Verwijderen
             </div>
         </div>   
-        <div class="item">
+        <div class="item" onclick="openCover('coverImport');">
             <div class="fontIcon">
                 &#xe0bd;
             </div>  
@@ -183,3 +215,49 @@
             </tbody>
         </table>
     <?php } ?>
+
+
+
+    <?php
+    // WERKT NOG NIET
+    include 'Libraries/PHPExcel/PHPExcel/IOFactory.php';
+
+    $inputFileName = $_FILES['file']['tmp_name'];
+
+    //  Read your Excel workbook
+    try {
+        $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        $objPHPExcel = $objReader->load($inputFileName);
+
+        $outputObj = new PHPExcel();
+    } catch(Exception $e) {
+        die();
+    }
+
+    //  Get worksheet dimensions
+    $sheet = $objPHPExcel->getSheet(0);
+    $highestRow = $sheet->getHighestRow();
+
+    for ($row = 2; $row <= $highestRow; $row++) {
+
+        $studentId = $sheet->getCell('A' . $row)->getValue();
+        $klasId = $sheet->getCell('B' . $row)->getValue();
+        $voornaam = $sheet->getCell('C' . $row)->getValue();
+        $tussenvoegsel = $sheet->getCell('D' . $row)->getValue();
+        $achternaam = $sheet->getCell('E' . $row)->getValue();
+
+        if (!empty($studentId)) {
+            $imports[$importCount] = array(
+                "studentId" => $studentId,
+                "klasId" => $klasId,
+                "voornaam" => $voornaam,
+                "tussenvoegsel" => $tussenvoegsel,
+                "achternaam" => $achternaam
+            );
+
+            $importCount = $importCount + 1;
+        }
+    }
+
+?>

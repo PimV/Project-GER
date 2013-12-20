@@ -11,7 +11,7 @@ class Studenten {
         include_once 'Student.php';
     }
 
-    public function addStudent($voornaam, $achternaam, $tussenvoegsel, $mail = array()) {
+    public function addStudent($voornaam, $achternaam, $tussenvoegsel, $mail) {
         $student = new Student();
         $student->setVoornaam($voornaam);
         $student->setAchternaam($achternaam);
