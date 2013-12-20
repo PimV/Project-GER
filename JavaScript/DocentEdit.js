@@ -4,8 +4,8 @@ var errorMsg;
 function checkLengthPassword() {
 
     for (var i = 0, max = passWords.length; i < max; i++) {
-        if (passWords[i].value.length < 4) {
-            errorMsg = 'Wachtwoord moet minstens 4 tekens lang zijn.';
+        if (passWords[i].value.length < 6) {
+            errorMsg = 'Wachtwoord moet minstens 6 tekens lang zijn.';
             return false;
         }
     }
