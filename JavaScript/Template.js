@@ -176,7 +176,7 @@ function deleteClicked(id) {
 }
 
 function showError(message, title) {
-    //title = (typeof title === "undefined") ? "" : title; //Title is optioneel.
+    title = (typeof title === "undefined") ? "" : title; //Title is optioneel.
     $("body").append("<div class='coverBg' onclick='closeError();' id='errorCover'>"+
     "<div class='cover'>" +
         "<div class='header'>" +
