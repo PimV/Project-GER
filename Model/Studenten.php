@@ -8,7 +8,8 @@
 class Studenten {
 
     /**
-    @todo StudentID veld toevoegen aan addStudent (ook savetoDB aanpassen) 
+    @todo Nieuw student aanmaken zonder klas? en student toevoegen waarvan de klas niet bestaat
+    @todo Toevoegen student met ID die al bestaat? Wat nu?
     @todo Query aanpassen van removeStudent (foreign keys verwijderen)
     @todo Zoeken: Javascript of PHP & SQL
     @todo Student waarde: op school of niet?
@@ -17,8 +18,8 @@ class Studenten {
         include_once 'Student.php';
     }
 
-    public function addStudent($voornaam, $achternaam, $tussenvoegsel, $mail) {
-        $student = new Student();
+    public function addStudent($studentId, $voornaam, $achternaam, $tussenvoegsel, $mail) {
+        $student = new Student($studentId);
         $student->setVoornaam($voornaam);
         $student->setAchternaam($achternaam);
         $student->setTussenvoegsel($tussenvoegsel);

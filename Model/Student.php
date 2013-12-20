@@ -22,41 +22,45 @@ class Student {
 
     private function loadStudentData() {
         $query = "SELECT * FROM student WHERE id = ?";
-        
         $result = DatabaseConnector::executeQuery($query, array($this->studentId));
 
         $this->voornaam = $result[0]["voornaam"];
         $this->achternaam = $result[0]["achternaam"];
         $this->tussenvoegsel = $result[0]["tussenvoegsel"];
         $this->mail = $result[0]["mail"];
-     }
+    }
 
-     // Setters
-     public function setVoornaam($voornaam) { $this->voornaam = $voornaam; }
-     public function setAchternaam($achternaam) { $this->achternaam = $achternaam; }
-     public function setTussenvoegsel($tussenvoegsel) { $this->tussenvoegsel = $tussenvoegsel; }
-     public function setMail($mail) { $this->mail = $mail; }
+    // Setters
+    public function setStudentId($studentId) { $this->studentId = $studentId; }
+    public function setVoornaam($voornaam) { $this->voornaam = $voornaam; }
+    public function setAchternaam($achternaam) { $this->achternaam = $achternaam; }
+    public function setTussenvoegsel($tussenvoegsel) { $this->tussenvoegsel = $tussenvoegsel; }
+    public function setMail($mail) { $this->mail = $mail; }
 
-     // Getters
-     public function getStudentId() { return $this->studentId; } 
-     public function getVoornaam() { return $this->voornaam; } 
-     public function getAchternaam() { return $this->achternaam; } 
-     public function getTussenvoegsel() { return $this->tussenvoegsel; } 
-     public function getMail() { return $this->mail; } 
+    // Getters
+    public function getStudentId() { return $this->studentId; } 
+    public function getVoornaam() { return $this->voornaam; } 
+    public function getAchternaam() { return $this->achternaam; } 
+    public function getTussenvoegsel() { return $this->tussenvoegsel; } 
+    public function getMail() { return $this->mail; } 
 
     public function saveToDB() {
-        if(empty($this->studentId)) {
-            $this->saveNewStudent();
-        } else {
+        $query = "SELECT * FROM student WHERE id = ?";
+        $result = DatabaseConnector::executeQuery($query, array($this->studentId));
+
+        if(is_null($result)) {
             $this->updateStudent();
+        } else {
+            $this->saveNewStudent();            
         }
     }
 
     public function saveNewStudent() {
-        $query = "INSERT INTO student (voornaam, achternaam, tussenvoegsel, mail)
-                  VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO student (id, voornaam, achternaam, tussenvoegsel, mail)
+                  VALUES (?, ?, ?, ?, ?)";
 
-        $parameters = array($this->voornaam,
+        $parameters = array($this->studentId,
+                            $this->voornaam,
                             $this->achternaam,
                             $this->tussenvoegsel,
                             $this->mail);

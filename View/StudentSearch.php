@@ -12,8 +12,8 @@
         <div class="contentMessage">
             <h2>Weet u zeker dat u deze student wil verwijderen?</h2>
             <br/><br/><br/><br/>
-            <input style="height: 40px; width: 180px;" type="button" value="Ja" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();"/>
-            <input style="height: 40px; width: 180px;" type="button" value="Nee" onclick="closeCover('coverDel')"/>
+            <input type="button" value="Ja" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();"/>
+            <input type="button" value="Nee" onclick="closeCover('coverDel')"/>
         </div>
     </div>
 </div>

@@ -42,15 +42,14 @@ class StudentEditController {
 
     private function saveData() {
         if(isset($_GET["id"])) {
+            $this->studentModel->setStudentId($_POST["studentId"]);
             $this->studentModel->setVoornaam($_POST["voornaam"]);
             $this->studentModel->setAchternaam($_POST["achternaam"]);
             $this->studentModel->setTussenvoegsel($_POST["tussenvoegsel"]);
             $this->studentModel->setMail($_POST["mail"]);
             $this->studentModel->saveToDB();
         } else {
-            $this->studentenModel->addStudent(
-              $_POST["voornaam"], $_POST["achternaam"],
-              $_POST["tussenvoegsel"], $_POST["mail"]);
+            $this->studentenModel->addStudent($_POST["studentId"], $_POST["voornaam"], $_POST["achternaam"], $_POST["tussenvoegsel"], $_POST["mail"]);
         }
     }
 }

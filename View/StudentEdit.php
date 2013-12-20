@@ -23,6 +23,10 @@
         <div class="left">
             <table class="noAction">
                 <tr>
+                    <td>Student ID</td>  
+                    <td><input name="studentId" type="text" value="<?php echo($studentId) ?>"/></td>
+                </tr>  
+                <tr>
                     <td>Voornaam</td>  
                     <td><input name="voornaam" type="text" value="<?php echo($voornaam) ?>"/></td>
                 </tr>        
