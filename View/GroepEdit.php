@@ -1,22 +1,3 @@
-<?php      
-
-    if (isset($_GET["id"]) && !empty($_GET["id"])) {
-        $editId = $_GET["id"];
-        
-        include_once("Model/Groep.php");
-        $group = new Groep;
-        $groupList = $group->getGroup($editId);
-        
-        $leftRubricList = $group->getEnabledRubics($editId);
-        $rigtRubricList = $group->getDisabledRubics($editId);
-    } 
-    else{
-        include_once("Model/Rubrieken.php");
-        $rubrieken = new Rubrieken;
-        $rigtRubricList = $rubrieken->getAllRubrics();
-    }
-?>
-
 <h1>Rol bewerken</h1>          
 <div class="ribbon">     
     <div class="item">
