@@ -397,11 +397,15 @@ input[type=submit] {
     border-radius: 5px;     
     width: 130px;         
     height: 35px;
-    background-color: #008080;
     color: #ffffff;
+    background-color: #008b8b;
     cursor: pointer;
-}       
+}  
+input[type=button] {      
+    height: 35px;
+}     
 
-input[type=button]:hover {
+input[type=button]:hover {      
+    color: #ffffff;
     background-color: #008b8b;
 }
