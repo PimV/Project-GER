@@ -39,7 +39,6 @@ $array = array(
     "groep",
     "groepedit",
     "studentsearch",
-    "student",
     "studentedit",
     "resultaat",
     "export",
