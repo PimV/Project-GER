@@ -65,21 +65,26 @@ class Beoordeling {
     }
 
     public function save() {
-        $query = 'INSERT INTO resultaat (rubriek_id, docent_id, klas_student_id, waardering_id, datum_beoordeling)
-                 VALUES (\'' .
-                $this->getRubric() .
-                '\', \'' .
-                $this->getDocentId() .
-                '\', \'' .
-                $this->getClassStudentId() .
-                '\', \'' .
-                $this->getRatingId() .
-                '\', \'' .
-                $this->getDate() . '\')';
+        $parameters = array($this->getRubric(), $this->getDocentId(), $this->getClassStudentId(), $this->getRatingId(), $this->getDate());
 
-        addslashes($query);
+//        $query = 'INSERT INTO resultaat (rubriek_id, docent_id, klas_student_id, waardering_id, datum_beoordeling)
+//                 VALUES (\'' .
+//                $this->getRubric() .
+//                '\', \'' .
+//                $this->getDocentId() .
+//                '\', \'' .
+//                $this->getClassStudentId() .
+//                '\', \'' .
+//                $this->getRatingId() .
+//                '\', \'' .
+//                $this->getDate() . '\')';
 
-        DatabaseConnector::executeQuery($query);
+        $query = 'INSERT INTO resultaat (rubriek_id, docent_id, klas_student_id, waardering_id, datum_beoordeling) VALUES(?,?,?,?,?)';
+
+        // addslashes($query);
+        //var_dump($parameters);
+
+        DatabaseConnector::executeQuery($query, $parameters);
     }
 
 }

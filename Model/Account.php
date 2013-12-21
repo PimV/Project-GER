@@ -22,18 +22,18 @@ class Account {
         $this->username = $inputUsername;
         $this->password = $inputPassword;
 
-        if ($this->checkIfUserExists() === '1') {
+        if ($this->CheckIfUserExcists() === '1') {
             $_SESSION['username'] = $this->username;
             $_SESSION['loggedin'] = 'true';
         }
-        return $this->checkIfUserExists();
+        return $this->CheckIfUserExcists();
     }
 
     /*
      * Kijkt in de database als de gebruiker wel echt bestaat.
      */
 
-    private function checkIfUserExists() {
+    private function CheckIfUserExcists() {
         $query = "SELECT a.gebruikersnaam FROM account a 
             WHERE a.gebruikersnaam = '$this->username'";
 

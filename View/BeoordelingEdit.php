@@ -1,4 +1,4 @@
-<h1>Beoordelingen klas <?php //klasnaam                                                                      ?></h1>  
+<h1>Beoordelingen klas <?php //klasnaam                                                                                             ?></h1>  
 
 <div class="ribbon">       
     <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling';
@@ -23,19 +23,18 @@
 <table cellpadding="0" cellspacing="0">
     <thead>
     <th>Nummer</th>     
-    <th>Naam</th>   
-    <th>Nr 1</th>
-    <th>Nr 2</th>
-    <th>Nr 3</th>
-    <th>Nr 4</th>
-    <th>Nr 5</th>
-    <th>Nr 6</th>
-    <th>Nr 7</th>   
-    <th>Nr 8</th>
-    <th>Nr 9</th>     
-    <th>Nr 10</th>
-    <th>Nr 11</th>   
-    <th>Nr 12</th>
+    <th>Naam</th> 
+    <?php
+    $rubricCount = 0;
+    foreach ($rubrieken as $rubriek) {
+        $rubricCount++;
+        if ($isBeoordeeld === false) {
+            echo "<th title='" . $rubriek['naam'] . "' style='text-align: center;'>Nr " . $rubricCount . "</th>";
+        } else if ((isset($totaalBeoordelingen[$student['klas_student_id']][$rubricCount - 1]['waardering']))) {
+            echo "<th title='" . $rubriek['naam'] . "' style='text-align: center;'>Nr " . $rubricCount . "</th>";
+        }
+    }
+    ?>
 </thead>    
 <tbody>
 
@@ -69,7 +68,19 @@
             if ($isBeoordeeld === false) {
                 $rubriekId = $rubriek['id'];
 
-                echo '<td>';
+                $bgcolor = "";
+                foreach ($rubriekenDocent as $rubriekDocent) {
+                    if (in_array($rubriekId, $rubriekDocent)) {
+                        if ($unEven) {
+                            $bgcolor = 'bgcolor="#AF5A3E"';
+                        } else
+                            $bgcolor = 'bgcolor="#DB704D"';
+                    }
+                }
+
+
+
+                echo '<td ' . $bgcolor . ' >';
                 echo '<select name=' . "score[$studentId][$rubriekId]" . '>';
                 foreach ($waarderingen as $waardering) {
                     echo '<option value=' . $waardering['id'] . '>' . $waardering['waardering'] . '</option>';
@@ -77,7 +88,8 @@
                 echo '</select>
                 </td>';
             } else {
-                echo '<td>' . $totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering'] . '</td>';
+                if (isset($totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering']))
+                    echo '<td style="text-align: center;">' . $totaalBeoordelingen[$student['klas_student_id']][$rubricCount]['waardering'] . '</td>';
             }
         }
         $unEven = !$unEven;
