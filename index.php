@@ -1,5 +1,4 @@
 <?php
-
 // This file is the entry point of the website and acts like a router. 
 // Depending on the URL received from the user, the correct controller will be created. 
 //Start the session.

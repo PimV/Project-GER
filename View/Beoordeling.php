@@ -12,7 +12,7 @@
     </div> 
     <div class="item" onclick="javascript:location.href = 'index.php?p=beoordelingedit&id=' + getSelectedItemId()">
 
-        <div class="fontIcon">
+        <div class="fontIcon"> 
             &#xe0b3;
         </div>  
         <div class="text" >
@@ -42,8 +42,9 @@ if ($noClasses === false) {
 
         echo '</tr>';
         $unEven = !$unEven;
-        echo '</tbody></table>';
     }
+
+    echo '</tbody></table>';
 } else {
     echo '<br/>';
     echo '<h2>Geen klassen om te beoordelen.</h2>';

@@ -1,14 +1,12 @@
 var passWords = document.getElementsByClassName('password');
 var errorMsg;
 
-window.onload = sync();
 
 function sync()
 {
-  var n1 = document.getElementsByName('mail')[0];
-  var n2 = document.getElementsByName('username')[0];
-  n2.value = n1.value;
- 
+    var n1 = document.getElementsByName('mail')[0];
+    var n2 = document.getElementsByName('username')[0];
+    n2.value = n1.value;
 }
 
 function checkLengthPassword() {
@@ -23,12 +21,12 @@ function checkLengthPassword() {
 }
 
 function checkLengthUsername() {
-//    if (document.getElementById('minLength').value.length < 4) {
-//        errorMsg = 'Gebruikersnaam moet minstens 4 tekens lang zijn.';
-//        return false;
-//    } else {
-//        return true;
-//    }
+    if (document.getElementById('minLength').value.length < 4) {
+        errorMsg = 'Gebruikersnaam moet minstens 4 tekens lang zijn.';
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function validatePasswords() {
