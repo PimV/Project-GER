@@ -15,7 +15,7 @@
             Opslaan
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=docent'">
         <div class="fontIcon">
             &#xe0f9;
         </div>  
@@ -54,7 +54,7 @@
                 </tr>
                 <tr>
                     <td>E-mail</td>  
-                    <td><input name="mail" type="text" value="<?php
+                    <td><input name="mail" type="text" autocomplete="false" oninput="sync();"  value="<?php
                         if (isset($docent)) {
                             echo $docent->getMail();
                         }
@@ -92,7 +92,7 @@
             <table class="noAction">
                 <tr>
                     <td>Gebruikersnaam</td>  
-                    <td><input id="minLength" name="username" value="<?php
+                    <td><input readonly id="minLength"  name="username" value="<?php
                         if (isset($account)) {
                             echo $account['gebruikersnaam'];
                         }
