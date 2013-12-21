@@ -1,6 +1,14 @@
 var passWords = document.getElementsByClassName('password');
 var errorMsg;
 
+
+function sync()
+{
+    var n1 = document.getElementsByName('mail')[0];
+    var n2 = document.getElementsByName('username')[0];
+    n2.value = n1.value;
+}
+
 function checkLengthPassword() {
 
     for (var i = 0, max = passWords.length; i < max; i++) {

@@ -24,7 +24,7 @@
 				Bewerken
 			</div>
 		</div> 
-		<div class="item" onclick="javascript:location.href='index.php?p=rubriek&del='+getSelectedItemId();">
+		<div class="item" onclick="deleteClicked(getSelectedItemId());">
 			<div class="fontIcon">
 				&#xe0a8;
 			</div>  
@@ -57,3 +57,18 @@
 			?>
 		</tbody>
 	</table> 
+	
+<div class="coverBg" id="cover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            <h2>Weet u zeker dat u deze rubriek wilt verwijderen?</h2>
+            <br><br><br><br><br><br><br><br>
+            <input style="height: 40px; width: 180px;" type="button" value="Rubriek verwijderen" onclick="javascript:location.href='index.php?p=rubriek&del='+getSelectedItemId();"/>
+            &nbsp;&nbsp;&nbsp;
+            <input style="height: 40px; width: 100px;" type="button" value="Annuleren" onclick="closeCover('cover')"/>
+        </div>
+    </div>
+</div>

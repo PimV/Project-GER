@@ -40,8 +40,14 @@ class BeoordelingController {
             }
         }
 
-        $page = "View" . DIRECTORY_SEPARATOR . "Beoordeling.php";
         $klassen_view = $this->klassen->getAllClassesNoResult_array();
+        $noClasses = false;
+        if (count($klassen_view) === 0) {
+            $noClasses = true;
+        }
+        
+        $page = "View" . DIRECTORY_SEPARATOR . "Beoordeling.php";
+        
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 

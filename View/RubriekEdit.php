@@ -41,12 +41,12 @@
 		<div class="right">   
 			<table class="noAction">
 				<tr>
-					<td>Omschrijving</td> 
+					<td style="vertical-align:top">Omschrijving</td> 
 					<td>
 					<?php if(isset($description)) {
-						echo "<input type='text' name='description' value='".$description."'/>";
+						echo "<textarea name='description' rows='5' cols='40'>".$description."</textarea>";
 					} else {
-						echo "<input type='text' name='description' />";
+						echo "<textarea name='description' rows='5' cols='40'></textarea>";
 					}
 					?>
 					</td>					

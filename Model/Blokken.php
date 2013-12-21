@@ -62,7 +62,8 @@ class Blokken {
 				  FROM blok AS b
 				  LEFT JOIN klas AS k ON b.id = k.blok_id
 				  WHERE b.verwijderd = 0
-				  GROUP BY b.id;";
+				  GROUP BY b.id
+				  ORDER BY b.leerjaar, b.bloknummer;";
 				  
 		$result = DatabaseConnector::executeQuery($query);
 		return $result;
