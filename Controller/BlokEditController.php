@@ -13,6 +13,7 @@ class BlokEditController {
 	
     public function __construct()
     {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Blokken.php';
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Blok.php';
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Klassen.php';
@@ -39,7 +40,7 @@ class BlokEditController {
 			$schoolYear = $_POST['schoolYear'];
 			$blockNumber = $_POST['blockNumber'];
 			$date = date('Y/m/d', strtotime($_POST['deadline']));
-			// Check of ingevoerde datum ($date) ná vandaag ligt, zo niet dan wordt er géén 
+			// Check of ingevoerde datum ($date) nï¿½ vandaag ligt, zo niet dan wordt er gï¿½ï¿½n 
 			// deadline ingesteld
 			if (strtotime($date) > time()) {
 				$deadline = date('Y/m/d', strtotime($_POST['deadline']));

@@ -14,6 +14,7 @@ class KlasEditController {
     private $klasModel;
     
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once 'Model'.DIRECTORY_SEPARATOR.'Klassen.php';
         include_once 'Model'.DIRECTORY_SEPARATOR.'Blokken.php';
         include_once 'Model'.DIRECTORY_SEPARATOR.'Studenten.php';

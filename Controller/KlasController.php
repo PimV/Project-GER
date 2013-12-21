@@ -10,6 +10,7 @@ class KlasController {
     private $klassenModel;
     
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once 'Model'.DIRECTORY_SEPARATOR.'Klassen.php';
         $this->klassenModel = new Klassen();
     }

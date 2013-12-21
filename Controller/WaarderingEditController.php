@@ -16,6 +16,7 @@ class WaarderingEditController {
     private $waarderingenModel;
 
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once('Model' . DIRECTORY_SEPARATOR . 'Waarderingen.php');
         include_once('Model' . DIRECTORY_SEPARATOR . 'Waardering.php');
         $this->waarderingenModel = new Waarderingen();

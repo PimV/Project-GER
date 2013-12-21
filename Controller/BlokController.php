@@ -10,6 +10,7 @@ class BlokController {
 	private $blokkenModel;
 	
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Blokken.php';
         $this->blokkenModel = new Blokken;
     }

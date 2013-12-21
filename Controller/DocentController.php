@@ -17,6 +17,7 @@ class DocentController {
     private $accountenModel;
 
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once('Model' . DIRECTORY_SEPARATOR . 'Docenten.php');
         include_once('Model' . DIRECTORY_SEPARATOR . 'Accounten.php');
         $this->docentenModel = new Docenten();

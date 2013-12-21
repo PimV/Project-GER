@@ -11,6 +11,7 @@ class RubriekController {
 	
     public function __construct()
     {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
 		include_once 'Model' . DIRECTORY_SEPARATOR . 'Rubrieken.php';
         $this->rubriekenModel = new Rubrieken;
 	}

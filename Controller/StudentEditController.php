@@ -9,6 +9,7 @@ class StudentEditController {
     
     
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once 'model'.DIRECTORY_SEPARATOR.'studenten.php';
         $this->studentenModel = new Studenten();
 

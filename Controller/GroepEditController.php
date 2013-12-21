@@ -8,6 +8,7 @@
 class GroepEditController {
     
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once 'model'.DIRECTORY_SEPARATOR.'Groep.php';
         include_once 'model'.DIRECTORY_SEPARATOR.'Rubrieken.php';
         

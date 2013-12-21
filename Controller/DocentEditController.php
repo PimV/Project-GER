@@ -19,6 +19,7 @@ class DocentEditController {
     private $accountModel;
 
     public function __construct() {
+        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
         include_once("Model" . DIRECTORY_SEPARATOR . "Docent.php");
         include_once("Model" . DIRECTORY_SEPARATOR . "Docenten.php");
         include_once("Model" . DIRECTORY_SEPARATOR . "Rechten.php");
