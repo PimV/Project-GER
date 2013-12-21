@@ -1,1 +1,0 @@
-<script src="JavaScript/KlasEdit.js"></script>

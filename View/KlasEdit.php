@@ -47,7 +47,7 @@
 
         <div class="right">   
             <table class="noAction">    
-                <tr>
+                <tr height="37px">
                     <td>Coach</td>  
                     <td>
                         <select name="coach" class="selectFullSize">
@@ -63,23 +63,22 @@
                         </select>    
                     </td>
                 </tr>          
-                <tr>
-                    <?php if(empty($classID)) { ?>
-                    <td>Blok</td>  
+                <tr height="32px">
+                    <td>Blok</td>
                     <td>
-                        <select name="block" class="selectFullSize">
-                            <?php
+                        <?php 
+                        if(empty($blockID)) {
+                            echo("<select name='block' class='selectFullSize'>");
                             foreach ($blokken as $row) {
-                                $selected = "";
-                                if($row["id"] == $blockID){
-                                    $selected = "selected";
-                                }
-                                echo("<option $selected value='".$row["id"]."'>".$row["bloknummer"]." - ".$row["naam"]."</option>");
+                                echo("<option value='".$row["id"]."'>".$row["bloknummer"]." - ".$row["naam"]."</option>");
                             }
-                            ?>
-                        </select>    
+                            echo("</select>");
+                        } 
+                        else {
+                            echo($blockNumber . " - " . $blockName);
+                        }
+                        ?>
                     </td>
-                    <?php } ?>
                 </tr>
             </table>     
         </div>
@@ -98,6 +97,7 @@
             ?>
         </ul>     
 
+        <?php if(!$reviewing) { ?>
         <div class="listViewControl">
             <div name="Left" class="fontIcon">&#xe111;</div>    
             <div name="Right" class="fontIcon">&#xe112;</div>      
@@ -110,5 +110,6 @@
             }
             ?>
         </ul> 
+        <?php } ?>
     </div>
 </div>

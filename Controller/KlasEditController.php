@@ -41,6 +41,7 @@ class KlasEditController {
         $coachID = "";
         $blockID = "";
         $schoolYear = "";
+        $reviewing = false;
         
         if(isset($this->klasModel)){
             $students = $this->klasModel->getStudents();
@@ -49,18 +50,24 @@ class KlasEditController {
             $coachID = $this->klasModel->getCoachID();
             $blockID = $this->klasModel->getBlockID();
             $schoolYear = $this->klasModel->getSchoolYear();
+            $reviewing = $this->klasModel->currentlyReviewing();
         }
         
         $yearChoices = array();
         array_push($yearChoices, date("Y")."-".(date("Y")+1));
         array_push($yearChoices, (date("Y")+1)."-".(date("Y")+2));
         
+        if(!empty($blockID)) {
+            $block = $this->blokkenModel->getBlock($blockID);
+            $blockNumber = $block->getBlockNumber();
+            $blockName = $block->getName();
+        }
+        
         $blokken = $this->blokkenModel->getAllBlocks();
         $classLessStudents = $this->studentenModel->getClasslessStudents();
         $docenten = $this->docentenModel->getAllTeachers();
 
         $page = "View".DIRECTORY_SEPARATOR."KlasEdit.php";
-        $pagehead = "View".DIRECTORY_SEPARATOR."KlasEditHead.php";
         include_once 'View'.DIRECTORY_SEPARATOR.'Template.php';
     }
     

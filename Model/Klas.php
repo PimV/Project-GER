@@ -84,6 +84,7 @@ class Klas {
     public function getSchoolYear() { return $this->schoolYear; }
     public function getReviewDeadline() { return $this->reviewDeadline; }
     public function getStudents() { return $this->students; }
+    public function currentlyReviewing() { return !empty($this->reviewDeadline); }
     
     
     public function saveToDB() {
