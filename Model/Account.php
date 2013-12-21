@@ -24,7 +24,7 @@ class Account {
 
         if ($this->CheckIfUserExcists() === '1') {
             $_SESSION['username'] = $this->username;
-            $_SESSION['loggedin'] = 'true';
+            $_SESSION['loggedin'] = true;
         }
         return $this->CheckIfUserExcists();
     }
