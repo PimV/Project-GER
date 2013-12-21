@@ -329,12 +329,13 @@ table tr td {
 }
 
 .coverBg .cover .header{
-    width: 100%;
+    width: calc(100% - 10px);
     background-color: #008b8b;
     border-bottom: 3px solid #006a6a;
     color: #ffffff;
     line-height: 40px;
     height: 40px;
+    padding-left: 10px;
 }
 
 .coverBg .cover .header .closeButton{

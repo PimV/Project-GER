@@ -23,24 +23,35 @@ class Klassen {
 
     /**
      * Pak alle HUIDIGE klassen. (admin klas overzicht)
-     * Klassen uit het verleden (al beoordeeld) en klassen die momenteel beoordeeld worden, worden niet opgehaald.
-     * Deze klassen mogen namelijk niet meer bewerkt worden. (wel mogelijk op te halen via de $noHistory parameter)
+     * Klassen uit het verleden (al beoordeeld) en klassen die momenteel beoordeeld worden, worden niet standaard opgehaald.
+     * Deze klassen mogen namelijk niet meer bewerkt worden. (wel mogelijk op te halen via de parameters)
      * 
-     * @param boolean $noHistory Default op true, wanneer false haalt hij ook klassen uit het verleden op. (en klassen die momenteel beoordeeld worden.)
+     * @param boolean $showHistory Default op false, wanneer true haalt hij ook klassen uit het verleden op. (en klassen die momenteel beoordeeld worden.)
+     * @param boolean $showReviewing Default op false, wanneer true haalt hij ook klassen op die momenteel beoordeeld worden.
      * @return array[][] Bevat alle klassen inclusief student aantallen.
      */
-    public function getAllClasses_array($noHistory = true) {
-        $query = "SELECT k.id, k.klascode, b.naam, b.bloknummer, b.id AS blokid, COUNT(s.id) AS studenten
+    public function getAllClasses_array($showHistory = false, $showReviewing = false) {
+        $query = "SELECT k.*,
+                        DATE_FORMAT(k.beoordeling_deadline,'%d-%m-%Y') AS beoordeling_deadline_dmY, 
+                        b.naam, 
+                        b.bloknummer, 
+                        b.id AS blokid, 
+                        COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
                     WHERE k.verwijderd = false ";
-
-        if ($noHistory) {
-            $query .= "AND beoordeling_deadline IS NULL ";
+        
+        if (!$showHistory) {
+            $query .= "AND (beoordeling_deadline IS NULL ";
+            if($showReviewing) {
+                $query .= "OR beoordeling_deadline > NOW() ";
+            }
+            $query .= ") ";
         }
+            
         $query .= "GROUP BY k.id
-                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
+                    ORDER BY k.beoordeling_deadline ASC, k.schooljaar DESC, b.bloknummer ASC";
 
         $result = DatabaseConnector::executeQuery($query);
         return $result;
