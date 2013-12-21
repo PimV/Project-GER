@@ -20,15 +20,14 @@
         </div>
     </div>
 </div>  
-
-<table cellpadding="0" cellspacing="0">
+<?php
+if ($noClasses === false) {
+    echo '<table cellpadding="0" cellspacing="0">
     <thead>
     <th>Klascode</th>     
     <th>Aantal studenten</th>   
 </thead>    
-<tbody>
-    <?php
-    //Loop through all classes and populate table
+<tbody>';
     $unEven = true;
 
     foreach ($klassen_view as $klas) {
@@ -43,10 +42,13 @@
 
         echo '</tr>';
         $unEven = !$unEven;
+        echo '</tbody></table>';
     }
-    ?>
-</tbody>
-</table>
+} else {
+    echo '<br/>';
+    echo '<h2>Geen klassen om te beoordelen.</h2>';
+}
+?>
 
 
 
