@@ -45,7 +45,10 @@ class BlokEditController {
 				$deadline = date('Y/m/d', strtotime($_POST['deadline']));
 			}
 			$open = $_POST['open'];
-			$classArray = $this->klassenModel->getAllClasses_array();
+			// Laad alle huidige klassen in
+			$classArray = $this->klassenModel->getAllClasses_array(true, true);
+			// Laad alle klassen die op dit moment open staan voor beoordeling in
+			$classReviewingArray = $this->klassenModel->getAllClassesReviewing_array();
 			// Check of $_SESSION['blok'] bestaat, als dit het geval is update het huidige blok
 			// d.m.v het id
 			if(isset($_SESSION['blok'])) {

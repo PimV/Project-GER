@@ -60,7 +60,7 @@ class Blok {
 	private function loadBlockData() {
 		$query = "SELECT b.naam, b.omschrijving, b.leerjaar, b.bloknummer, k.beoordeling_deadline
 				  FROM blok AS b
-				  JOIN klas AS k ON b.id = k.blok_id
+				  LEFT JOIN klas AS k ON b.id = k.blok_id
 				  WHERE b.id = ?
 				  GROUP BY b.id";
 		
@@ -97,11 +97,19 @@ class Blok {
 										 WHERE id = ?", $array);
 		
 		// Ga alleen verder als de combobox open op 'Ja' is gezet
-		if($this->open == true) {
+		// Wanneer een ingevulde deadline wordt gezet op een datum die
+		// vóór de huidige datum ligt, dan wordt de deadline op null
+		// gezet (verwijderd) uncomment '&& !is_null($this->deadline))'
+		// om uit te zetten
+		if($this->open == true /*&& !is_null($this->deadline)*/) {
+			// Variabele om aan te geven of de deadline is gezet
+			$deadlineSet = false;
+			// Query voor het zetten van de deadline
+			$query = "UPDATE klas SET beoordeling_deadline = ? 
+					  WHERE blok_id = ? AND klascode = ?";
 			// Loop door classArray heen, als het blok_id van een klas in deze array
 			// overeen komt met het id van dit blok update de deadline van die klas
-			
-			// Het updaten van een deadline naar een andere datum is nog NIET mogelijk
+			// het array classArray bevat ALLEEN klassen die nog géén deadline hebben
 			foreach($this->classArray as $value) {
 				if($value['blokid'] == $this->id) {
 					$query = "UPDATE klas SET beoordeling_deadline = ? 
@@ -109,13 +117,26 @@ class Blok {
 					$array = array($this->deadline,
 								   $this->id,
 								   $value['klascode']);
-			
-					DatabaseConnector::executeQuery($query, $array);
+					$deadlineSet = true;
 				}
 			}
-
-		}
-		
+			// Als deadlineSet 'false' is, loop door classReviewingArray heen en zoek 
+			// door de klassen die al wél een deadline hebben, en update deze
+			if($deadlineSet == false) {
+				foreach($this->classReviewingArray as $value) {
+					if($value['blokid'] == $this->id) {
+						$array = array($this->deadline,
+									   $this->id,
+									   $value['klascode']);
+						$deadlineSet = true;
+					}
+				}
+			}
+			// Set deadline
+			if($deadlineSet) {
+				DatabaseConnector::executeQuery($query, $array);
+			}
+		}			
     }
     
 }
