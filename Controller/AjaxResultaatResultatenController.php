@@ -113,7 +113,7 @@ class AjaxResultaatResultatenController {
             if(is_null($average)){
                $name = "Eindbeoordeling: " . $this->student->getVoornaam() . " " . $this->student->getTussenvoegsel() . " " . $this->student->getAchternaam() . " - Leerjaar " . $this->leerjaar; 
             }else{
-               $name = $this->student->getVoornaam() . " " . $this->student->getTussenvoegsel() . " " . $this->student->getAchternaam() . " - Leerjaar " . $this->leerjaar;    
+               $name = "Gemiddelde: " . $this->student->getVoornaam() . " " . $this->student->getTussenvoegsel() . " " . $this->student->getAchternaam() . " - Leerjaar " . $this->leerjaar;    
             }         
             if($this->type == "klas"){
                 $name .= " - " . $this->klasModel->getClassCode() . " - " . $this->blokModel->getName();    

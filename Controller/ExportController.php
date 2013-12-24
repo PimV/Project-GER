@@ -67,8 +67,8 @@ class ExportController {
         $pdf = new FPDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial','B',16);
-        $pdf->SetX(30);
-        $pdf->Cell(40,15,'Beoordeling student. ');
+        $pdf->SetX(50);
+        $pdf->Cell(40,15,'Beoordeling student vanuit GER. ');
         //                                   x,y,size
         $pdf->Image('Images/temp/chart1.png',20,35,175);
         if($this->boolImageTwo)
