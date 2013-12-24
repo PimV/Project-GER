@@ -102,7 +102,7 @@ class Student {
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal het gemiddelde voor een student op uit een leerjaar (max 4 blokken) per docent
     public function getResultsYear($leerjaar){
-        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS waardering, CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS docent
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, COALESCE(ROUND(AVG(NULLIF(w.waardering, 0)),0),0) AS waardering, CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS docent
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN docent d ON r.docent_id = d.id
@@ -121,7 +121,7 @@ class Student {
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal het gemiddelde voor een student op uit een blok
     public function getAverageResultClass($klas){
-        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding, ks.id AS klas_student_id
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, COALESCE(ROUND(AVG(NULLIF(w.waardering, 0)),0),0) AS gemiddelde, MAX(w.waardering) - MIN(w.waardering) AS spreiding, ks.id AS klas_student_id
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
@@ -137,7 +137,7 @@ class Student {
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal het gemiddelde voor een student op uit een leerjaar (max 4 blokken)
     public function getAverageResultYear($leerjaar){
-        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, ROUND(AVG(w.waardering),0) AS gemiddelde
+        $query = "  SELECT r.rubriek_id, ru.naam AS rubriek, COALESCE(ROUND(AVG(NULLIF(w.waardering, 0)),0),0) AS gemiddelde
                     FROM resultaat r
                     LEFT JOIN klas_student ks ON r.klas_student_id = ks.id
                     LEFT JOIN rubriek ru ON r.rubriek_id = ru.id
