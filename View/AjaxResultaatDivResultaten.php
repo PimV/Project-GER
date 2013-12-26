@@ -102,11 +102,11 @@
                 else{                   
                     foreach($average as $row){
                         echo "<td style='text-align: center;'><select name='s[".$row["rubriek_id"]."]'>";
-                            foreach($waarderingen as $option){
-                                if($option[1] == $row["gemiddelde"]){
-                                    echo "<option value='$option[0]' selected>$option[1]</option>";                                 
+                            foreach($this->waarderingen as $option){
+                                if($option["waardering"] == $row["gemiddelde"]){
+                                    echo "<option value='". $option["id"] ."' selected>". $option["waardering"] ."</option>";                                 
                                 }else{
-                                    echo "<option value='$option[0]'>$option[1]</option>";                                    
+                                    echo "<option value='". $option["id"] ."'>". $option["waardering"] ."</option>";                                    
                                 }
                             }
                         echo "</select></td>";

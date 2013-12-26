@@ -8,17 +8,20 @@
 class AjaxResultaatResultatenController {
     
     private $studentenModel;
+    private $waarderingModel;
     private $klasModel;
     private $blokModel;
     private $student;
     private $type;
     private $leerjaar;
+    private $waarderingen;
     
     public function __construct()
     {        
         include_once 'model/Studenten.php';
         include_once 'model/Klas.php';
         include_once 'model/Blok.php';
+        include_once 'model/Waarderingen.php';
         $this->studentenModel = new Studenten();
     }
     
@@ -35,6 +38,7 @@ class AjaxResultaatResultatenController {
         if(is_numeric($klas)){
             $this->type = "klas";
             $result = $this->student->getResultsClass($klas);  
+            $this->waarderingModel = new Waarderingen();
                     
             if(!empty($result)){
                 $average= $this->student->getAverageResultClass($klas);            
@@ -49,13 +53,8 @@ class AjaxResultaatResultatenController {
             }
             
             //Uit database ophalen?
-            $waarderingen = array(  array(1,0),
-                                    array(2,1),
-                                    array(3,2),
-                                    array(4,3),
-                                    array(5,4),
-                                    array(6,5),
-                                 );
+            $this->waarderingen = $this->waarderingModel->getAllRatings();
+                    
             $this->klasModel = new Klas($klas);
             $this->blokModel = new Blok($this->klasModel->getBlockID());
         }else{
@@ -119,7 +118,8 @@ class AjaxResultaatResultatenController {
                 $name .= " - " . $this->klasModel->getClassCode() . " - " . $this->blokModel->getName();    
             }            
             
-            //Uit model halen waarderingen
+            //Maximale beoordeling
+            //TODO: Uit model halen waarderingen
             $maximaal = 5;
 
             //Maak van de arrays eens javascript

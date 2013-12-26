@@ -14,7 +14,6 @@ class Waarderingen {
     public function getAllRatings() {
         $query = "SELECT * FROM waardering WHERE verwijderd = 0 ORDER BY waardering";
         $result = DatabaseConnector::executeQuery($query);
-
         return $result;
     }
 
@@ -29,9 +28,9 @@ class Waarderingen {
         DatabaseConnector::executeQuery($query);
     }
     
-    public function getMaxRating($id) {
+    public function getMaxRating() {
         $query = "SELECT MAX(waardering) FROM waardering";
-        DatabaseConnector::executeQuery($query);
+        $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
 
