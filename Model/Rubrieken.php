@@ -25,9 +25,12 @@ class Rubrieken {
      *
      */
     public function removeRubric($id) {
-        DatabaseConnector::executeQuery("UPDATE rubriek
-										 SET verwijderd = 1
-										 WHERE id = ?", array($id));
+		$query = "UPDATE rubriek SET verwijderd = 1 WHERE id = ?";
+		$query2 = "DELETE FROM rol_rubriek WHERE rubriek_id = ?";
+		$query3 = "DELETE FROM docent_rubriek WHERE rubriek_id = ?";
+        DatabaseConnector::executeQuery($query, array($id));
+		DatabaseConnector::executeQuery($query2, array($id));
+		DatabaseConnector::executeQuery($query3, array($id));
     }
 
     /**
@@ -36,8 +39,6 @@ class Rubrieken {
      */
     public function getRubric($id) {
         return new Rubriek($id);
-        //$result = DatabaseConnector::executeQuery("SELECT * FROM rubriek WHERE id = ?", array($id));
-        //return $result;
     }
 
     /**
