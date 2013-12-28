@@ -190,8 +190,8 @@
             <thead>
             <th>Id</th>     
             <th>Voornaam</th>
-            <th>Achternaam</th>
             <th>Tussenvoegsel</th>
+            <th>Achternaam</th>
             <th>Mail</th>   
             </thead>
             <tbody>
@@ -205,8 +205,8 @@
                     }
                     echo("<td>" . $row["id"] . "</td>");
                     echo("<td>" . $row["voornaam"] . "</td>");
-                    echo("<td>" . $row["achternaam"] . "</td>");
                     echo("<td>" . $row["tussenvoegsel"] . "</td>");
+                    echo("<td>" . $row["achternaam"] . "</td>");
                     echo("<td>" . $row["mail"] . "</td>");
                     echo("</tr>");
                     $unEven = !$unEven;
