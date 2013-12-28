@@ -28,7 +28,7 @@ class Studenten {
     }
 
     public function getAllStudents_array() {
-        $query = "SELECT * from student";
+        $query = "SELECT * from student ORDER BY achternaam, voornaam ASC";
 
         $result = DatabaseConnector::executeQuery($query);
         return $result;
