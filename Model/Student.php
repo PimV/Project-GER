@@ -112,6 +112,7 @@ class Student {
                     LEFT JOIN blok b ON k.blok_id = b.id
                     WHERE ks.student_id = ?
                     AND b.leerjaar = ?
+                    AND k.beoordeling_deadline < NOW()
                     GROUP BY d.id, ru.id";
         
         $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $leerjaar));
@@ -146,6 +147,7 @@ class Student {
                     LEFT JOIN blok b ON k.blok_id = b.id
                     WHERE ks.student_id = ?
                     AND b.leerjaar = ?
+                    AND k.beoordeling_deadline < NOW()
                     GROUP BY ru.id";
 
         $result = DatabaseConnector::executeQuery($query, array($this->getStudentId(), $leerjaar));
