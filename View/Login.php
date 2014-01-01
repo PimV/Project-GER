@@ -10,9 +10,9 @@
             <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
         </div>
         <div class="contentMessage">
-            <?php
+            <h2><?php
                 echo $_SESSION['loginError'];
-            ?>   
+            ?></h2>   
         </div>
     </div>
 </div>
