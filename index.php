@@ -1,10 +1,11 @@
 <?php
+
 // This file is the entry point of the website and acts like a router. 
 // Depending on the URL received from the user, the correct controller will be created. 
 //Start the session.
 session_start();
 
-if(!isset($_SESSION['loggedin'])) {
+if (!isset($_SESSION['loggedin'])) {
     $_SESSION['loggedin'] = false; //True wanneer er een gebruiker is ingelogd.
     $_SESSION['username'] = NULL;
     $_SESSION['admin'] = false; //True wanneer een admin is ingelogd.
@@ -19,7 +20,6 @@ if(!isset($_SESSION['loggedin'])) {
 
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
-
 //Get the page to open. Homepage default if none specified. 
 if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = strtolower($_GET["p"]);
@@ -27,7 +27,7 @@ if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = "home";
 }
 
-if(!$_SESSION['loggedin']) {
+if (!$_SESSION['loggedin']) {
     $page = "login";
 }
 
@@ -54,7 +54,9 @@ $array = array(
     "docentedit",
     "profiel",
     "waardering",
-    "waarderingedit"
+    "waarderingedit",
+    "account",
+    "accountedit"
 );
 
 foreach ($array as $arrayPage) {

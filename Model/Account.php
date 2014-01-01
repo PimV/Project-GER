@@ -5,8 +5,7 @@
  *
  * @author Gijs van der Venne
  */
-class Account
-    {
+class Account {
 
     private $username;
     private $password;
@@ -19,86 +18,69 @@ class Account
      * zo nee: log de gebruiker niet in en geef een error.
      */
 
-    public function validateLogin($inputUsername, $inputPassword)
-        {
+    public function validateLogin($inputUsername, $inputPassword) {
 
         $this->username = $inputUsername;
         $this->password = $inputPassword;
 
-        if ($this->CheckIfUserExcists() === '1')
-        {
+        if ($this->CheckIfUserExcists() === '1') {
             $_SESSION['username'] = $this->username;
-            $_SESSION['loggedin'] = true;
+            $_SESSION['loggedin'] = 'true';
         }
         return $this->CheckIfUserExcists();
-        }
+    }
 
     /*
      * Kijkt in de database als de gebruiker wel echt bestaat.
      */
 
-    private function CheckIfUserExcists()
-        {
+    private function CheckIfUserExcists() {
         $query = "SELECT a.gebruikersnaam FROM account a 
             WHERE a.gebruikersnaam = '$this->username'";
 
         $result = DatabaseConnector::executeQuery($query);
 
-        if ($result != null)
-        {
+        if ($result != null) {
             $md5pass = md5($this->password);
 
             $query = "SELECT a.wachtwoord, a.disabled, a.level_id FROM account a 
                       WHERE a.wachtwoord = '$md5pass' AND a.gebruikersnaam = '$this->username'";
 
             $result = DatabaseConnector::executeQuery($query);
-            
-            if ($result != null)
-            {
-                if ($result[0]['disabled'] === 0)
-                {     
+
+            if ($result != null) {
+                if ($result[0]['disabled'] === 0) {
                     $this->enabled = true;
                     $this->level = $result[0]['level_id'];
-                }
-                else
-                {
+                } else {
                     $this->enabled = false;
                 }
 
-                if ($this->getEnabled())
-                {
+                if ($this->getEnabled()) {
                     $_SESSION['username'] = $this->username;
                     $_SESSION['loggedin'] = true;
-                    
-                    if ($this->getAccountLevel() == '1')
-                    {
+
+                    if ($this->getAccountLevel() == '1') {
                         $_SESSION['admin'] = true;
                     }
 
                     return '1';
-                }
-                else
-                {
+                } else {
                     return '2';
                 }
-            }
-            else
-            {
+            } else {
                 return '3';
             }
-        }
-        else
-        {
+        } else {
             return '3';
         }
-        }
+    }
 
     /*
      * Verander het passwoord van de gebruiker die ingelogd is.
      */
 
-    public function changeUserPass($inputUsername, $inputPassword, $newPassword, $newPasswordRepeat)
-        {
+    public function changeUserPass($inputUsername, $inputPassword, $newPassword, $newPasswordRepeat) {
         $md5pass = md5($inputPassword);
 
         $query = "SELECT a.gebruikersnaam, a.wachtwoord FROM account a 
@@ -106,10 +88,8 @@ class Account
 
         $result = DatabaseConnector::executeQuery($query);
 
-        if ($result != null)
-        {
-            if ($newPassword == $newPasswordRepeat && $newPassword != $inputPassword)
-            {
+        if ($result != null) {
+            if ($newPassword == $newPasswordRepeat && $newPassword != $inputPassword) {
                 $newMd5Pass = md5($newPassword);
 
                 $array = array($newMd5Pass, $inputUsername);
@@ -118,40 +98,31 @@ class Account
                 DatabaseConnector::executeQuery($query, $array);
 
                 return '1';
-            }
-            else if ($newPassword == $inputPassword)
-            {
+            } else if ($newPassword == $inputPassword) {
                 return '2';
-            }
-            else
-            {
+            } else {
                 echo'De nieuwe wachtwoorden komen niet overeen';
                 return '3';
             }
-        }
-        else
-        {
+        } else {
             echo 'Verkeerd wachtwoord ingetypt';
             return '4';
         }
-        }
+    }
 
     /*
      * Haalt de waarde op van de variable $enabled.
      */
 
-    private function getEnabled()
-        {
+    private function getEnabled() {
         return $this->enabled;
-        }
+    }
 
-    private function getAccountLevel()
-        {
+    private function getAccountLevel() {
         return $this->level;
-        }
+    }
 
-    public function save($userName, $passWord, $levelId)
-        {
+    public function save($userName, $passWord, $levelId) {
 
 
         $query = "SELECT LAST_INSERT_ID() AS id FROM docent LIMIT 1";
@@ -166,57 +137,62 @@ class Account
 
 
         DatabaseConnector::executeQuery($query, $parameters);
-        }
+    }
 
-    public function update($docentId, $userName, $passWord = null, $levelId)
-        {
+    public function update($docentId, $userName, $passWord = null, $levelId, $activated = 0, $oldUserName) {
         $parameters = array();
 
         $query = "UPDATE account SET ";
 
-        if (isset($passWord))
-        {
+        if (isset($passWord)) {
             $parameters[] = md5($passWord);
             $query .= "wachtwoord = ?, ";
         }
 
-        if (isset($userName))
-        {
+        if (isset($userName)) {
             $parameters[] = $userName;
             $query .= "gebruikersnaam = ?, ";
         }
 
-        if (isset($levelId))
-        {
+        if (isset($levelId)) {
             $parameters[] = $levelId;
             $query .= "level_id = ?, ";
         }
 
+        if (isset($activated)) {
+            $parameters[] = $activated;
+            $query .= "disabled = ?, ";
+        }
+
         $query = substr($query, 0, strlen($query) - 2);
 
-        $parameters[] = $docentId;
 
-        $query .= " WHERE docent_id = ?";
+
+        if (isset($docentId)) {
+            $parameters[] = $docentId;
+            $query .= " WHERE docent_id = ?";
+        } else {
+            $parameters[] = $oldUserName;
+            $query .= " WHERE gebruikersnaam = ?";
+        }
 
         var_dump($query);
         var_dump($parameters);
 
 
         DatabaseConnector::executeQuery($query, $parameters);
-        }
+    }
 
-    public function changePassByDocentId($docentId, $newPass)
-        {
+    public function changePassByDocentId($docentId, $newPass) {
         $newPass = md5($newPass);
         $parameters = array($newPass, $docentId);
 
         $query = "UPDATE account SET wachtwoord = ? WHERE docent_id = ?";
 
         DatabaseConnector::executeQuery($query, $parameters);
-        }
+    }
 
-    public function getAccount($docentId)
-        {
+    public function getAccount($docentId) {
         $parameters = array($docentId);
 
         $query = "SELECT * FROM account WHERE docent_id = ?";
@@ -224,8 +200,18 @@ class Account
         $result = DatabaseConnector::executeQuery($query, $parameters);
 
         return $result;
-        }
-
     }
+
+    public function getAccountByKey($userName) {
+        $parameters = array($userName);
+
+        $query = "SELECT * FROM account WHERE gebruikersnaam = ?";
+
+        $result = DatabaseConnector::executeQuery($query, $parameters);
+
+        return $result;
+    }
+
+}
 
 ?>
