@@ -1,6 +1,7 @@
 <h1>Home</h1>       
 <div class="beheerMenu">
-    <?php if ($_SESSION["admin"]) { ?>
+    <?php if ($_SESSION["admin"])
+    { ?>
         <div class="menuRow">
             <div class="menuItem" onclick="javascript:location.href = 'index.php?p=docent'">
                 <div class="fontIcon">&#xe075;</div>      
@@ -19,10 +20,11 @@
                 <div class="text">Waarderingen</div>
             </div>
         </div>  
-    <?php } ?>
+<?php } ?>
 
     <div class="menuRow">
-        <?php if ($_SESSION["admin"]) { ?>
+<?php if ($_SESSION["admin"])
+{ ?>
             <div class="menuItem" onclick="javascript:location.href = 'index.php?p=studentsearch'">
                 <div class="fontIcon">&#xe070;</div>      
                 <div class="text">Studenten</div>
@@ -38,12 +40,13 @@
         <?php } ?>
         <!--TODO:-->
         <!--CHECK OF DE DOCENT VAN MINSTENS ÉÉN KLAS, ANDERS DEZE KNOP NIET EENS LATEN ZIEN BIJ EEN DOCENT!!!! DAN HEEFT DIE AAN BEOORDELING GENOEG-->
-        <?php if (!$_SESSION["admin"]) { ?>
+<?php if (!$_SESSION["admin"])
+{ ?>
             <div class="menuItem" onclick="javascript:location.href = 'index.php?p=studentsearch'">
                 <div class="fontIcon">&#xe095;</div>      
                 <div class="text">Resultaten</div>
             </div>
-        <?php } ?>
+<?php } ?>
         <div class="menuItem" onclick="javascript:location.href = 'index.php?p=beoordeling'">
             <div class="fontIcon">&#xe023;</div>      
             <div class="text">Beoordelingen</div>
@@ -51,15 +54,16 @@
     </div>     
 
     <div class="menuRow">
-        <?php if ($_SESSION["admin"]) { ?>
-            <div class="menuItem">
-                <div class="fontIcon" onclick="javascript:location.href = 'index.php?p=profiel'">&#xe087;</div>      
-                <div class="text">Profiel</div>
-            </div>
+        <div class="menuItem">
+            <div class="fontIcon" onclick="javascript:location.href = 'index.php?p=profiel'">&#xe087;</div>      
+            <div class="text">Profiel</div>
+        </div>
+<?php if ($_SESSION["admin"])
+{ ?>
             <div class="menuItem">
                 <div class="fontIcon" onclick="javascript:location.href = 'index.php?p=account'">&#xe0c6;</div>      
                 <div class="text">Accounts</div>
             </div>
-        <?php } ?>
+<?php } ?>
     </div>
 </div>

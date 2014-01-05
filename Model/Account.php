@@ -101,11 +101,9 @@ class Account {
             } else if ($newPassword == $inputPassword) {
                 return '2';
             } else {
-                echo'De nieuwe wachtwoorden komen niet overeen';
                 return '3';
             }
         } else {
-            echo 'Verkeerd wachtwoord ingetypt';
             return '4';
         }
     }

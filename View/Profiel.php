@@ -1,10 +1,12 @@
+<script src="JavaScript/AccountValidation.js"></script>
+<script src="JavaScript/DocentEdit.js"></script>
 <script type="text/javascript">
 
     function run() {
         openCover('profielcover');
     }
 </script>
-<script src="JavaScript/AccountValidation.js"></script>
+
 
 <div class="coverBg" id="profielcover">
     <div class="cover">
@@ -20,7 +22,8 @@
 </div>
 
 <?php
-if (isset($_GET["e"])) {
+if (isset($_GET["e"]))
+{
     echo '<script type="text/javascript">run();</script>';
 }
 ?>
@@ -28,7 +31,9 @@ if (isset($_GET["e"])) {
 <h1>Account bewerken</h1>          
 <div class="ribbon">
     <div class="item">
-        <div class="fontIcon" onclick="$('#newPassRequest').submit();">
+        <div class="fontIcon" onclick="if (validatePassesOnly()) {
+            $('#newPassRequest').submit();
+        }">
             &#xe060;
         </div>  
         <div class="text">

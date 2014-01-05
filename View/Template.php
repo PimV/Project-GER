@@ -24,6 +24,8 @@
     <body>
         <div id="wrapper" style="position: absolute;width: 100%; height: 100%;">
             <div id="tmpHeader">
+                <?php if ($_SESSION["loggedin"])
+    { ?>
                 <div class="headerMenu">
                     <ul>
                         <li onclick="javascript:location.href = 'index.php?p=home'"><div class="icon fontIcon" >&#xe001;</div><div class="text">Home</div></li>
@@ -32,6 +34,7 @@
 
                     </ul>
                 </div>
+                <?php } ?>
             </div>
 
             <div id="tmpContent"> 
