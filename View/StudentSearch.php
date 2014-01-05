@@ -4,6 +4,11 @@
      Als het om een administrator gaat moet alles worden getoond.
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
+
+<script src="JavaScript/StudentSearch.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
+
 <div class="coverBg" id="coverDel">
     <div class="cover">
         <div class="header">
@@ -12,7 +17,7 @@
         <div class="contentMessage">
             <h2>Weet u zeker dat u deze student wilt verwijderen?</h2>
             <br/><br/><br/><br/>
-            <input type="button" value="Ja" onclick="javascript:location.href='index.php?p=studentsearch&del='+getSelectedItemId();"/>
+            <input type="button" value="Ja" onclick="javascript:location.href = 'index.php?p=studentsearch&del=' + getSelectedItemId();"/>
             <input type="button" value="Nee" onclick="closeCover('coverDel')"/>
         </div>
     </div>
@@ -82,7 +87,8 @@
                 Bewerken
             </div>
         </div> 
-        <div class="item" onclick="getSelectedItemId();openCover('coverDel');">
+        <div class="item" onclick="getSelectedItemId();
+                    openCover('coverDel');">
             <div class="fontIcon">
                 &#xe0a8;
             </div>  
@@ -108,7 +114,7 @@
             <table class="noAction">   
                 <tr>
                     <td>Studentnummer</td>  
-                    <td><input type="text"/></td>
+                    <td><input id="filter" name="filt" onkeyup="filter(this, 'sf', 1)" type="text" placeholder="Typ hier om te zoeken."/></td>
                 </tr>  
                 <tr>
                     <td>Voornaam</td>  
@@ -125,11 +131,11 @@
             <table class="noAction">  
                 <tr>     
                     <td>Startdatum</td>         
-                    <td><input type="text"/></td>
+                    <td><input id="datepicker1" type="text"/></td>
                 </tr>           
                 <tr>     
                     <td>Einddatum</td>         
-                    <td><input type="text"/></td>
+                    <td><input id="datepicker2" type="text"/></td>
                 </tr> 
                 <tr>
                     <td>Klas</td>
@@ -138,7 +144,15 @@
                             <option> </option>
                             <?php
                             foreach ($klassen as $row) {
-                                echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                if (isset($_GET['classId'])) {
+                                    if ($row["id"] == $_GET['classId']) {
+                                        echo("<option selected='selected' value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    } else {
+                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    }
+                                } else {
+                                    echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                }
                             }
                             ?>
                         </select>
@@ -161,7 +175,15 @@
                             <option> </option>
                             <?php
                             foreach ($klassen as $row) {
-                                echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+
+                                if (isset($_GET['classId'])) {
+
+                                    if ($row["id"] === $_GET['classId']) {
+                                        echo("<option selected='selected' value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    } else {
+                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    }
+                                }
                             }
                             ?>
                         </select>
@@ -186,7 +208,7 @@
     <?php } ?>
 
     <?php if ($_SESSION['admin']) { ?>
-        <table cellpadding="0" cellspacing="0">
+        <table id="sf" cellpadding="0" cellspacing="0">
             <thead>
             <th>Id</th>     
             <th>Voornaam</th>
@@ -219,23 +241,23 @@
 
 
     <?php
-    // WERKT NOG NIET
+// WERKT NOG NIET
     include 'Libraries/PHPExcel/PHPExcel/IOFactory.php';
 
     $inputFileName = $_FILES['file']['tmp_name'];
 
-    //  Read your Excel workbook
+//  Read your Excel workbook
     try {
         $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
         $objReader = PHPExcel_IOFactory::createReader($inputFileType);
         $objPHPExcel = $objReader->load($inputFileName);
 
         $outputObj = new PHPExcel();
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         die();
     }
 
-    //  Get worksheet dimensions
+//  Get worksheet dimensions
     $sheet = $objPHPExcel->getSheet(0);
     $highestRow = $sheet->getHighestRow();
 
@@ -259,5 +281,4 @@
             $importCount = $importCount + 1;
         }
     }
-
-?>
+    ?>
