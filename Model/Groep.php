@@ -20,7 +20,40 @@ class Groep {
             $this->loadGroup($id);
         }
     }
+    
+    public function get_id() {
+        return $this->_id;
+    }
 
+    public function get_naam() {
+        return $this->_naam;
+    }
+
+    public function get_omschrijving() {
+        return $this->_omschrijving;
+    }
+
+    public function get_rubics() {
+        return $this->_rubics;
+    }
+
+    public function set_id($_id) {
+        $this->_id = $_id;
+    }
+
+    public function set_naam($_naam) {
+        $this->_naam = $_naam;
+    }
+
+    public function set_omschrijving($_omschrijving) {
+        $this->_omschrijving = $_omschrijving;
+    }
+
+    public function set_rubics($_rubics) {
+        $this->_rubics = $_rubics;
+    }
+
+    
     public function loadGroup($groupId){
         $result = DatabaseConnector::executeQuery(
                 "SELECT 
@@ -66,35 +99,33 @@ class Groep {
         }
     }
     
-    public function addGroup(){
-        DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET "
+    private function addGroup(){
+        DatabaseConnector::executeQuery("INSERT INTO rol SET "
                 . "(naam, omschrijving, verwijderd) "
                 . "VALUES "
-                . "(" .  $this->_naam . ", " . $this->_omschrijving . ", false)");
-
-        DatabaseConnector::executeQuery("DELET FROM rol_rubriek WHERE rol_id = " . $this->_id);
+                . "(" .  $this->_naam . ", " . $this->_omschrijving . ", 0)");
         
-        foreach($this->_rubics as $value) {
-            $rol = $value['rolId'];
-            $rubriek = $value['rubriekId'];
-            
-            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET (rol_id, rubriek_id) VALUES (" . $rol . ", " . $rubriek . ")");
+        $idQuery = DatabaseConnector::executeQuery("SELECT max(id) AS id from rol");
+        
+        $this->_id = $idQuery['0']['id'];
+        
+        foreach($this->_rubics as $key => $rol) {            
+            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET (rol_id, rubriek_id) VALUES (" . $rol . ", " . $this->_id . ")");
         }
     }
 
-    public function updateGroep(){
-        DatabaseConnector::executeQuery("UPDATE rol SET naam = " . $this->_naam . ", 
-                                                omschrijving = " . $this->_omschrijving . ",
-                                                verwijderd = false,
-                                                WHERE id = " . $this->_omschrijving);
+    private function updateGroep(){
+        DatabaseConnector::executeQuery("UPDATE rol SET naam = '" . $this->_naam . "', 
+                                                omschrijving = '" . $this->_omschrijving . "',
+                                                verwijderd = 0
+                                                WHERE id = " . $this->_id);
 
-        DatabaseConnector::executeQuery("DELET FROM rol_rubriek WHERE rol_id = " . $this->_id);
+        DatabaseConnector::executeQuery("DELETE FROM rol_rubriek WHERE rol_id = " . $this->_id);
         
-        foreach($this->_rubics as $value) {
-            $rol = $value['rolId'];
-            $rubriek = $value['rubriekId'];
-            
-            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET (rol_id, rubriek_id) VALUES (" . $rol . ", " . $rubriek . ")");
+        foreach($this->_rubics as $key => $rol) {            
+            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET "
+                    . "rol_id = " . $this->_id . ", "
+                    . "rubriek_id = " . $rol);
         }
     }    
 }
