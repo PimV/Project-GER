@@ -29,7 +29,7 @@ class StudentSearchController {
             } else {
                 $studenten = $this->studentenModel->getAllStudents_array();
             }
-            $klassen = $this->klassenModel->getAllClasses_array();
+            $klassen = $this->klassenModel->getAllClasses_array(true, true);
 
             if (isset($_GET["del"])) {
                 $this->studentenModel->removeStudent($_GET["del"]);
