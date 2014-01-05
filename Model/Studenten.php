@@ -37,11 +37,27 @@ class Studenten {
     }
 
     public function removeStudent($studentId) {
-        $query1 = "DELETE FROM klas_student WHERE student_id = ?";
+        // Verwijder definitieve resultaten van student
+        $query1 = "DELETE r.* FROM resultaat_definitief as r
+                    INNER JOIN klas_student as k
+                    ON r.klas_student_id = k.id
+                    WHERE k.student_id = ?";
         DatabaseConnector::executeQuery($query1, array($studentId));
 
-        $query2 = "DELETE FROM student WHERE id = ?";
+        // Verwijder resultaten van student
+        $query1 = "DELETE r.* FROM resultaat as r
+                    INNER JOIN klas_student as k
+                    ON r.klas_student_id = k.id
+                    WHERE k.student_id = ?";
+        DatabaseConnector::executeQuery($query1, array($studentId));
+
+        // Verwijder student van klas
+        $query2 = "DELETE FROM klas_student WHERE student_id = ?";
         DatabaseConnector::executeQuery($query2, array($studentId));
+
+        // Verwijder student
+        $query3 = "DELETE FROM student WHERE id = ?";
+        DatabaseConnector::executeQuery($query3, array($studentId));
     }
 
     //TODO: studenten die van school af zijn?
