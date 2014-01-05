@@ -10,9 +10,7 @@ class Studenten {
     /**
       @todo Nieuw student aanmaken zonder klas? en student toevoegen waarvan de klas niet bestaat
       @todo Toevoegen student met ID die al bestaat? Wat nu?
-      @todo Query aanpassen van removeStudent (foreign keys verwijderen)
       @todo Zoeken: Javascript of PHP & SQL
-      @todo Student waarde: op school of niet?
      */
     public function __construct() {
         include_once 'Student.php';
@@ -39,8 +37,11 @@ class Studenten {
     }
 
     public function removeStudent($studentId) {
-        $query = "DELETE FROM student WHERE id = ?";
-        DatabaseConnector::executeQuery($query, array($studentId));
+        $query1 = "DELETE FROM klas_student WHERE student_id = ?";
+        DatabaseConnector::executeQuery($query1, array($studentId));
+
+        $query2 = "DELETE FROM student WHERE id = ?";
+        DatabaseConnector::executeQuery($query2, array($studentId));
     }
 
     //TODO: studenten die van school af zijn?
