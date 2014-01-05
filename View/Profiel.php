@@ -1,8 +1,10 @@
 <script type="text/javascript">
-    function run(){
+
+    function run() {
         openCover('profielcover');
     }
 </script>
+<script src="JavaScript/AccountValidation.js"></script>
 
 <div class="coverBg" id="profielcover">
     <div class="cover">
@@ -11,17 +13,15 @@
         </div>
         <div class="contentMessage">
             <?php
-                echo $_SESSION['profielError'];
+            echo $_SESSION['profielError'];
             ?>   
         </div>
     </div>
 </div>
 
 <?php
-
-if(isset($_GET["e"]))
-{
-    echo '<script type="text/javascript">run();</script>';  
+if (isset($_GET["e"])) {
+    echo '<script type="text/javascript">run();</script>';
 }
 ?>
 
@@ -60,11 +60,11 @@ if(isset($_GET["e"]))
             <table class="noAction">     
                 <tr>
                     <td>Nieuw wachtwoord</td>  
-                    <td><input type="password" name="newPass"/></td>
+                    <td><input class="password" type="password" name="newPass"/></td>
                 </tr>         
                 <tr>
                     <td>Wachtwoord herhalen</td>  
-                    <td><input type="password" name="newPassRepeat"/></td>
+                    <td><input class="password" type="password" name="newPassRepeat"/></td>
                 </tr>   
             </table>     
         </div>
