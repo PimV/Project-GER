@@ -104,26 +104,10 @@ class MailController {
     }
 
     public function sendMail() {
-        $message = "Geen bericht (KAN NIET!)";
-        $email = "Geen email (KAN NIET!)";
-        $name = "Geen naam (KAN NIET!)";
-        $addresses = null;
-        if (isset($_POST['message'])) {
-            $message = $_POST['message'];
-        }
-        if (isset($_POST['email'])) {
-            $email = $_POST['email'];
-        }
-        if (isset($_POST['name'])) {
-            $name = $_POST['name'];
-        }
-        if (isset($_POST['addresses'])) {
-            $addresses = $_POST['addresses'];
-        }
         require 'PHPMailer/PHPMailerAutoload.php';
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
-        $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth = true;  // authentication enabled
         $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
         $mail->Host = 'ssl://smtp.gmail.com';
@@ -142,12 +126,9 @@ class MailController {
 
             if (!$mail->Send()) {
                 $error = 'Mail error: ' . $mail->ErrorInfo;
-                //echo json_encode(array("status" => false));
             } else {
                 $error = 'Message sent!';
-                //echo json_encode(array("status" => true));
             }
-            //$majorFailure .= $error . "<br>";
         }
         echo $majorFailure;
     }
