@@ -1,4 +1,5 @@
 <script src="JavaScript/DocentEdit.js"></script>
+<script src="JavaScript/AccountValidation.js"></script>
 <h1>Account bewerken</h1>          
 <div class="ribbon">     
     <div class="item" onclick="
