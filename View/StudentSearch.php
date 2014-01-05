@@ -117,27 +117,6 @@
                     <td><input id="filter" name="filt" onkeyup="filter(this, 'sf', 1)" type="text" placeholder="Typ hier om te zoeken."/></td>
                 </tr>  
                 <tr>
-                    <td>Voornaam</td>  
-                    <td><input type="text"/></td>
-                </tr>         
-                <tr>
-                    <td>Achternaam</td>  
-                    <td><input type="text"/></td>
-                </tr>  
-            </table>            
-        </div>
-
-        <div class="right">   
-            <table class="noAction">  
-                <tr>     
-                    <td>Startdatum</td>         
-                    <td><input id="datepicker1" type="text"/></td>
-                </tr>           
-                <tr>     
-                    <td>Einddatum</td>         
-                    <td><input id="datepicker2" type="text"/></td>
-                </tr> 
-                <tr>
                     <td>Klas</td>
                     <td>
                         <select id="dropdownClass" class="selectFullSize" onchange="showId()">
@@ -157,7 +136,20 @@
                             ?>
                         </select>
                     </td>
-                </tr>
+                </tr> 
+            </table>            
+        </div>
+
+        <div class="right">   
+            <table class="noAction">  
+                <tr>     
+                    <td>Startdatum</td>         
+                    <td><input id="datepicker1" type="text"/></td>
+                </tr>           
+                <tr>     
+                    <td>Einddatum</td>         
+                    <td><input id="datepicker2" type="text"/></td>
+                </tr> 
             </table>     
         </div>
     </div>
