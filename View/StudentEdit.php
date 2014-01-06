@@ -15,7 +15,7 @@ else{
             Opslaan
         </div>
     </div>
-    <div class="item" onclick="javascript:location.href='index.php?p=studentsearch'">
+    <div class="item" onclick="javascript:location.href='index.php?p=studentsearch&classId=' + <?php echo $_GET['c']; ?>">
         <div class="fontIcon">
             &#xe0f9;
         </div>  
