@@ -51,15 +51,7 @@
         <div class="text">
             Terug
         </div>
-    </div>
-    <div class="item">
-        <div class="fontIcon">
-            &#xe07f;
-        </div>  
-        <div class="text">
-            Zoeken
-        </div>
-    </div>   
+    </div>  
     <div class="item" onclick="javascript:location.href = 'index.php?p=resultaat&id=' + getSelectedItemId()">
         <div class="fontIcon">
             &#xe095;
@@ -113,7 +105,7 @@
         <div class="left">
             <table class="noAction">   
                 <tr>
-                    <td>Studentnummer</td>  
+                    <td>Zoekveld</td>  
                     <td><input id="filter" name="filt" onkeyup="filter(this, 'sf', 1)" type="text" placeholder="Typ hier om te zoeken."/></td>
                 </tr>  
                 <tr>
@@ -138,19 +130,6 @@
                     </td>
                 </tr> 
             </table>            
-        </div>
-
-        <div class="right">   
-            <table class="noAction">  
-                <tr>     
-                    <td>Startdatum</td>         
-                    <td><input id="datepicker1" type="text"/></td>
-                </tr>           
-                <tr>     
-                    <td>Einddatum</td>         
-                    <td><input id="datepicker2" type="text"/></td>
-                </tr> 
-            </table>     
         </div>
     </div>
 <?php } ?>

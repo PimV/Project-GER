@@ -16,6 +16,7 @@ function showId() {
 }
 
 function filter(phrase, _id) {
+    var even = false;
     var words = phrase.value.toLowerCase().split(" ");
     var table = document.getElementById(_id);
     var ele;
@@ -23,13 +24,22 @@ function filter(phrase, _id) {
         ele = table.rows[r].innerHTML.replace(/<[^>]+>/g, "");
         var displayStyle = 'none';
         for (var i = 0; i < words.length; i++) {
-            if (ele.toLowerCase().indexOf(words[i]) >= 0)
+            if (ele.toLowerCase().indexOf(words[i]) >= 0){
                 displayStyle = '';
+                
+                if(!even){
+                    $(table.rows[r]).addClass("unEven");                    
+                }else{
+                    $(table.rows[r]).removeClass("unEven"); 
+                }  
+                even = !even;
+            }
             else {
                 displayStyle = 'none';
                 break;
             }
         }
         table.rows[r].style.display = displayStyle;
+         
     }
 }

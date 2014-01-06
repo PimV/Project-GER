@@ -52,6 +52,9 @@ class StudentEditController {
         } else {
             $this->studentenModel->addStudent($_POST["studentId"], $_POST["voornaam"], $_POST["achternaam"], $_POST["tussenvoegsel"], $_POST["mail"]);
         }
+        
+        //Redirect naar de overzicht pagina van studenten
+        header("location: index.php?p=studentsearch");
     }
 }
 
