@@ -55,7 +55,7 @@ class StudentEditController {
         }
         
         //Redirect naar de overzicht pagina van studenten
-        header("location: index.php?p=studentsearch");
+        header("location: index.php?p=studentsearch&classId=" . $_GET['c']);
     }
 }
 

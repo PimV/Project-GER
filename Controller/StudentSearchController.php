@@ -18,10 +18,13 @@ class StudentSearchController {
     }
 
     public function invoke() {
-        
+    
+        $classId = 0;
+                
         //Als er een klasId is, pak dan alle studenten van die klas, anders pak alle studenten.
-        if (isset($_GET['classId'])) {
-            $studenten = $this->studentenModel->getStudentsFromClass((int) $_GET['classId']);
+        if (isset($_GET['classId']) && $_GET['classId'] != 0) {
+            $classId = $_GET['classId'];
+            $studenten = $this->studentenModel->getStudentsFromClass($classId);
         } else {
             $studenten = $this->studentenModel->getAllStudents_array();
         }
