@@ -106,4 +106,13 @@
 			</table>     
 		</div>
 	</div>
+	
+<?php	
+if(isset($error)) {
+	echo "<script> showError('Geen geldige datum ingevoerd', 'Geen datum'); </script>"; 
+}
+
+?>
+
 </form>
+
