@@ -1,4 +1,11 @@
-<h1>Rol bewerken</h1>          
+<?php
+if(isset($_GET['id'])){
+    echo "<h1>Rol " . $groupList['0']['naam'] . " bewerken</h1>";  
+}
+else{
+    echo '<h1>Rol toevoegen</h1>';
+}
+?>
 <div class="ribbon">     
     <div class="item">
         <div class="fontIcon" onclick="

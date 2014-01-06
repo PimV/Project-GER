@@ -1,4 +1,11 @@
-<h1>Student bewerken</h1>          
+<?php
+if(isset($_GET['id'])){
+    echo "<h1>$voornaam $tussenvoegsel $achternaam bewerken</h1>";  
+}
+else{
+    echo '<h1>Student toevoegen</h1>';
+}
+?>       
 <div class="ribbon">     
     <div class="item" onclick="$('#form').submit();">
         <div class="fontIcon">
