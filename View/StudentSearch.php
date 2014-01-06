@@ -8,6 +8,11 @@
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
 
+
+
+
+
+
 <div class="coverBg" id="coverDel">
     <div class="cover">
         <div class="header">
@@ -31,11 +36,33 @@
             <h2>Selecteer het bestand waarin de studenten staan.</h2>
 
             <br/><br/><br/><br/>
-            <form action="index.php?p=studentsearch" method="post" enctype="multipart/form-data">
+            <form action="index.php?p=import" method="POST" enctype="multipart/form-data">
                 <label for="file">Bestand: </label>
-                <input type="file" name="file" id="file"><br>
-                <input type="submit" name="submit" value="Submit">
+                <input type="file" name="file" id="file"></input><br>
+                <input type="submit" name="submit" value="submit"></input>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="coverBg" id="importResult">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('importResult')"></div>
+        </div>
+        <div class="contentMessage">
+            <h2>Resultaat van import: </h2>
+            <br>
+            <p>Het importeren is
+                <?php
+                if (isset($_SESSION['importSuccess'])) {
+                    if ($_SESSION['importSuccess']) {
+                        echo ' gelukt. U heeft ' . $_SESSION['importCount'] . ' student(en) toegevoegd.';
+                    } else {
+                        echo ' mislukt.';
+                    }
+                }
+                ?>
         </div>
     </div>
 </div>
@@ -98,20 +125,18 @@
     <?php } ?>
 </div>  
 
+<!-- Laat onderstaande view elementen alleen zien als een administrator is ingelogd -->
+<?php if ($_SESSION['admin']) { ?>
     <div class="splitScreen">
         <div class="left">
-            <table class="noAction"> 
-                <!-- Laat onderstaande view elementen alleen zien als een administrator is ingelogd -->
-                <?php if ($_SESSION['admin']) { ?>
+            <table class="noAction">   
                 <tr>
                     <td>Zoekveld</td>  
                     <td><input id="filter" name="filt" onkeyup="filter(this, 'sf', 1)" type="text" placeholder="Typ hier om te zoeken."/></td>
                 </tr>  
-                <?php } ?>
                 <tr>
                     <td>Klas</td>
                     <td>
-                        <?php if ($_SESSION['admin']) { ?>
                         <select id="dropdownClass" class="selectFullSize" onchange="showId()">
                             <option> </option>
                             <?php
@@ -128,39 +153,58 @@
                             }
                             ?>
                         </select>
-                        <?php } else if (!$_SESSION['admin']) {?>
-                        <select id="dropdownClass" class="selectFullSize" onchange="showId()">
-                            <?php
-                            $i = 1;
-                            foreach ($klassen as $row) {
-                                if (isset($_GET['classId'])) {
-                                    if ($row["id"] == $_GET['classId']) {
-                                        echo("<option selected value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                    } else {
-                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                    }
-                                } else {
-                                    if($i == count($klassen)){
-                                        echo("<option selected value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                     }else{
-                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                    }
-                                    $i++;
-                                }
-                            }
-                            
-                            if (!isset($_GET['classId'])) {
-                                echo "<script>showId();</script>";
-                            }
-                            
-                            ?>
-                        </select>
-                        <?php } ?>
                     </td>
                 </tr> 
             </table>            
         </div>
     </div>
+<?php } ?>
+
+<!-- Laat onderstaande view elementen alleen zien als een docent is ingelogd -->
+<?php if (!$_SESSION['admin']) { ?>
+    <div class="splitScreen">
+        <div class="left">
+            <table class="noAction">  
+                <tr>
+                    <td>Klas</td>
+                    <td>
+                        <select id="dropdownClass" class="selectFullSize" onchange="showId()">
+                            <option> </option>
+                            <?php
+                            foreach ($klassen as $row) {
+
+                                if (isset($_GET['classId'])) {
+
+                                    if ($row["id"] == $_GET['classId']) {
+                                        echo("<option selected='selected' value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    } else {
+                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    }
+                                } else {
+                                    echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                }
+                            }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+            </table>            
+        </div>
+
+
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+            <th>Id</th>     
+            <th>Voornaam</th>
+            <th>Achternaam</th>
+            <th>Tussenvoegsel</th>
+            <th>Mail</th>   
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    <?php } ?>
 
     <table id="sf" cellpadding="0" cellspacing="0">
         <thead>
@@ -191,47 +235,16 @@
         </tbody>
     </table>
 
-
-
     <?php
-// WERKT NOG NIET
-    include 'Libraries/PHPExcel/PHPExcel/IOFactory.php';
+    if (isset($_SESSION['importSuccess'])) {
 
-    $inputFileName = $_FILES['file']['tmp_name'];
-
-//  Read your Excel workbook
-    try {
-        $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-        $objPHPExcel = $objReader->load($inputFileName);
-
-        $outputObj = new PHPExcel();
-    } catch (Exception $e) {
-        die();
+        echo '<script type="text/javascript">openCover("importResult");</script>';
     }
-
-//  Get worksheet dimensions
-    $sheet = $objPHPExcel->getSheet(0);
-    $highestRow = $sheet->getHighestRow();
-
-    for ($row = 1; $row <= $highestRow; $row++) {
-
-        $studentId = $sheet->getCell('A' . $row)->getValue();
-        $klasId = $sheet->getCell('B' . $row)->getValue();
-        $voornaam = $sheet->getCell('C' . $row)->getValue();
-        $tussenvoegsel = $sheet->getCell('D' . $row)->getValue();
-        $achternaam = $sheet->getCell('E' . $row)->getValue();
-
-        if (!empty($studentId)) {
-            $imports[$importCount] = array(
-                "studentId" => $studentId,
-                "klasId" => $klasId,
-                "voornaam" => $voornaam,
-                "tussenvoegsel" => $tussenvoegsel,
-                "achternaam" => $achternaam
-            );
-
-            $importCount = $importCount + 1;
-        }
-    }
+    unset($_SESSION['importSuccess']);
     ?>
+
+
+
+
+
+
