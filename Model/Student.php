@@ -48,7 +48,7 @@ class Student {
 
     public function saveToDB() {
         $query = "SELECT * FROM student WHERE id = ?";
-        $result = DatabaseConnector::executeQuery($query, array($this->studentId))
+        $result = DatabaseConnector::executeQuery($query, array($this->studentId));
 
         if (is_null($this->oldId)) {
             // geen ID
@@ -57,7 +57,7 @@ class Student {
             // ID niet veranderd
             $this->updateStudent();
         } else if ($this->oldId != $this->studentId && is_null($result[0])) {
-            // ID veranderd en nieuwe ID bestaat niet
+            // ID veranderd & nieuwe ID bestaat niet
             $this->updateStudentWithDependencies();
         }
     }
