@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Klassen
+ * Klassen model. Voor algemene acties die betrekking hebben over de hele collectie klassen.
  *
  * @author johan
  */

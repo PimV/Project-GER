@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of Klas
+ * Klas model. Voor het beheren van een enkele klas.
  *
  * @author johan
  */
@@ -86,7 +86,9 @@ class Klas {
     public function getStudents() { return $this->students; }
     public function currentlyReviewing() { return !empty($this->reviewDeadline); }
     
-    
+    /**
+     * Use when finished editing class info to write all changes to the database. 
+     */
     public function saveToDB() {
         if(empty($this->classId)) {
             $this->saveNewClass();
@@ -96,6 +98,9 @@ class Klas {
         }
     }
     
+    /**
+     * Save a new class to the database.
+     */
     private function saveNewClass() {
             //Nieuwe klas maken.
             $query = "INSERT INTO klas (klascode, coach_id, blok_id, schooljaar)
@@ -122,57 +127,66 @@ class Klas {
             }
     }
     
+    /**
+     * Update the class in the database.
+     */
     private function updateClass() {
-            $query = "UPDATE klas SET klascode = ?, coach_id = ?, blok_id = ?, schooljaar = ? ";
-            $parameters = array($this->classCode, 
-                                $this->coachId,
-                                $this->blockId,
-                                $this->schoolYear);
-            
-            if(!empty($this->reviewDeadline)){
-                $query .= ", beoordeling_deadline = STR_TO_DATE($this->reviewDeadline, '%d-%m-%Y') ";
-                array_push($parameters, $this->reviewDeadline);
-            }
-            $query .= "WHERE id = $this->classId ";
-            
-            DatabaseConnector::executeQuery($query, $parameters);
-            
-            $removedStudents = array_diff($this->oldStudentIds, $this->newStudentIds);
-            $addedStudents = array_diff($this->newStudentIds, $this->oldStudentIds);
+        //Update de klas.
+        $query = "UPDATE klas SET klascode = ?, coach_id = ?, blok_id = ?, schooljaar = ? ";
+        $parameters = array($this->classCode, 
+                            $this->coachId,
+                            $this->blockId,
+                            $this->schoolYear);
 
-            if(!empty($removedStudents)) {
-                $deleteQuery = "DELETE FROM klas_student
-                                WHERE klas_id = $this->classId AND
-                                student_id IN (";
-                $deleteParameters = array();
-                $arraySize = count($removedStudents);
-                $i = 1;
-                foreach ($removedStudents as $key => $id) {
-                    $deleteQuery .= "?";
-                    if($i < $arraySize){$deleteQuery .= ", ";}
-                    else {$deleteQuery .= ")";}
-                    array_push($deleteParameters, $id);
-                    $i++;
-                }
-                DatabaseConnector::executeQuery($deleteQuery, $deleteParameters);
-            }
+        if(!empty($this->reviewDeadline)){
+            $query .= ", beoordeling_deadline = STR_TO_DATE($this->reviewDeadline, '%d-%m-%Y') ";
+            array_push($parameters, $this->reviewDeadline);
+        }
+        $query .= "WHERE id = $this->classId ";
 
-            if(!empty($addedStudents))
-            {
-                $addQuery = "INSERT INTO klas_student (klas_id, student_id) VALUES ";
-                $addParameters = array();
-                $arraySize = count($addedStudents);
-                $i = 1;
-                foreach ($addedStudents as $key => $id) {
-                    $addQuery .= "($this->classId, ?)";
-                    if($i < $arraySize){$addQuery .= ", ";}
-                    array_push($addParameters, $id);
-                    $i++;
-                }
-                DatabaseConnector::executeQuery($addQuery, $addParameters);
+        DatabaseConnector::executeQuery($query, $parameters);
+
+        $removedStudents = array_diff($this->oldStudentIds, $this->newStudentIds);
+        $addedStudents = array_diff($this->newStudentIds, $this->oldStudentIds);
+
+        //Ontkoppel de weggehaalde studenten.
+        if(!empty($removedStudents)) {
+            $deleteQuery = "DELETE FROM klas_student
+                            WHERE klas_id = $this->classId AND
+                            student_id IN (";
+            $deleteParameters = array();
+            $arraySize = count($removedStudents);
+            $i = 1;
+            foreach ($removedStudents as $key => $id) {
+                $deleteQuery .= "?";
+                if($i < $arraySize){$deleteQuery .= ", ";}
+                else {$deleteQuery .= ")";}
+                array_push($deleteParameters, $id);
+                $i++;
             }
+            DatabaseConnector::executeQuery($deleteQuery, $deleteParameters);
+        }
+
+        //Koppel de nieuw toegevoegde studenten.
+        if(!empty($addedStudents))
+        {
+            $addQuery = "INSERT INTO klas_student (klas_id, student_id) VALUES ";
+            $addParameters = array();
+            $arraySize = count($addedStudents);
+            $i = 1;
+            foreach ($addedStudents as $key => $id) {
+                $addQuery .= "($this->classId, ?)";
+                if($i < $arraySize){$addQuery .= ", ";}
+                array_push($addParameters, $id);
+                $i++;
+            }
+            DatabaseConnector::executeQuery($addQuery, $addParameters);
+        }
     }
     
+    /**
+     * Verwijder de klas.
+     */
     public function removeClass(){
         $query = "DELETE FROM klas_student WHERE klas_id = $this->classId";
         $query2 = "DELETE FROM klas WHERE id = $this->classId";

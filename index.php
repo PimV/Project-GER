@@ -2,6 +2,7 @@
 
 // This file is the entry point of the website and acts like a router. 
 // Depending on the URL received from the user, the correct controller will be created. 
+
 //Start the session.
 session_start();
 
@@ -13,7 +14,8 @@ if (!isset($_SESSION['loggedin'])) {
 }
 
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
-include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
+include_once 'Controller/DatabaseConnector.php';    //Static class for database connections.
+
 //Get the page to open. Homepage default if none specified. 
 if (isset($_GET["p"]) && !empty($_GET["p"])) {
     $page = strtolower($_GET["p"]);
