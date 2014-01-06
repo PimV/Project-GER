@@ -87,20 +87,38 @@ class ImportController {
             foreach ($imports as $newStudent) {
                 $student = new Student();
                 if (isset($newStudent['studentId'])) {
-                    $student->setStudentId($newStudent['studentId']);
-                    $student->setVoornaam($newStudent['voornaam']);
-                    $student->setTussenvoegsel($newStudent['tussenvoegsel']);
-                    $student->setAchternaam($newStudent['achternaam']);
-                    $student->setMail('');
-                    $student->saveNewStudent();
-                    $importCount++;
+                    if ($this->validateStudentData($newStudent)) {
+                        $student->setStudentId($newStudent['studentId']);
+                        $student->setVoornaam($newStudent['voornaam']);
+                        $student->setTussenvoegsel($newStudent['tussenvoegsel']);
+                        $student->setAchternaam($newStudent['achternaam']);
+                        $student->setMail('');
+                        var_dump($newStudent['voornaam']);
+                        $importCount++;
+                    }
                 }
+            }
+            if ((int) $importCount === 0) {
+                return false;
             }
             $_SESSION['importCount'] = (int) $importCount;
             return true;
         } catch (Exception $e) {
             return false;
         }
+    }
+
+    public function validateStudentData($student) {
+        if (!isset($student['studentId']) || $student['studentId'] == null) {
+            return false;
+        }
+        if (!isset($student['voornaam']) || $student['voornaam'] == null) {
+            return false;
+        }
+        if (!isset($student['achternaam']) || $student['achternaam'] == null) {
+            return false;
+        }
+        return true;
     }
 
 }

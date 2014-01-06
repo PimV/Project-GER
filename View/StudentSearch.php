@@ -62,11 +62,11 @@
                     if ($_SESSION['importSuccess']) {
                         echo ' gelukt. U heeft ' . $_SESSION['importCount'] . ' student(en) toegevoegd.';
                     } else {
-                        echo ' mislukt. <br>';
+                        echo ' mislukt. <br> Mogelijke oorzaken zijn een corrupt of geen Excel-bestand.';
                     }
                 }
                 ?>
-                Mogelijke oorzaken zijn een corrupt of geen Excel-bestand.
+
         </div>
     </div>
 </div>
