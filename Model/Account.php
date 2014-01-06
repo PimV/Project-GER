@@ -10,6 +10,7 @@ class Account {
     private $username;
     private $password;
     private $enabled;
+    private $level;
 
     /*
      * Valideer als de gebruiker de goede gegevens ingevold heeft.
@@ -24,7 +25,7 @@ class Account {
 
         if ($this->CheckIfUserExcists() === '1') {
             $_SESSION['username'] = $this->username;
-            $_SESSION['loggedin'] = true;
+            $_SESSION['loggedin'] = 'true';
         }
         return $this->CheckIfUserExcists();
     }
@@ -42,7 +43,7 @@ class Account {
         if ($result != null) {
             $md5pass = md5($this->password);
 
-            $query = "SELECT a.wachtwoord, a.disabled FROM account a 
+            $query = "SELECT a.wachtwoord, a.disabled, a.level_id FROM account a 
                       WHERE a.wachtwoord = '$md5pass' AND a.gebruikersnaam = '$this->username'";
 
             $result = DatabaseConnector::executeQuery($query);
@@ -50,6 +51,7 @@ class Account {
             if ($result != null) {
                 if ($result[0]['disabled'] === 0) {
                     $this->enabled = true;
+                    $this->level = $result[0]['level_id'];
                 } else {
                     $this->enabled = false;
                 }
@@ -57,6 +59,10 @@ class Account {
                 if ($this->getEnabled()) {
                     $_SESSION['username'] = $this->username;
                     $_SESSION['loggedin'] = true;
+
+                    if ($this->getAccountLevel() == '1') {
+                        $_SESSION['admin'] = true;
+                    }
 
                     return '1';
                 } else {
@@ -66,7 +72,7 @@ class Account {
                 return '3';
             }
         } else {
-            return '4';
+            return '3';
         }
     }
 
@@ -95,11 +101,9 @@ class Account {
             } else if ($newPassword == $inputPassword) {
                 return '2';
             } else {
-                echo'De nieuwe wachtwoorden komen niet overeen';
                 return '3';
             }
         } else {
-            echo 'Verkeerd wachtwoord ingetypt';
             return '4';
         }
     }
@@ -110,6 +114,10 @@ class Account {
 
     private function getEnabled() {
         return $this->enabled;
+    }
+
+    private function getAccountLevel() {
+        return $this->level;
     }
 
     public function save($userName, $passWord, $levelId) {
@@ -129,7 +137,7 @@ class Account {
         DatabaseConnector::executeQuery($query, $parameters);
     }
 
-    public function update($docentId, $userName, $passWord = null, $levelId) {
+    public function update($docentId, $userName, $passWord = null, $levelId, $activated = 0, $oldUserName) {
         $parameters = array();
 
         $query = "UPDATE account SET ";
@@ -149,11 +157,22 @@ class Account {
             $query .= "level_id = ?, ";
         }
 
+        if (isset($activated)) {
+            $parameters[] = $activated;
+            $query .= "disabled = ?, ";
+        }
+
         $query = substr($query, 0, strlen($query) - 2);
 
-        $parameters[] = $docentId;
 
-        $query .= " WHERE docent_id = ?";
+
+        if (isset($docentId)) {
+            $parameters[] = $docentId;
+            $query .= " WHERE docent_id = ?";
+        } else {
+            $parameters[] = $oldUserName;
+            $query .= " WHERE gebruikersnaam = ?";
+        }
 
         var_dump($query);
         var_dump($parameters);
@@ -175,6 +194,16 @@ class Account {
         $parameters = array($docentId);
 
         $query = "SELECT * FROM account WHERE docent_id = ?";
+
+        $result = DatabaseConnector::executeQuery($query, $parameters);
+
+        return $result;
+    }
+
+    public function getAccountByKey($userName) {
+        $parameters = array($userName);
+
+        $query = "SELECT * FROM account WHERE gebruikersnaam = ?";
 
         $result = DatabaseConnector::executeQuery($query, $parameters);
 

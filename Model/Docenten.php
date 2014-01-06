@@ -76,8 +76,7 @@ class Docenten {
 
     public function getRollenNotAssignedByTeacher($docentId = null) {
         if (isset($docentId)) {
-            $parameters =
-            $query = "SELECT * FROM rol WHERE id NOT IN (SELECT id FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId') AND verwijderd = 0";
+            $parameters = $query = "SELECT * FROM rol WHERE id NOT IN (SELECT id FROM rol JOIN docent_rol ON rol.id = docent_rol.rol_id WHERE docent_id = '$docentId') AND verwijderd = 0";
         } else {
             $query = "SELECT * FROM rol WHERE verwijderd = 0";
         }
@@ -91,6 +90,12 @@ class Docenten {
         $parameters = array($teacherId);
         $query = "UPDATE docent SET verwijderd = 1 WHERE id = ?";
         DatabaseConnector::executeQuery($query, $parameters);
+    }
+
+    public function fetchMailData() {
+        $query = "SELECT id, voornaam, tussenvoegsel, achternaam, mail FROM docent WHERE verwijderd = 0";
+        $result = DatabaseConnector::executeQuery($query);
+        return $result;
     }
 
 }

@@ -48,7 +48,7 @@ class Student {
         $query = "SELECT * FROM student WHERE id = ?";
         $result = DatabaseConnector::executeQuery($query, array($this->studentId));
 
-        if(is_null($result)) {
+        if(count($result) == 1) {
             $this->updateStudent();
         } else {
             $this->saveNewStudent();            
@@ -58,7 +58,7 @@ class Student {
     public function saveNewStudent() {
         $query = "INSERT INTO student (id, voornaam, achternaam, tussenvoegsel, mail)
                   VALUES (?, ?, ?, ?, ?)";
-
+                  
         $parameters = array($this->studentId,
                             $this->voornaam,
                             $this->achternaam,

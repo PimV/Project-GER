@@ -8,12 +8,10 @@
 class Studenten {
 
     /**
-    @todo Nieuw student aanmaken zonder klas? en student toevoegen waarvan de klas niet bestaat
-    @todo Toevoegen student met ID die al bestaat? Wat nu?
-    @todo Query aanpassen van removeStudent (foreign keys verwijderen)
-    @todo Zoeken: Javascript of PHP & SQL
-    @todo Student waarde: op school of niet?
-    */
+      @todo Nieuw student aanmaken zonder klas? en student toevoegen waarvan de klas niet bestaat
+      @todo Toevoegen student met ID die al bestaat? Wat nu?
+      @todo Zoeken: Javascript of PHP & SQL
+     */
     public function __construct() {
         include_once 'Student.php';
     }
@@ -33,21 +31,38 @@ class Studenten {
         $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
-    
+
     public function getStudent($studentId) {
         return new Student($studentId);
     }
 
     public function removeStudent($studentId) {
-        $query = "DELETE FROM student WHERE id = ?";
-        DatabaseConnector::executeQuery($query, array($studentId));
+        // Verwijder definitieve resultaten van student
+        $query1 = "DELETE r.* FROM resultaat_definitief as r
+                    INNER JOIN klas_student as k
+                    ON r.klas_student_id = k.id
+                    WHERE k.student_id = ?";
+        DatabaseConnector::executeQuery($query1, array($studentId));
+
+        // Verwijder resultaten van student
+        $query1 = "DELETE r.* FROM resultaat as r
+                    INNER JOIN klas_student as k
+                    ON r.klas_student_id = k.id
+                    WHERE k.student_id = ?";
+        DatabaseConnector::executeQuery($query1, array($studentId));
+
+        // Verwijder student van klas
+        $query2 = "DELETE FROM klas_student WHERE student_id = ?";
+        DatabaseConnector::executeQuery($query2, array($studentId));
+
+        // Verwijder student
+        $query3 = "DELETE FROM student WHERE id = ?";
+        DatabaseConnector::executeQuery($query3, array($studentId));
     }
-
-
 
     //TODO: studenten die van school af zijn?
     public function getClasslessStudents() {
-        
+
         $query = "SELECT s.id AS studentid, CONCAT_WS(' ', s.voornaam, s.tussenvoegsel, s.achternaam) AS studentnaam
                     FROM student s
                     WHERE s.id NOT IN (
@@ -60,7 +75,7 @@ class Studenten {
         $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
-    
+
     //TODO: moet verplaatst worden naar 'student' model.
     //Word gebruikt op de result pagina om alle klassen van een student op te halen voor wanneer de admin is ingelogd
     //en coach id kan daar nog bij worden opgegeven wanneer een docent is ingelogd 
@@ -118,7 +133,12 @@ class Studenten {
     }
 
     public function getStudentsFromClass($classId) {
-        $query = "  SELECT ks.id AS klas_student_id, s.id AS id, s.voornaam AS voornaam, s.achternaam AS achternaam, s.tussenvoegsel AS tussenvoegsel FROM student s
+        $query = "  SELECT  ks.id AS klas_student_id,
+                            s.id AS id, s.voornaam AS voornaam,
+                            s.achternaam AS achternaam,
+                            s.tussenvoegsel AS tussenvoegsel,
+                            s.mail AS mail 
+                            FROM student s
                     JOIN klas_student ks ON ks.student_id = s.id
                     WHERE ks.klas_id = $classId
                     ORDER BY ks.id";

@@ -80,3 +80,24 @@ function allFieldsEntered() {
         return false;
     }
 }
+
+function validatePassesOnly() {
+    if (passwordsEmpty() === false) {
+        $passwordEqualCheck = validatePasswords();
+        if ($passwordEqualCheck === false) {
+            alert(errorMsg);
+            return;
+        } else {
+            $passwordLengthCheck = checkLengthPassword();
+
+            if ($passwordLengthCheck === false) {
+                alert(errorMsg);
+                return;
+            }
+        }
+    } else {
+        alert("Het nieuwe wachtwoord is leeg!");
+        return;
+    }
+    return true;
+}
