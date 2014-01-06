@@ -9,7 +9,8 @@
             Opslaan
         </div>
     </div>
-    <div class="item">
+    <div class="item" onclick="
+			javascript:location.href='index.php?p=waardering'">
         <div class="fontIcon">
             &#xe0f9;
         </div>  
