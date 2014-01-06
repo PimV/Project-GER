@@ -59,7 +59,7 @@ function createChart(canvas, naam, rubrieken, punten, maximaal){
     .Set('background.grid.count', maximaal)
     .Set('ymax', maximaal)
     .Set('radius', 170)
-    .Set('background.grid.spokes', 12)
+    .Set('background.grid.spokes', rubrieken.length)
     .Set('colors', ['Gradient(green)'])
     .Draw();
 };	
