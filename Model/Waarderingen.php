@@ -29,7 +29,9 @@ class Waarderingen {
     }
     
     public function getMaxRating() {
-        $query = "SELECT MAX(waardering) FROM waardering";
+        $query = "  SELECT MAX(waardering) 
+                    FROM waardering 
+                    WHERE verwijderd = 0";
         $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
