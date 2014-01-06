@@ -175,6 +175,12 @@ function deleteClicked(id) {
     }
 }
 
+/**
+ * Show an error message with the given message and title.
+ * 
+ * @param {String} message The message the error should show. Can use HTML.
+ * @param {String} title Optional. The title of the error message.
+ */
 function showError(message, title) {
     title = (typeof title === "undefined") ? "" : title; //Title is optioneel.
     $("body").append("<div class='coverBg' onclick='closeError();' id='errorCover'>"+
@@ -191,6 +197,9 @@ function showError(message, title) {
     openCover("errorCover");
 }
 
+/**
+ * Close the error message
+ */
 function closeError() {
     closeCover("errorCover");
     setTimeout(function(){
