@@ -15,7 +15,7 @@
             
             //Maak de table headers aan
             echo "<thead>";
-            echo "<th>Docent</th>";
+            echo "<th></th>";
             
             //Stel voor de foreach loopS in met welke leraar het begint
             $teacher = $result[0]["docent"];
