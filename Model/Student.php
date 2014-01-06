@@ -47,14 +47,17 @@ class Student {
     public function getOldId() { return $this->oldId; }
 
     public function saveToDB() {
+        $query = "SELECT * FROM student WHERE id = ?";
+        $result = DatabaseConnector::executeQuery($query, array($this->studentId))
+
         if (is_null($this->oldId)) {
             // geen ID
             $this->saveNewStudent();
         } else if ($this->oldId == $this->studentId) {
             // ID niet veranderd
             $this->updateStudent();
-        } else {
-            // ID veranderd
+        } else if ($this->oldId != $this->studentId && is_null($result[0])) {
+            // ID veranderd en nieuwe ID bestaat niet
             $this->updateStudentWithDependencies();
         }
     }
@@ -99,7 +102,7 @@ class Student {
                             $this->oldId);
 
         DatabaseConnector::executeQuery($query, $parameters);
-        
+
         // Verwijder student
         $query = "DELETE FROM student WHERE id = ?";
         DatabaseConnector::executeQuery($query, array($this->oldId));
