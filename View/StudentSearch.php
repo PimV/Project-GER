@@ -82,7 +82,7 @@
             Terug
         </div>
     </div>  
-    <div class="item" onclick="javascript:location.href = 'index.php?p=resultaat&id=' + getSelectedItemId()">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=resultaat&c=' + <?php echo $classId; ?> + '&id=' + getSelectedItemId()">
         <div class="fontIcon">
             &#xe095;
         </div>  
@@ -101,7 +101,7 @@
                 Toevoegen
             </div>
         </div>
-        <div class="item" onclick="javascript:location.href = 'index.php?p=studentedit&id=' + getSelectedItemId();">
+        <div class="item" onclick="javascript:location.href = 'index.php?p=studentedit&c=' + <?php echo $classId; ?> + '&id=' + getSelectedItemId();">
             <div class="fontIcon">
                 &#xe006;
             </div>  
