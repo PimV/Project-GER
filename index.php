@@ -11,12 +11,6 @@ if (!isset($_SESSION['loggedin'])) {
     $_SESSION['admin'] = false; //True wanneer een admin is ingelogd.
     $_SESSION['docentId'] = NULL; //Beschikbaar wanneer docent is ingelogd. Om onder andere zijn coach klassen op te halen.
 }
-//
-////TODO: verwijder tijdelijke test waardes
-//$_SESSION['loggedin'] = true;
-//$_SESSION['username'] = "Admin+docent testUser";
-//$_SESSION["admin"] = true;
-//$_SESSION["docentId"] = 2;
 
 include_once 'Model/GlobalSettings.php';            //Static class with global settings.
 include_once 'Controller/DatabaseConnector.php';    //Static class for database connections
