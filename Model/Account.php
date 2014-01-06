@@ -25,7 +25,7 @@ class Account {
 
         if ($this->CheckIfUserExcists() === '1') {
             $_SESSION['username'] = $this->username;
-            $_SESSION['loggedin'] = 'true';
+            $_SESSION['loggedin'] = true;
         }
         return $this->CheckIfUserExcists();
     }
@@ -43,7 +43,7 @@ class Account {
         if ($result != null) {
             $md5pass = md5($this->password);
 
-            $query = "SELECT a.wachtwoord, a.disabled, a.level_id FROM account a 
+            $query = "SELECT a.wachtwoord, a.disabled, a.level_id, a.docent_id FROM account a 
                       WHERE a.wachtwoord = '$md5pass' AND a.gebruikersnaam = '$this->username'";
 
             $result = DatabaseConnector::executeQuery($query);
@@ -62,7 +62,10 @@ class Account {
 
                     if ($this->getAccountLevel() == '1') {
                         $_SESSION['admin'] = true;
+                    }else{                        
+                        $_SESSION['docentId'] = $result[0]['docent_id'];
                     }
+                  
 
                     return '1';
                 } else {
