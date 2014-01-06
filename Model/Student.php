@@ -80,12 +80,11 @@ class Student {
                   SET voornaam = ?, achternaam = ?, tussenvoegsel = ?, mail = ? 
                   WHERE id = ?";
 
-        $parameters = array($this->studentId,
-                            $this->voornaam,
+        $parameters = array($this->voornaam,
                             $this->achternaam,
                             $this->tussenvoegsel,
                             $this->mail,
-                            $this->oldId);
+                            $this->studentId);
 
         DatabaseConnector::executeQuery($query, $parameters);
     }  
