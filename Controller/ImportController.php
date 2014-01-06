@@ -9,18 +9,21 @@ class ImportController {
     public function __construct() {
 
         if (isset($_POST['submit'])) {
+            $_SESSION['importSuccess'] = false;
             $fileName = $_FILES['file']['tmp_name'];
 
-            $this->startImport($fileName);
+            if (isset($fileName) && $fileName !== '') {
+                $this->startImport($fileName);
 
-            $_SESSION['importSuccess'] = $this->importSuccess;
+                $_SESSION['importSuccess'] = $this->importSuccess;
+            }
             // if ($this->importSuccess) {                
             header('Location: index.php?p=studentsearch');
             // }
-
-            die;
+            // die;
+        } else {
+            
         }
-        die;
     }
 
     public function startImport($fileName) {

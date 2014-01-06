@@ -24,14 +24,14 @@ function filter(phrase, _id) {
         ele = table.rows[r].innerHTML.replace(/<[^>]+>/g, "");
         var displayStyle = 'none';
         for (var i = 0; i < words.length; i++) {
-            if (ele.toLowerCase().indexOf(words[i]) >= 0){
+            if (ele.toLowerCase().indexOf(words[i]) >= 0) {
                 displayStyle = '';
-                
-                if(!even){
-                    $(table.rows[r]).addClass("unEven");                    
-                }else{
-                    $(table.rows[r]).removeClass("unEven"); 
-                }  
+
+                if (!even) {
+                    $(table.rows[r]).addClass("unEven");
+                } else {
+                    $(table.rows[r]).removeClass("unEven");
+                }
                 even = !even;
             }
             else {
@@ -40,6 +40,18 @@ function filter(phrase, _id) {
             }
         }
         table.rows[r].style.display = displayStyle;
-         
+
+    }
+}
+
+function beforeSubmit() {
+    var fileName = document.getElementById("file").value;
+    var ext = fileName.split('.').pop();
+    if (ext === "xls" || ext === "xlsx") {
+
+        return true;
+    } else {
+        document.getElementById("file").value = "";
+        return false;
     }
 }
