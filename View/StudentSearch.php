@@ -36,10 +36,13 @@
             <h2>Selecteer het bestand waarin de studenten staan.</h2>
 
             <br/><br/><br/><br/>
-            <form action="index.php?p=import" method="POST" enctype="multipart/form-data">
-                <label for="file">Bestand: </label>
-                <input type="file" name="file" id="file"></input><br>
-                <input type="submit" name="submit" value="submit"></input>
+            <form action="index.php?p=import" method="POST" enctype="multipart/form-data" >
+                <div><label for="file">Bestand: </label></div>
+                <br/>
+                <div>
+                    <input onchange="beforeSubmit()" type="file" name="file" id="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .csv"></input>
+                    <input style="display: inline;" type="submit" name="submit" value="Importeren"></input>
+                </div>
             </form>
         </div>
     </div>
@@ -59,10 +62,11 @@
                     if ($_SESSION['importSuccess']) {
                         echo ' gelukt. U heeft ' . $_SESSION['importCount'] . ' student(en) toegevoegd.';
                     } else {
-                        echo ' mislukt.';
+                        echo ' mislukt. <br> Mogelijke oorzaken zijn een corrupt of geen Excel-bestand.';
                     }
                 }
                 ?>
+
         </div>
     </div>
 </div>
@@ -78,7 +82,7 @@
             Terug
         </div>
     </div>  
-    <div class="item" onclick="javascript:location.href = 'index.php?p=resultaat&c=' + <?php echo $classId; ?> + '&id=' + getSelectedItemId()">
+    <div class="item" onclick="javascript:location.href = 'index.php?p=resultaat&id=' + getSelectedItemId()">
         <div class="fontIcon">
             &#xe095;
         </div>  
@@ -97,7 +101,7 @@
                 Toevoegen
             </div>
         </div>
-        <div class="item" onclick="javascript:location.href = 'index.php?p=studentedit&c=' + <?php echo $classId; ?> + '&id=' + getSelectedItemId();">
+        <div class="item" onclick="javascript:location.href = 'index.php?p=studentedit&id=' + getSelectedItemId();">
             <div class="fontIcon">
                 &#xe006;
             </div>  
@@ -106,7 +110,7 @@
             </div>
         </div> 
         <div class="item" onclick="getSelectedItemId();
-                    openCover('coverDel');">
+                openCover('coverDel');">
             <div class="fontIcon">
                 &#xe0a8;
             </div>  

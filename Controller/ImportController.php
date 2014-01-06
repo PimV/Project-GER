@@ -9,18 +9,21 @@ class ImportController {
     public function __construct() {
 
         if (isset($_POST['submit'])) {
+            $_SESSION['importSuccess'] = false;
             $fileName = $_FILES['file']['tmp_name'];
 
-            $this->startImport($fileName);
+            if (isset($fileName) && $fileName !== '') {
+                $this->startImport($fileName);
 
-            $_SESSION['importSuccess'] = $this->importSuccess;
+                $_SESSION['importSuccess'] = $this->importSuccess;
+            }
             // if ($this->importSuccess) {                
             header('Location: index.php?p=studentsearch');
             // }
-
-            die;
+            // die;
+        } else {
+            
         }
-        die;
     }
 
     public function startImport($fileName) {
@@ -84,20 +87,38 @@ class ImportController {
             foreach ($imports as $newStudent) {
                 $student = new Student();
                 if (isset($newStudent['studentId'])) {
-                    $student->setStudentId($newStudent['studentId']);
-                    $student->setVoornaam($newStudent['voornaam']);
-                    $student->setTussenvoegsel($newStudent['tussenvoegsel']);
-                    $student->setAchternaam($newStudent['achternaam']);
-                    $student->setMail('');
-                    $student->saveNewStudent();
-                    $importCount++;
+                    if ($this->validateStudentData($newStudent)) {
+                        $student->setStudentId($newStudent['studentId']);
+                        $student->setVoornaam($newStudent['voornaam']);
+                        $student->setTussenvoegsel($newStudent['tussenvoegsel']);
+                        $student->setAchternaam($newStudent['achternaam']);
+                        $student->setMail('');
+                        var_dump($newStudent['voornaam']);
+                        $importCount++;
+                    }
                 }
+            }
+            if ((int) $importCount === 0) {
+                return false;
             }
             $_SESSION['importCount'] = (int) $importCount;
             return true;
         } catch (Exception $e) {
             return false;
         }
+    }
+
+    public function validateStudentData($student) {
+        if (!isset($student['studentId']) || $student['studentId'] == null) {
+            return false;
+        }
+        if (!isset($student['voornaam']) || $student['voornaam'] == null) {
+            return false;
+        }
+        if (!isset($student['achternaam']) || $student['achternaam'] == null) {
+            return false;
+        }
+        return true;
     }
 
 }
