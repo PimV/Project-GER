@@ -18,17 +18,17 @@ class StudentSearchController {
     }
 
     public function invoke() {
-        $page = 'StudentSearch.php';
-        $pagehead = 'StudentSearchHead.php';
-
+        
+        //Als er een klasId is, pak dan alle studenten van die klas, anders pak alle studenten.
+        if (isset($_GET['classId'])) {
+            $studenten = $this->studentenModel->getStudentsFromClass((int) $_GET['classId']);
+        } else {
+            $studenten = $this->studentenModel->getAllStudents_array();
+        }
+        
         //Admin ingelogd
         if ($_SESSION['admin']) {
-            //Als er een klasId is, pak dan alle studenten van die klas, anders pak alle studenten.
-            if (isset($_GET['classId'])) {
-                $studenten = $this->studentenModel->getStudentsFromClass((int) $_GET['classId']);
-            } else {
-                $studenten = $this->studentenModel->getAllStudents_array();
-            }
+            
             $klassen = $this->klassenModel->getAllClasses_array(true, true);
 
             if (isset($_GET["del"])) {
@@ -49,6 +49,8 @@ class StudentSearchController {
             $klassen = $this->klassenModel->getAllClassesRating_array($coachId);
         }
 
+        $page = 'StudentSearch.php';
+        $pagehead = 'StudentSearchHead.php';
         include 'view' . DIRECTORY_SEPARATOR . 'template.php';
     }
 

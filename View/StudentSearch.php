@@ -4,7 +4,6 @@
      Als het om een administrator gaat moet alles worden getoond.
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
-
 <script src="JavaScript/StudentSearch.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
@@ -149,11 +148,13 @@
 
                                 if (isset($_GET['classId'])) {
 
-                                    if ($row["id"] === $_GET['classId']) {
+                                    if ($row["id"] == $_GET['classId']) {
                                         echo("<option selected='selected' value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
                                     } else {
                                         echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
                                     }
+                                }else {
+                                    echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
                                 }
                             }
                             ?>
@@ -178,36 +179,34 @@
         </table>
     <?php } ?>
 
-    <?php if ($_SESSION['admin']) { ?>
-        <table id="sf" cellpadding="0" cellspacing="0">
-            <thead>
-            <th>Id</th>     
-            <th>Voornaam</th>
-            <th>Tussenvoegsel</th>
-            <th>Achternaam</th>
-            <th>Mail</th>   
-            </thead>
-            <tbody>
-                <?php
-                $unEven = true;
-                foreach ($studenten as $row) {
-                    if ($unEven) {
-                        echo("<tr id='" . $row["id"] . "' class='unEven'>");
-                    } else {
-                        echo("<tr id='" . $row["id"] . "'>");
-                    }
-                    echo("<td>" . $row["id"] . "</td>");
-                    echo("<td>" . $row["voornaam"] . "</td>");
-                    echo("<td>" . $row["tussenvoegsel"] . "</td>");
-                    echo("<td>" . $row["achternaam"] . "</td>");
-                    echo("<td>" . $row["mail"] . "</td>");
-                    echo("</tr>");
-                    $unEven = !$unEven;
+    <table id="sf" cellpadding="0" cellspacing="0">
+        <thead>
+        <th>Id</th>     
+        <th>Voornaam</th>
+        <th>Tussenvoegsel</th>
+        <th>Achternaam</th>
+        <th>Mail</th>   
+        </thead>
+        <tbody>
+            <?php
+            $unEven = true;
+            foreach ($studenten as $row) {
+                if ($unEven) {
+                    echo("<tr id='" . $row["id"] . "' class='unEven'>");
+                } else {
+                    echo("<tr id='" . $row["id"] . "'>");
                 }
-                ?>
-            </tbody>
-        </table>
-    <?php } ?>
+                echo("<td>" . $row["id"] . "</td>");
+                echo("<td>" . $row["voornaam"] . "</td>");
+                echo("<td>" . $row["tussenvoegsel"] . "</td>");
+                echo("<td>" . $row["achternaam"] . "</td>");
+                echo("<td>" . $row["mail"] . "</td>");
+                echo("</tr>");
+                $unEven = !$unEven;
+            }
+            ?>
+        </tbody>
+    </table>
 
 
 
