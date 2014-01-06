@@ -8,14 +8,14 @@
 				Terug
 			</div>
 		</div> 
-		<div class="item" onclick="javascript:location.href='index.php?p=rubriekedit'">
+<!--		<div class="item" onclick="javascript:location.href='index.php?p=rubriekedit'">
 			<div class="fontIcon">
 				&#xe102;
 			</div>  
 			<div class="text">
 				Toevoegen
 			</div>
-		</div>
+		</div>-->
 		<div class="item" onclick="javascript:location.href='index.php?p=rubriekedit&id='+getSelectedItemId();">
 			<div class="fontIcon">
 				&#xe006;
@@ -24,14 +24,14 @@
 				Bewerken
 			</div>
 		</div> 
-		<div class="item" onclick="deleteClicked(getSelectedItemId());">
+<!--		<div class="item" onclick="deleteClicked(getSelectedItemId());">
 			<div class="fontIcon">
 				&#xe0a8;
 			</div>  
 			<div class="text">
 				Verwijderen
 			</div>
-		</div>
+		</div>-->
 	</div>
 	<!-- Table containing all rubrics -->
 	<table cellpadding="0" cellspacing="0">
