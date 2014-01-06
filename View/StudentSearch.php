@@ -35,12 +35,13 @@
         <div class="contentMessage">
             <h2>Selecteer het bestand waarin de studenten staan.</h2>
 
-            <br/><br/><br/><br/>
+            <br/><br/><br/>
             <form action="index.php?p=import" method="POST" enctype="multipart/form-data">
                 <label for="file">Bestand: </label>
                 <input type="file" name="file" id="file"></input><br>
                 <input type="submit" name="submit" value="submit"></input>
             </form>
+            <br/><br/>
         </div>
     </div>
 </div>
