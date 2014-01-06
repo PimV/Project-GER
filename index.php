@@ -50,7 +50,8 @@ $array = array(
     "waardering",
     "waarderingedit",
     "account",
-    "accountedit"
+    "accountedit",
+    "import"
 );
 
 foreach ($array as $arrayPage) {
