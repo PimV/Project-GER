@@ -11,7 +11,7 @@ class Student {
     private $voornaam;
     private $achternaam;
     private $tussenvoegsel;
-    private $mail;
+    private $mail;    private $oldId;
 
     public function __construct($studentId = null) {
         if(!is_null($studentId)) {
@@ -36,6 +36,7 @@ class Student {
     public function setAchternaam($achternaam) { $this->achternaam = $achternaam; }
     public function setTussenvoegsel($tussenvoegsel) { $this->tussenvoegsel = $tussenvoegsel; }
     public function setMail($mail) { $this->mail = $mail; }
+    public function setOldId($oldId) { $this->oldId = $oldId; }
 
     // Getters
     public function getStudentId() { return $this->studentId; } 
@@ -43,15 +44,18 @@ class Student {
     public function getAchternaam() { return $this->achternaam; } 
     public function getTussenvoegsel() { return $this->tussenvoegsel; } 
     public function getMail() { return $this->mail; } 
+    public function getOldId() { return $this->oldId; }
 
     public function saveToDB() {
-        $query = "SELECT * FROM student WHERE id = ?";
-        $result = DatabaseConnector::executeQuery($query, array($this->studentId));
-
-        if(count($result) == 1) {
+        if (is_null($this->oldId)) {
+            // geen ID
+            $this->saveNewStudent();
+        } else if ($this->oldId == $this->studentId) {
+            // ID niet veranderd
             $this->updateStudent();
         } else {
-            $this->saveNewStudent();            
+            // ID veranderd
+            $this->updateStudentWithDependencies();
         }
     }
 
@@ -73,15 +77,34 @@ class Student {
                   SET voornaam = ?, achternaam = ?, tussenvoegsel = ?, mail = ? 
                   WHERE id = ?";
 
-        $parameters = array($this->voornaam,
+        $parameters = array($this->studentId,
+                            $this->voornaam,
                             $this->achternaam,
                             $this->tussenvoegsel,
                             $this->mail,
-                            $this->studentId);
+                            $this->oldId);
 
         DatabaseConnector::executeQuery($query, $parameters);
+    }  
+
+    public function updateStudentWithDependencies() {
+        $this->saveNewStudent();
+
+        // klas_student aanpassen
+        $query = "UPDATE klas_student 
+                  SET student_id = ? 
+                  WHERE student_id = ?";
+
+        $parameters = array($this->studentId,
+                            $this->oldId);
+
+        DatabaseConnector::executeQuery($query, $parameters);
+        
+        // Verwijder student
+        $query = "DELETE FROM student WHERE id = ?";
+        DatabaseConnector::executeQuery($query, array($this->oldId));
     }
-    
+
     
     //Zou moeten werken. Alleen nog maar via workbench getest!
     //Haal de punten voor een student uit een blok op per docent

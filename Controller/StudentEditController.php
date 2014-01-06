@@ -48,6 +48,7 @@ class StudentEditController {
             $this->studentModel->setAchternaam($_POST["achternaam"]);
             $this->studentModel->setTussenvoegsel($_POST["tussenvoegsel"]);
             $this->studentModel->setMail($_POST["mail"]);
+            $this->studentModel->setOldId($_GET["id"]);
             $this->studentModel->saveToDB();
         } else {
             $this->studentenModel->addStudent($_POST["studentId"], $_POST["voornaam"], $_POST["achternaam"], $_POST["tussenvoegsel"], $_POST["mail"]);
