@@ -13,14 +13,22 @@ class LoginController
 
         if (!empty($_POST))
         {
-            $this->validateLoginRequest();
+            if ($_POST["forgetUsername"] != null)
+            {
+
+                $this->forgetPass($_POST["forgetUsername"]);
+            }
+            else
+            {
+                $this->validateLoginRequest();
+            }
         }
         }
 
     public function validateLoginRequest()
         {
-        $loginpassed = (string)$this->loginModel->validateLogin($_POST['username'], $_POST['password']);
-        
+        $loginpassed = (string) $this->loginModel->validateLogin($_POST['username'], $_POST['password']);
+
         switch ($loginpassed)
         {
             case '1':
@@ -41,9 +49,50 @@ class LoginController
         }
         }
 
+    public function forgetPass($username)
+        {
+        include_once 'Controller' . DIRECTORY_SEPARATOR . 'MailController.php';
+
+        $mailController = new MailController();
+
+        //$mail = $this->loginModel->getAccountEmail($username)[0]['mail'];
+        $account = $this->loginModel->getAccountByKey($username);
+        $mail = $this->loginModel->getAccountEmail($username)[0]['mail'];
+
+
+
+
+        if ($mail != null)
+        {
+            $mailController->setMail($mail);
+            $success = $mailController->sendForgetMail();
+            $newPass = $mailController->getNewPass();
+            if ($success)
+            {
+                $newAccount = new Account();
+                $newAccount->update(null, $username, $newPass, null, null, $username);
+
+                $this->LoginErrorMessage = "E-mail verstuurd";
+                $_SESSION['loginError'] = $this->LoginErrorMessage;
+                header("location: index.php?p=login&e=error");
+            }
+            else
+            {
+                $this->LoginErrorMessage = "Geen e-mail verstuurd.";
+                $_SESSION['loginError'] = $this->LoginErrorMessage;
+                header("location: index.php?p=login&e=error");
+            }
+        }
+        else
+        {
+            $this->LoginErrorMessage = "Geen e-mail bekend vraag de admin voor een nieuw wachtwoord.";
+            $_SESSION['loginError'] = $this->LoginErrorMessage;
+            header("location: index.php?p=login&e=error");
+        }
+        }
+
     public function invoke()
         {
-
         $page = "View" . DIRECTORY_SEPARATOR . "Login.php";
 
         include_once "View" . DIRECTORY_SEPARATOR . "Template.php";

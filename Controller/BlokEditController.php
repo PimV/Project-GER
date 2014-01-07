@@ -77,7 +77,10 @@ class BlokEditController {
 					var_dump($this->blokkenModel->getBlock($id)->getOpen());
 					if ($this->blokkenModel->getBlock($id)->getOpen() === false) {
 						include_once 'Controller' . DIRECTORY_SEPARATOR . 'MailController.php';
-						$mailController = new MailController($name, $deadline);
+						$mailController = new MailController();
+                                                $mailController->setName($name);
+                                                $mailController->setDeadline($deadline);
+                                                $mailController->init();
 					}
 				}
 				$this->blokModel->setClassArray($classArray);
