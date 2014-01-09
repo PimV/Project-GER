@@ -60,7 +60,7 @@
 					echo "<td>".$value['bloknummer']."</td>";
 					
 					// Check of blok open staat
-					if(!is_null($value['beoordeling_deadline'])) {
+					if(!is_null($value['beoordeling_deadline']) && strtotime($value['beoordeling_deadline']) > time()) {
 						echo "<td>Ja</td></tr>";
 					} else {
 						echo "<td>Nee</td></tr>";
