@@ -93,7 +93,7 @@
 
     <!-- Laat onderstaande knoppen alleen zien als een administrator is ingelogd -->
     <?php if ($_SESSION['admin']) { ?>
-        <div class="item" onclick="javascript:location.href = 'index.php?p=studentedit'">
+        <div class="item" onclick="javascript:location.href = 'index.php?p=studentedit&c=' + <?php echo $classId; ?>">
             <div class="fontIcon">
                 &#xe102;
             </div>  

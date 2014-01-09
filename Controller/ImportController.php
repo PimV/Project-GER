@@ -93,6 +93,7 @@ class ImportController {
                         $student->setTussenvoegsel($newStudent['tussenvoegsel']);
                         $student->setAchternaam($newStudent['achternaam']);
                         $student->setMail('');
+                        $student->saveNewStudent();
                         var_dump($newStudent['voornaam']);
                         $importCount++;
                     }

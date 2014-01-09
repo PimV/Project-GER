@@ -125,7 +125,7 @@ class MailController
         $mail->Host = 'ssl://smtp.gmail.com';
         $mail->Port = 465;
         //$mail->Username = "ger.automail@gmail.com";
-        $mail->Username = "webshop.moviemania@gmail.com";
+        $mail->Username = "ger.automail@gmail.com";
         $mail->Password = "Ab12345!";
         $mail->SetFrom('ger.automail@gmail.com', "noreply@projectger.com");
 
@@ -223,7 +223,7 @@ class MailController
 
     public function setName($name)
         {
-        $this->name = $name;
+        $this->blokName = $name;
         }
 
     public function setDeadline($deadline)
