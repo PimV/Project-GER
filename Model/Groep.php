@@ -103,7 +103,7 @@ class Groep {
         DatabaseConnector::executeQuery("INSERT INTO rol SET "
                 . "(naam, omschrijving, verwijderd) "
                 . "VALUES "
-                . "(" .  $this->_naam . ", " . $this->_omschrijving . ", 0)");
+                . "('" .  $this->_naam . "', '" . $this->_omschrijving . "', 0)");
         
         $idQuery = DatabaseConnector::executeQuery("SELECT max(id) AS id from rol");
         
