@@ -139,7 +139,7 @@ class Klas {
                             $this->schoolYear);
 
         if(!empty($this->reviewDeadline)){
-            $query .= ", beoordeling_deadline = STR_TO_DATE($this->reviewDeadline, '%d-%m-%Y') ";
+            $query .= ", beoordeling_deadline = STR_TO_DATE(?, '%d-%m-%Y') ";
             array_push($parameters, $this->reviewDeadline);
         }
         $query .= "WHERE id = $this->classId ";

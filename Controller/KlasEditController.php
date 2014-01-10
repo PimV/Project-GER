@@ -86,11 +86,11 @@ class KlasEditController {
     private function saveData() {
         if(isset($_GET["id"])){
             //Update class.
-            $this->klasModel->setClassCode($_POST["code"]);
+            if(isset($_POST["code"])){$this->klasModel->setClassCode($_POST["code"]); }
             if(isset($_POST["block"])){ $this->klasModel->setBlock($_POST["block"]); }
-            $this->klasModel->setSchoolYear($_POST["schoolyear"]);
-            $this->klasModel->setCoach($_POST["coach"]);
-            $this->klasModel->setStudents($_POST["list1"]);
+            if(isset($_POST["schoolyear"])){$this->klasModel->setSchoolYear($_POST["schoolyear"]); }
+            if(isset($_POST["coach"])){$this->klasModel->setCoach($_POST["coach"]); }
+            if(isset($_POST["list1"])){$this->klasModel->setStudents($_POST["list1"]); }
             $this->klasModel->saveToDB();
         }
         else {

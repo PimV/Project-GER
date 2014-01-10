@@ -24,13 +24,19 @@
             <table class="noAction">
                 <tr>
                     <td>Code</td>  
-                    <td><input name="code" type="text" value="<?php echo($classCode) ?>"/></td>
+                    <?php
+                        if(!$reviewing) {
+                            echo("<td><input name='code' type='text' value='$classCode'/></td>");
+                        } else {
+                            echo("<td>$classCode</td>");
+                        }
+                    ?>
                 </tr>        
                 <tr>
                     <td>Schooljaar</td>  
-                    <td>
-                        <select name="schoolyear" class="selectFullSize">
-                            <?php
+                    <?php
+                        if(!$reviewing) {
+                            echo("<td><select name='schoolyear' class='selectFullSize'>");
                             foreach ($yearChoices as $year) {
                                 $selected = "";
                                 if($year == $schoolYear) {
@@ -38,9 +44,11 @@
                                 }
                                 echo("<option $selected value='$year'>$year</option>");
                             }
-                            ?>
-                        </select>    
-                    </td>
+                            echo("</select></td>");
+                        } else {
+                            echo("<td>$schoolYear</td>");
+                        }
+                    ?>
                 </tr> 
             </table>                  
         </div>
