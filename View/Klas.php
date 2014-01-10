@@ -69,7 +69,7 @@
                 echo("<td>".$row["klascode"]."</td>");
                 echo("<td>".$row["schooljaar"]."</td>");
                 echo("<td>".$row["bloknummer"]." ".$row["naam"]."</td>");
-                echo("<td>".$row["coach_id"]."</td>");
+                echo("<td>".$row["coach"]."</td>");
                 echo("<td>".$row["studenten"]."</td>");
                 echo("<td>".$row["beoordeling_deadline_dmY"]."</td>");
                 echo("</tr>");

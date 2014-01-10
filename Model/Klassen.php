@@ -36,10 +36,12 @@ class Klassen {
                         b.naam, 
                         b.bloknummer, 
                         b.id AS blokid, 
+                        CONCAT_WS(' ', d.voornaam, d.tussenvoegsel, d.achternaam) AS coach,
                         COUNT(s.id) AS studenten
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
+                    LEFT JOIN docent d ON d.id = k.coach_id
                     WHERE k.verwijderd = false ";
         
         if (!$showHistory) {
