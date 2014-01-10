@@ -54,7 +54,7 @@
         <th>Blok</th>
         <th>Coach</th>
         <th>Studenten</th>
-        <th>beoordeling deadline</th>
+        <th>Beoordeling deadline</th>
     </thead>
     <tbody>
         <?php
