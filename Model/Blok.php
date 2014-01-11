@@ -62,6 +62,8 @@ class Blok {
 				  FROM blok AS b
 				  LEFT JOIN klas AS k ON b.id = k.blok_id
 				  WHERE b.id = ?
+				  AND k.beoordeling_deadline >= NOW()
+				  OR k.beoordeling_deadline IS NULL
 				  GROUP BY b.id";
 		
 		$result = DatabaseConnector::executeQuery($query, array($this->id));
@@ -70,7 +72,10 @@ class Blok {
 		$this->description = $result[0]['omschrijving'];
 		$this->schoolYear = $result[0]['leerjaar'];
 		$this->blockNumber = $result[0]['bloknummer'];
-		$this->deadline = $result[0]['beoordeling_deadline'];
+		// Check of de deadline datum  na vandaag ligt, zo niet dan wordt er geen deadline ingesteld
+		if (strtotime($result[0]['beoordeling_deadline']) > time()) {
+			$this->deadline = $result[0]['beoordeling_deadline'];
+		}
 		if(isset($this->deadline)) {
 			$this->open = true;
 		} else {
@@ -95,13 +100,14 @@ class Blok {
 										 leerjaar = ?,
 										 bloknummer = ?
 										 WHERE id = ?", $array);
-		
+
 		// Ga alleen verder als de combobox open op 'Ja' is gezet
 		// Wanneer een ingevulde deadline wordt gezet op een datum die
 		// vóór de huidige datum ligt, dan wordt de deadline op null
 		// gezet (verwijderd) uncomment '&& !is_null($this->deadline))'
 		// om uit te zetten
-		if($this->open == true /*&& !is_null($this->deadline)*/) {
+		//if($this->open === 'true' /*&& !is_null($this->deadline)*/) {
+		if(!empty($this->deadline)) {
 			// Variabele om aan te geven of de deadline is gezet
 			$deadlineSet = false;
 			// Query voor het zetten van de deadline
@@ -112,11 +118,12 @@ class Blok {
 			// het array classArray bevat ALLEEN klassen die nog géén deadline hebben
 			foreach($this->classArray as $value) {
 				if($value['blokid'] == $this->id) {
-					$query = "UPDATE klas SET beoordeling_deadline = ? 
-							  WHERE blok_id = ? AND klascode = ?";
+					//$query = "UPDATE klas SET beoordeling_deadline = ? 
+							  //WHERE blok_id = ? AND klascode = ?";
 					$array = array($this->deadline,
 								   $this->id,
 								   $value['klascode']);
+					DatabaseConnector::executeQuery($query, $array);
 					$deadlineSet = true;
 				}
 			}
@@ -128,16 +135,36 @@ class Blok {
 						$array = array($this->deadline,
 									   $this->id,
 									   $value['klascode']);
-						$deadlineSet = true;
+						DatabaseConnector::executeQuery($query, $array);
 					}
 				}
 			}
 			// Set deadline
-			if($deadlineSet) {
+			//if($deadlineSet) {
+				//DatabaseConnector::executeQuery($query, $array);
+			//}
+		} else {
+			$this->removeDeadline();
+		}		
+    }
+	
+	/**
+	 * Verwijder een deadline van dit blok voor alle huidige klassen, die nu beoordeeld worden
+	 *
+	 */
+	private function removeDeadline() {
+		$query = "UPDATE klas SET beoordeling_deadline = ?
+				  WHERE blok_id = ? AND klascode = ?";
+				  
+		foreach($this->classReviewingArray as $value) {
+			if($value['blokid'] === $this->id) {
+				$array = array('NULL',
+							   $this->id,
+							   $value['klascode']);
 				DatabaseConnector::executeQuery($query, $array);
 			}
-		}			
-    }
+		}
+	}
     
 }
 

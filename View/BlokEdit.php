@@ -79,14 +79,25 @@
 		
 		<div class="right">   
 			<table class="noAction">  
-				<tr>     
+				<tr><!-- 
 					<td>Open</td>  
 					<td>
 						<select class="selectFullSize" name="open" <?php echo (!isset($_SESSION['blok'])) ? 'disabled="disabled"' : ''; ?>>  
 							<option <?php echo (!isset($deadline)) ? 'selected="selected"' : ''; ?> value=false>Nee</option>
 							<option <?php echo (isset($deadline)) ? 'selected="selected"' : ''; ?> value=true>Ja</option>				  
 						</select>
-					</td>  
+					</td> 
+					-->
+					<td>Open</td>  
+					<td>
+						<?php
+						if(isset($deadline)) {
+							echo "<input type='text' name='open' value='Ja' disabled/>";
+						} else {
+							echo "<input type='text' name='open' value='Nee' disabled/>";
+						}
+						?>
+					</td> 
 				</tr>          
 				<tr>
 					<td>Einddatum</td>  
@@ -102,16 +113,18 @@
 						}
 					}
 					?>
-				</tr> 
+				</tr>
 			</table>     
 		</div>
 	</div>
 	
 <?php	
-if(isset($error)) {
+if(isset($error) && $error == "empty") {
 	echo "<script> showError('Geen geldige datum ingevoerd', 'Geen datum'); </script>"; 
 }
-
+if(isset($error) && $error == "noclass") {
+	echo "<script> showError('Er is nog geen klas aan dit blok gekoppeld', 'Geen klas gevonden'); </script>"; 
+}
 ?>
 
 </form>

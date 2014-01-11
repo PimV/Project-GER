@@ -61,9 +61,11 @@ class Blokken {
 		$query = "SELECT b.id, b.naam, b.omschrijving, b.leerjaar, b.bloknummer, k.beoordeling_deadline
 				  FROM blok AS b
 				  LEFT JOIN klas AS k ON b.id = k.blok_id
-				  WHERE b.verwijderd = 0
+				  WHERE b.verwijderd = 0 
+				  AND k.beoordeling_deadline >= NOW()
+				  OR k.beoordeling_deadline IS NULL
 				  GROUP BY b.id
-				  ORDER BY b.leerjaar, b.bloknummer;";
+				  ORDER BY b.leerjaar, b.bloknummer";
 				  
 		$result = DatabaseConnector::executeQuery($query);
 		return $result;
