@@ -1,7 +1,6 @@
 <?php
 
-class MailController
-    {
+class MailController {
 
     private $default;
     private $_teacherData;
@@ -15,86 +14,71 @@ class MailController
     private $deadline;
     private $newPass;
 
-    public function __construct()
-        {
+    public function __construct() {
         
-        }
+    }
 
-    public function init()
-        {
+    public function init() {
         $this->fetchTeacherInfo();
         $this->convertTeacherData();
         $this->fetchRubrics();
         $this->storeFormattedRubrics();
         $this->sendMail();
-        }
+    }
 
-    private function storeFormattedRubrics()
-        {
-        foreach ($this->teacherRubrics as $teacherId => $rubrics)
-        {
+    private function storeFormattedRubrics() {
+        foreach ($this->teacherRubrics as $teacherId => $rubrics) {
             $this->formatRubrics($this->teacherRubrics[$teacherId]);
             $this->teacherFormattedRubrics[$teacherId] = $this->formatRubrics($this->teacherRubrics[$teacherId]);
         }
-        }
+    }
 
-    private function fetchTeacherInfo()
-        {
+    private function fetchTeacherInfo() {
         include_once 'Model' . DIRECTORY_SEPARATOR . 'Docenten.php';
         $teacherModel = new Docenten();
         $this->_teacherData = $teacherModel->fetchMailData();
-        }
+    }
 
-    private function convertTeacherData()
-        {
+    private function convertTeacherData() {
         $this->teachers = array();
-        foreach ($this->_teacherData as $teacher)
-        {
+        foreach ($this->_teacherData as $teacher) {
             $this->teachers[$teacher['id']] = $teacher['mail'];
             $fullName = "";
             $fullName .= $teacher['voornaam'];
-            if (isset($teacher['tussenvoegsel']) && !empty($teacher['tussenvoegsel']))
-            {
+            if (isset($teacher['tussenvoegsel']) && !empty($teacher['tussenvoegsel'])) {
                 $fullName .= " " . $teacher['tussenvoegsel'];
             }
             $fullName .= " " . $teacher['achternaam'];
             $this->teacherNames[$teacher['id']] = $fullName;
         }
-        }
+    }
 
-    public function fetchRubrics()
-        {
+    public function fetchRubrics() {
         include_once 'Model' . DIRECTORY_SEPARATOR . 'Rubrieken.php';
         $rubricModel = new Rubrieken();
 
-        foreach ($this->teachers as $teacherId => $value)
-        {
+        foreach ($this->teachers as $teacherId => $value) {
             $_rubricsData = $rubricModel->getAllRubricsInclRole($teacherId);
             $rubrics = array();
-            foreach ($_rubricsData as $rubric)
-            {
+            foreach ($_rubricsData as $rubric) {
                 $rubrics[$rubric['id']] = $rubric['naam'];
             }
             $this->teacherRubrics[$teacherId] = $rubrics;
         }
-        }
+    }
 
-    public function formatRubrics($rubrics)
-        {
+    public function formatRubrics($rubrics) {
         $formattedText = "";
-        foreach ($rubrics as $rubric)
-        {
+        foreach ($rubrics as $rubric) {
             $formattedText .= "- " . $rubric . "\n";
         }
-        if (empty($formattedText))
-        {
+        if (empty($formattedText)) {
             $formattedText = "Geen specifieke rubrieken te beoordelen. Beoordeel naar eigen inzicht.";
         }
         return $formattedText;
-        }
+    }
 
-    public function setDefault($teacherId)
-        {
+    public function setDefault($teacherId) {
         $this->default = ""
                 . "*Dit is een automatisch gegenereerd bericht. Gelieve niet hierop te antwoorden!*"
                 . "\n \n"
@@ -112,10 +96,9 @@ class MailController
                 . "\n \n"
                 . "*Dit is een automatisch gegenereerd bericht. Gelieve niet hierop te antwoorden!*";
         return $this->default;
-        }
+    }
 
-    public function sendForgetMail()
-        {
+    public function sendForgetMail() {
         require 'Libraries/PHPMailer/PHPMailerAutoload.php';
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
@@ -136,23 +119,19 @@ class MailController
 
         //die;
 
-        if (!$mail->Send())
-        {
+        if (!$mail->Send()) {
             $error = 'Mail error: ' . $mail->ErrorInfo;
             return false;
-        }
-        else
-        {
+        } else {
             $error = 'Message sent!';
             return true;
         }
         var_dump("Mail moet verzonden zijn");
-        }
+    }
 
-    public function sendMail()
-        {
+    public function sendMail() {
         require 'Libraries/PHPMailer/PHPMailerAutoload.php';
-       
+
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
         $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
@@ -168,30 +147,24 @@ class MailController
 
         $majorFailure = "";
 
-        foreach ($this->teachers as $teacherId => $address)
-        {
+        foreach ($this->teachers as $teacherId => $address) {
             $mail->ClearAllRecipients();
             $mail->AddAddress($address);
             $mail->Body = $this->setDefault($teacherId);
 
-            if (!$mail->Send())
-            {
+            if (!$mail->Send()) {
                 $error = 'Mail error: ' . $mail->ErrorInfo;
-            }
-            else
-            {
+            } else {
                 $error = 'Message sent!';
             }
         }
-         die;
         echo $majorFailure;
-        }
+    }
 
-    public function newPassMail()
-        {
+    public function newPassMail() {
 
         $this->generateNewPass();
-        
+
         $this->defaultForgetPass = ""
                 . "*Dit is een automatisch gegenereerd bericht. Gelieve niet hierop te antwoorden!*"
                 . "\n \n"
@@ -207,35 +180,30 @@ class MailController
                 . "*Dit is een automatisch gegenereerd bericht. Gelieve niet hierop te antwoorden!*";
 
         return $this->defaultForgetPass;
-        }
+    }
 
-    public function generateNewPass()
-        {
+    public function generateNewPass() {
         $this->newPass = "";
-        for ($i = 0; $i < 9; $i++)
-        {
+        for ($i = 0; $i < 9; $i++) {
             $this->newPass .= rand(0, 9);
         }
         return $this->newPass;
-        }
-        
-        public function getNewPass() {
-            return $this->newPass;
-            }
-
-    public function setName($name)
-        {
-        $this->blokName = $name;
-        }
-
-    public function setDeadline($deadline)
-        {
-        $this->deadline = $deadline;
-        }
-
-    public function setMail($mail)
-        {
-        $this->_mail = $mail;
-        }
-
     }
+
+    public function getNewPass() {
+        return $this->newPass;
+    }
+
+    public function setName($name) {
+        $this->blokName = $name;
+    }
+
+    public function setDeadline($deadline) {
+        $this->deadline = $deadline;
+    }
+
+    public function setMail($mail) {
+        $this->_mail = $mail;
+    }
+
+}
