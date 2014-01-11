@@ -44,7 +44,45 @@ class ImportController {
         $highestRow = $sheet->getHighestRow();
 
         $importCount = 0;
+
+
+
+
+        $validFormat = false;
+
+
+        $idColumn = $sheet->getCell('A1')->getValue();
+        $lastNameColumn = $sheet->getCell('C1')->getValue();
+        $insertColumn = $sheet->getCell('D1')->getValue();
+        $firstNameColumn = $sheet->getCell('E1')->getValue();
+
+
+        var_dump(nl2br($idColumn));
+        var_dump($lastNameColumn);
+        var_dump($insertColumn);
+        var_dump($firstNameColumn);
+
+        $idValidator = strcmp($idColumn, "Student\nnummer");
+
+
+
+
+
+        if ($idValidator === 0 &&
+                $lastNameColumn === 'Achternaam' &&
+                $insertColumn === 'vv' &&
+                $firstNameColumn === 'Roepnaam') {
+            $validFormat = true;
+        }
+
+        if ($validFormat === false) {
+            $this->importSuccess = false;
+            return;
+        }
+
+
         for ($row = 2; $row <= $highestRow; $row++) {
+
 
             $studentId = $sheet->getCell('A' . $row)->getValue();
             $klasId = $sheet->getCell('B' . $row)->getValue();

@@ -71,7 +71,7 @@
             <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
         </div>
         <div class="contentMessage">
-            <h2>Weet u zeker dat u deze account wilt deactiveren?</h2>
+            <h2>Weet u zeker dat u dit account wilt verwijderen?</h2>
             <br><br><br><br><br><br><br><br>
             <input style="height: 40px; width: 180px;" type="button" value="Docent verwijderen" onclick="javascript:location.href = 'index.php?p=account&del=' + getSelectedItemId();"/>
             &nbsp;&nbsp;&nbsp;

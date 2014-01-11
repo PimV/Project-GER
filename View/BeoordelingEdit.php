@@ -1,15 +1,17 @@
-<h1>Beoordelingen klas <?php //klasnaam                                                                                             ?></h1>  
+<h1>Beoordelingen klas <?php //klasnaam                                                                                              ?></h1>  
 
 <div class="ribbon">       
-    <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling';
-            $('#results').submit();">   
-        <div class="fontIcon">
-            &#xe060;
-        </div>  
-        <div class="text">
-            Opslaan
+    <?php if ($isBeoordeeld === false): ?>
+        <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling';
+                $('#results').submit();">   
+            <div class="fontIcon">
+                &#xe060;
+            </div>  
+            <div class="text">
+                Opslaan
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
     <div class="item" onclick="javascript:location.href = 'index.php?p=beoordeling'">
         <div class="fontIcon">
             &#xe0f9;
@@ -72,9 +74,9 @@
                 foreach ($rubriekenDocent as $rubriekDocent) {
                     if (in_array($rubriekId, $rubriekDocent)) {
                         if ($unEven) {
-                            $bgcolor = 'bgcolor="#AF5A3E"';
+                            $bgcolor = 'bgcolor="#33CC00"';
                         } else
-                            $bgcolor = 'bgcolor="#DB704D"';
+                            $bgcolor = 'bgcolor="#33FF00"';
                     }
                 }
 

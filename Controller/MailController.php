@@ -116,7 +116,7 @@ class MailController
 
     public function sendForgetMail()
         {
-        require 'PHPMailer/PHPMailerAutoload.php';
+        require 'Libraries/PHPMailer/PHPMailerAutoload.php';
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
         $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
@@ -134,7 +134,6 @@ class MailController
         $mail->AddAddress($this->_mail);
         $mail->Body = $this->newPassMail();
 
-        var_dump($this->_mail);
         //die;
 
         if (!$mail->Send())
@@ -152,15 +151,17 @@ class MailController
 
     public function sendMail()
         {
-        require 'PHPMailer/PHPMailerAutoload.php';
+        require 'Libraries/PHPMailer/PHPMailerAutoload.php';
+       
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
-        $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth = true;  // authentication enabled
         $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
         $mail->Host = 'ssl://smtp.gmail.com';
         $mail->Port = 465;
-        $mail->Username = "ger.automail@gmail.com";
+        $mail->Username = "webshop.moviemania@gmail.com";
+        //$mail->Username = "ger.automail@gmail.com";
         $mail->Password = "Ab12345!";
         $mail->SetFrom('ger.automail@gmail.com', "noreply@projectger.com");
         $mail->Subject = "Beoordelingen opengezet";
@@ -182,6 +183,7 @@ class MailController
                 $error = 'Message sent!';
             }
         }
+         die;
         echo $majorFailure;
         }
 
