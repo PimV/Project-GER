@@ -195,19 +195,6 @@
             </table>            
         </div>
 
-
-        <table cellpadding="0" cellspacing="0">
-            <thead>
-            <th>Id</th>     
-            <th>Voornaam</th>
-            <th>Achternaam</th>
-            <th>Tussenvoegsel</th>
-            <th>Mail</th>   
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
     <?php } ?>
 
     <table id="sf" cellpadding="0" cellspacing="0">
