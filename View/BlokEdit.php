@@ -119,7 +119,7 @@
 	</div>
 	
 <?php	
-if(isset($error) && $error == "empty") {
+if(isset($error) && $error == "date") {
 	echo "<script> showError('Geen geldige datum ingevoerd', 'Geen datum'); </script>"; 
 }
 if(isset($error) && $error == "noclass") {
