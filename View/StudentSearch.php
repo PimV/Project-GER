@@ -197,7 +197,9 @@
 
     <?php } ?>
 
-    <table id="sf" cellpadding="0" cellspacing="0">
+    <?php if(!empty($klassen)): ?>
+
+        <table id="sf" cellpadding="0" cellspacing="0">
         <thead>
         <th>Id</th>     
         <th>Voornaam</th>
@@ -224,7 +226,12 @@
             }
             ?>
         </tbody>
-    </table>
+    </table>        
+
+    <?php else: ?>
+        <div>U kunt geen studenten zien omdat geen coach bent van een klas</div>
+    <?php endif; ?>
+
 
     <?php
     if (isset($_SESSION['importSuccess'])) {

@@ -26,8 +26,7 @@ class StudentSearchController {
             $classId = $_GET['classId'];
             $studenten = $this->studentenModel->getStudentsFromClass($classId);
         } else {
-            // Wanneer een docent bij geen klas behoort.
-            $studenten = Array();
+            $studenten = $this->studentenModel->getAllStudents_array();
         }
         
         //Admin ingelogd
