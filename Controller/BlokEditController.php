@@ -38,25 +38,26 @@ class BlokEditController {
     }
 
     public function invoke() {
-        if (!empty($_POST)) {
-			if($_POST['deadline']) {
-				if(empty($_POST['deadline'])) {
-					header("Location: index.php?p=blokedit&id=".$_SESSION['blok']."&error=empty");
-					exit();
-				}
-			} 
+        if (!empty($_POST)) {		
 			// Initialiseer variabelen
 			$name = $_POST['name'];
 			$description = $_POST['description'];
 			$schoolYear = $_POST['schoolYear'];
 			$blockNumber = $_POST['blockNumber'];
-			$date = date('Y/m/d', strtotime($_POST['deadline']));
-			// Check of ingevoerde datum ($date) n� vandaag ligt, zo niet dan wordt er g��n 
-			// deadline ingesteld
-			if (strtotime($date) > time()) {
+			if(!empty($_POST['deadline'])) {
+				$date = date('Y/m/d', strtotime($_POST['deadline']));
+				// Als de datum wel is ingevuld maar vóór vandaag ligt, stop en geef een foutmelding
+				if (strtotime($date) < time()) {
+					header("Location: index.php?p=blokedit&id=".$_SESSION['blok']."&error=date");
+					exit();
+				}
+			} else {
+				$date = null;
+			}
+			// Check of $date is gezet, zo ja zet de deadline
+			if(isset($date)) {
 				$deadline = date('Y/m/d', strtotime($_POST['deadline']));
 			}
-			//$open = $_POST['open'];
 			// Laad alle huidige klassen in
 			$classArray = $this->klassenModel->getAllClasses_array(false, false);
 			// Laad alle klassen die op dit moment open staan voor beoordeling in
@@ -70,20 +71,19 @@ class BlokEditController {
 				$this->blokModel->setDescription($description);
 				$this->blokModel->setSchoolYear($schoolYear);
 				$this->blokModel->setBlockNumber($blockNumber);
-				$this->blokModel->setDeadline($deadline);
-				//$this->blokModel->setOpen($open);
-				/*
-				if ($open === 'true') {
-					var_dump($this->blokkenModel->getBlock($id)->getOpen());
-					if ($this->blokkenModel->getBlock($id)->getOpen() === false) {
-						include_once 'Controller' . DIRECTORY_SEPARATOR . 'MailController.php';
-						$mailController = new MailController();
-                                                $mailController->setName($name);
-                                                $mailController->setDeadline($deadline);
-                                                $mailController->init();
+				if (isset($deadline)) {
+					// Check of het huidige blok al is gekoppeld aan een klas, zo niet stop en geef een foutmelding
+					$hasConnectedClasses = $this->blokModel->hasConnectedClasses();
+					if(!$hasConnectedClasses) {
+						header("Location: index.php?p=blokedit&id=".$_SESSION['blok']."&error=noclass");
+						exit();
 					}
-				}
-				*/
+					// Het blok is gekoppeld aan een klas, zet de deadline
+                    $this->blokModel->setDeadline($deadline);
+                } else {
+                    $this->blokModel->setDeadline(null);
+                }
+				// Check of de deadline zojuist is gezet, zo ja roep de mailcontroller aan
 				if (isset($deadline)) {
 					var_dump($this->blokkenModel->getBlock($id)->getDeadline());
 					$temp = $this->blokkenModel->getBlock($id)->getDeadline();
@@ -96,13 +96,8 @@ class BlokEditController {
 					}
 				}
 				$this->blokModel->setClassArray($classArray);
+				$this->blokModel->setClassReviewingArray($classReviewingArray);
 				$this->blokModel->saveToDB();
-				/*
-				if(!$success) {
-					header("Location: index.php?p=blokedit&id=".$_SESSION['blok']."&error=noclass");
-					exit();
-				}
-				*/
 				unset($_SESSION['blok']);
 			} else {
 				// Sessie bestaat niet, voeg nieuw blok toe
@@ -118,7 +113,6 @@ class BlokEditController {
         $schoolYear = $this->blokModel->getSchoolYear();
         $blockNumber = $this->blokModel->getBlockNumber();
         $deadline = $this->blokModel->getDeadline();
-        //$open = $this->blokModel->getOpen();
 		$error = $this->err;
 
         $page = "View" . DIRECTORY_SEPARATOR . "BlokEdit.php";

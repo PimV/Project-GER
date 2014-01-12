@@ -66,7 +66,7 @@ class Klassen {
      * @return array[][] Bevat alle klassen inclusief student aantallen.
      */
     public function getAllClassesReviewing_array($studentId = null) {
-        $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten
+        $query = "SELECT k.id, k.klascode, b.naam, COUNT(s.id) AS studenten, k.blok_id AS blokid
                     FROM klas k 
                     LEFT JOIN klas_student s ON s.klas_id = k.id 
                     LEFT JOIN blok b ON b.id = k.blok_id
