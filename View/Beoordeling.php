@@ -25,6 +25,7 @@ if ($noClasses === false) {
     echo '<table cellpadding="0" cellspacing="0">
     <thead>
     <th>Klascode</th>     
+    <th>Blok</th>
     <th>Aantal studenten</th>   
 </thead>    
 <tbody>';
@@ -38,6 +39,7 @@ if ($noClasses === false) {
         }
         echo '<tr ' . $trClass . ' id=' . $klas['id'] . '>';
         echo '<td>' . $klas['klascode'] . '</td>';
+        echo '<td>' . $klas['blok'] . '</td>';
         echo '<td>' . $klas['studenten'] . '</td>';
 
         echo '</tr>';

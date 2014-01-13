@@ -1,10 +1,3 @@
-$(function() {
-    $("#datepicker1").datepicker();
-});
-$(function() {
-    $("#datepicker2").datepicker();
-});
-
 function showId() {
     var a = document.getElementById("dropdownClass");
     var id = a.options[a.selectedIndex].value;

@@ -1,4 +1,8 @@
- <h1>Blok bewerken</h1> 
+ 
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
+
+<h1>Blok bewerken</h1> 
 <form id="save-form" action="index.php?p=blokedit" method="POST"> 
 	<div class="ribbon">     
 		<div class="item" onclick="document.forms['save-form'].submit();">
@@ -104,12 +108,12 @@
 					<td>
 					<?php
 					if(!isset($_SESSION['blok'])) {
-						echo "<input type='text' name='deadline' value='' disabled/> (yyyy-MM-dd)";
+						echo "<input type='text' id='deadline' name='deadline' disabled/> (yyyy-MM-dd)";
 					} else {
 						if(isset($deadline)) {
-							echo "<input type='text' name='deadline' value='".$deadline."'/> (yyyy-MM-dd)";
+							echo "<input type='text' id='deadline' name='deadline' value='".$deadline."'/> (yyyy-MM-dd)";
 						} else {
-							echo "<input type='text' name='deadline' value='' /> (yyyy-MM-dd)";
+							echo "<input type='text' id='deadline' name='deadline' /> (yyyy-MM-dd)";
 						}
 					}
 					?>

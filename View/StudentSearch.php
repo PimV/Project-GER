@@ -5,8 +5,6 @@
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
 <script src="JavaScript/StudentSearch.js"></script>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-<link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
 
 
 
@@ -129,18 +127,20 @@
     <?php } ?>
 </div>  
 
-<!-- Laat onderstaande view elementen alleen zien als een administrator is ingelogd -->
-<?php if ($_SESSION['admin']) { ?>
-    <div class="splitScreen">
+<div class="splitScreen">
         <div class="left">
-            <table class="noAction">   
+            <table class="noAction"> 
+                <!-- Laat onderstaande view elementen alleen zien als een administrator is ingelogd -->
+                <?php if ($_SESSION['admin']) { ?>
                 <tr>
                     <td>Zoekveld</td>  
                     <td><input id="filter" name="filt" onkeyup="filter(this, 'sf', 1)" type="text" placeholder="Typ hier om te zoeken."/></td>
                 </tr>  
+                <?php } ?>
                 <tr>
                     <td>Klas</td>
                     <td>
+                        <?php if ($_SESSION['admin']) { ?>
                         <select id="dropdownClass" class="selectFullSize" onchange="showId()">
                             <option> </option>
                             <?php
@@ -157,45 +157,35 @@
                             }
                             ?>
                         </select>
+                        <?php } else if (!$_SESSION['admin']) {?>
+                        <select id="dropdownClass" class="selectFullSize" onchange="showId()">
+                            <?php
+                            $i = 1;
+                            foreach ($klassen as $row) {
+                                if (isset($_GET['classId'])) {
+                                    if ($row["id"] == $_GET['classId']) {
+                                        echo("<option selected value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    } else {
+                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    }
+                                } else {
+                                    echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
+                                    $i++;
+                                }
+                            }
+                            
+                            if (!isset($_GET['classId'])) {
+                                echo "<script>showId();</script>";
+                            }
+                            
+                            ?>
+                        </select>
+                        <?php } ?>
                     </td>
                 </tr> 
             </table>            
         </div>
     </div>
-<?php } ?>
-
-<!-- Laat onderstaande view elementen alleen zien als een docent is ingelogd -->
-<?php if (!$_SESSION['admin']) { ?>
-    <div class="splitScreen">
-        <div class="left">
-            <table class="noAction">  
-                <tr>
-                    <td>Klas</td>
-                    <td>
-                        <select id="dropdownClass" class="selectFullSize" onchange="showId()">
-                            <option> </option>
-                            <?php
-                            foreach ($klassen as $row) {
-
-                                if (isset($_GET['classId'])) {
-
-                                    if ($row["id"] == $_GET['classId']) {
-                                        echo("<option selected='selected' value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                    } else {
-                                        echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                    }
-                                } else {
-                                    echo("<option value='" . $row["id"] . "'>" . $row["klascode"] . " - " . $row["naam"] . "</option>");
-                                }
-                            }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-            </table>            
-        </div>
-
-    <?php } ?>
 
     <?php if(!empty($klassen)): ?>
 
@@ -229,7 +219,7 @@
     </table>        
 
     <?php else: ?>
-        <div>U kunt geen studenten zien omdat geen coach bent van een klas</div>
+        <table class="noAction"><tr><td><div>U kunt geen studenten zien omdat geen coach bent van een klas</div></td></tr></table>
     <?php endif; ?>
 
 

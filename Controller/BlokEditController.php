@@ -116,6 +116,7 @@ class BlokEditController {
 		$error = $this->err;
 
         $page = "View" . DIRECTORY_SEPARATOR . "BlokEdit.php";
+        $pagehead = "View" . DIRECTORY_SEPARATOR . "BlokEditHead.php";
         include "View" . DIRECTORY_SEPARATOR . "Template.php";
     }
 
