@@ -124,9 +124,10 @@ class Klassen {
 
     public function getAllClassesNoResult_array() {
 
-        $query = "  SELECT k.id AS id, k.klascode AS klascode, COUNT(s.id) AS studenten
+        $query = "  SELECT k.id AS id, k.klascode AS klascode, COUNT(s.id) AS studenten, b.naam AS blok
                     FROM klas k 
-                    LEFT JOIN klas_student s ON s.klas_id = k.id 
+                    LEFT JOIN klas_student s ON s.klas_id = k.id
+                    LEFT JOIN blok b ON b.id = k.blok_id
                     WHERE beoordeling_deadline > NOW()
                     GROUP BY k.id";
 
