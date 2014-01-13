@@ -5,8 +5,6 @@
 
      Een heleboel menu knoppen moeten ook disabled zijn als er nog geen student geselecteerd is.-->
 <script src="JavaScript/StudentSearch.js"></script>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-<link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
 
 
 
