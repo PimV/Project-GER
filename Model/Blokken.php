@@ -58,10 +58,9 @@ class Blokken {
 	 *
 	 */
 	public function getAllBlocks() {
-		$query = "SELECT b.id, b.naam, b.omschrijving, b.leerjaar, b.bloknummer, k.beoordeling_deadline
+		$query = "SELECT b.id, b.naam, b.omschrijving, b.leerjaar, b.bloknummer, (SELECT beoordeling_deadline FROM klas WHERE blok_id = b.id AND beoordeling_deadline > NOW() LIMIT 1) AS beoordeling_deadline
 				  FROM blok AS b
-				  LEFT JOIN klas AS k ON b.id = k.blok_id
-				  WHERE b.verwijderd = 0 
+				  WHERE b.verwijderd = 0
 				  GROUP BY b.id
 				  ORDER BY b.leerjaar, b.bloknummer";
 				  

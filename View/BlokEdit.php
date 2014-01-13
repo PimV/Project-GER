@@ -12,7 +12,7 @@ if(empty($_GET["id"])) {
 ?> 
 <form id="save-form" action="index.php?p=blokedit" method="POST"> 
 	<div class="ribbon">     
-		<div class="item" onclick="document.forms['save-form'].submit();">
+		<div class="item" onclick="showError('De gegevens worden verwerkt..', 'Een ogenblik geduld'); document.forms['save-form'].submit();">
 			<div class="fontIcon">
 				 &#xe060;
 			</div>  
