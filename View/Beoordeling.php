@@ -10,15 +10,21 @@
             Terug
         </div>
     </div> 
-    <div class="item" onclick="javascript:location.href = 'index.php?p=beoordelingedit&id=' + getSelectedItemId()">
+    <?php
+    if (isset($_SESSION['docentId'])) {
+        echo 'docentId=' . $_SESSION['docentId'];
+        ?>
+        <div class="item" onclick="javascript:location.href = 'index.php?p=beoordelingedit&id=' + getSelectedItemId()">
 
-        <div class="fontIcon"> 
-            &#xe0b3;
-        </div>  
-        <div class="text" >
-            Beoordelen
+            <div class="fontIcon"> 
+                &#xe0b3;
+            </div>  
+            <div class="text" >
+                Beoordelen
+            </div>
         </div>
-    </div>
+        <?php }
+    ?>
 </div>  
 <?php
 if ($noClasses === false) {

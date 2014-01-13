@@ -150,6 +150,47 @@ class DocentEditController {
             $this->docentModel->update();
             $this->accountModel->update($_GET["id"], $_POST['username'], $pass, $_POST['level']);
         } else {
+
+            //Update class.
+
+            $newMail = $_POST['mail'];
+            $allMailsRaw = $this->docentenModel->fetchMailsOnly();
+            $newMailExists = false;
+            foreach ($allMailsRaw as $row) {
+                if ($newMail === $row['mail']) {
+                    $newMailExists = true;
+                    break;
+                }
+            }
+
+            if ($newMailExists) {
+                $_SESSION['editError'] = "Dit e-mailadres bestaat al en kan niet worden opgeslagen.";
+                header("location: index.php?p=docentedit&id=" . $_GET['id']);
+                die;
+            }
+
+
+
+            $newUsername = $_POST['username'];
+            include_once("Model" . DIRECTORY_SEPARATOR . "Accounten.php");
+            $accountenModel = new Accounten();
+            $allUsersRaw = $accountenModel->getAllActiveAccounts();
+            $userExists = false;
+            foreach ($allUsersRaw as $userRaw) {
+                if ($newUsername === $userRaw['gebruikersnaam']) {
+                    $userExists = true;
+                    break;
+                }
+            }
+
+
+            if ($userExists) {
+                $_SESSION['editError'] = "Username kan niet aangepast worden, bestaat namelijk al!";
+                header("location: index.php?p=docentedit");
+                die;
+            }
+
+
             //Create new class.
             $this->docentenModel->addTeacher(
                     $_POST["voornaam"], $_POST["tussenvoegsel"], $_POST["achternaam"], $_POST["mail"], $_POST["rollen"], $_POST["rubrieken"]);
