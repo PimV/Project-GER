@@ -1,4 +1,10 @@
 <?php
+if (isset($_SESSION['editError'])) {
+    echo '<script>showError("' . $_SESSION['editError'] . '");</script>';
+    
+}
+unset($_SESSION['editError']);
+
 if(isset($_GET['id'])){
     echo "<h1>$voornaam $tussenvoegsel $achternaam bewerken</h1>";  
 }
