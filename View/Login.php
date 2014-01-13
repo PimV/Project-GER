@@ -4,52 +4,59 @@
     }
 </script>
 
-<div class="coverBg" id="cover">
+
+<div class="coverBg" id="errorCover">
     <div class="cover">
         <div class="header">
-            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+            <div class="closeButton fontIcon" onclick="closeCover('errorCover')"></div>
         </div>
         <div class="contentMessage">
             <?php
-                if ($_SESSION['loginError'] == null)
-                {
-                   echo' <form action = "#" method = "POST">
-                    <table class = "noAction">
+            if (isset($_SESSION['loginError'])) {
+                echo $_SESSION['loginError'];
+            } else {
+                echo 'Er ging iets mis, probeer het opnieuw!';
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
+<div class="coverBg" id="forget">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('forget')"></div>
+        </div>
+        <div class="contentMessage">
+            <form action = "#" method = "POST">
+                <table class = "noAction">
                     <tr>
-                    <td>Gebruikersnaam</td>
-                    <td><input type = "text" name = "forgetUsername"/></td>                  
-                    <td></td>
-                    <td><input type = "submit" value = "Zend mail"/></td>
+                        <td>Gebruikersnaam</td>
+                        <td><input type = "text" name = "forgetUsername"/></td>
+                        <td></td>
+                        <td><input type = "submit" value = "Zend mail"/></td>
                     </tr>
-                    </table>
-                    </form>';
-                }
-                else
-                {
-                    echo $_SESSION['loginError'];
-                }
-                ?>  
+                </table>
+            </form>
         </div>
     </div>
 </div>
 
 <?php
-if (isset($_GET["l"]))
-{
+if (isset($_GET["l"])) {
     session_unset();
     session_destroy();
     header("location:index.php");
-}
-else if (isset($_GET["e"]))
-{
-    echo '<script type="text/javascript">run();</script>';
-}
-else if (isset($_GET["f"]))
-{
-    $_SESSION['loginError'] = null;
-    echo '<script type="text/javascript">run();</script>';
+} else if (isset($_GET["e"])) {
+    echo '<script>openCover("errorCover");</script>';
+} else if (isset($_GET["f"])) {
+    echo '<script>openCover("forget");</script>';
 }
 ?>
+
+
+
+
 
 
 <h1>Login</h1>        
@@ -66,7 +73,8 @@ else if (isset($_GET["f"]))
             </tr> 
             <tr>
                 <td colspan="2">
-                    <a href="index.php?p=login&f=forget">Wachtwoord vergeten?</a>
+                    <a onclick="openCover('forget');
+                            return false;" href="index.php?p=login&f=forget">Wachtwoord vergeten?</a>
                 </td>
             </tr>
             <tr>
@@ -76,3 +84,5 @@ else if (isset($_GET["f"]))
         </table>
     </form>
 </div>
+
+
