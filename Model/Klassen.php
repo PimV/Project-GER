@@ -116,7 +116,7 @@ class Klassen {
 
         $query .= "AND beoordeling_deadline < NOW()
                     GROUP BY k.id
-                    ORDER BY k.schooljaar ASC, b.bloknummer ASC";
+                    ORDER BY k.schooljaar DESC, b.bloknummer DESC";
 
         $result = DatabaseConnector::executeQuery($query, $parameters);
         return $result;
