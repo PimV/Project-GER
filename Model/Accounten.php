@@ -26,6 +26,14 @@ class Accounten {
         return $result;
     }
 
+    public function getAllActiveAccounts() {
+        $query = "SELECT * FROM account WHERE disabled = 0";
+
+        $result = DatabaseConnector::executeQuery($query);
+
+        return $result;
+    }
+
     public function removeAccount($accountId) {
         $parameters = array($accountId);
 
