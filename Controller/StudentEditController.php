@@ -42,20 +42,34 @@ class StudentEditController {
     }
 
     private function saveData() {
-        if(isset($_GET["id"])) {
-            $this->studentModel->setStudentId($_POST["studentId"]);
-            $this->studentModel->setVoornaam($_POST["voornaam"]);
-            $this->studentModel->setAchternaam($_POST["achternaam"]);
-            $this->studentModel->setTussenvoegsel($_POST["tussenvoegsel"]);
-            $this->studentModel->setMail($_POST["mail"]);
-            $this->studentModel->setOldId($_GET["id"]);
-            $this->studentModel->saveToDB();
+        if (!$_POST["studentId"]) {
+            $_SESSION['editError'] = "Student ID mag niet leeg zijn";
+            $newLocation = "location: index.php?p=studentedit&c=0";
+            
+            if(isset($_GET['id'])) {
+                $newLocation .= "&id=" . $_GET['id'];
+            }
+            header($newLocation);
+            die;
         } else {
-            $this->studentenModel->addStudent($_POST["studentId"], $_POST["voornaam"], $_POST["achternaam"], $_POST["tussenvoegsel"], $_POST["mail"]);
+            if(isset($_GET["id"])) {
+                $this->studentModel->setStudentId($_POST["studentId"]);
+                $this->studentModel->setVoornaam($_POST["voornaam"]);
+                $this->studentModel->setAchternaam($_POST["achternaam"]);
+                $this->studentModel->setTussenvoegsel($_POST["tussenvoegsel"]);
+                $this->studentModel->setMail($_POST["mail"]);
+                $this->studentModel->setOldId($_GET["id"]);
+                $this->studentModel->saveToDB();
+            } else {
+                $this->studentenModel->addStudent($_POST["studentId"], $_POST["voornaam"], $_POST["achternaam"], $_POST["tussenvoegsel"], $_POST["mail"]);
+            }
+
+            
+            //Redirect naar de overzicht pagina van studenten
+            header("location: index.php?p=studentsearch&classId=" . $_GET['c']);
         }
-        
-        //Redirect naar de overzicht pagina van studenten
-        header("location: index.php?p=studentsearch&classId=" . $_GET['c']);
+
+
     }
 }
 
