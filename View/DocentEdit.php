@@ -1,13 +1,29 @@
+<?php
+if (isset($_SESSION['editError'])) {
+    echo '<script>showError("' . $_SESSION['editError'] . '");</script>';
+}
+unset($_SESSION['editError']);
+?>
+
 <script src="JavaScript/DocentEdit.js"></script>
 <script src="JavaScript/AccountValidation.js"></script>
-<h1>Docent bewerken</h1>          
+
+<?php
+if(empty($_GET["id"])) {
+    echo("<h1>Docent toevoegen</h1>");
+} else {
+    echo("<h1>Docent bewerken</h1>");
+}
+?>
 <div class="ribbon">     
     <div class="item" onclick="
-            if (validateAccountData() === true <?php if ($bestaatAl) {
-    echo ')';
-} else {
-    echo '&& allFieldsEntered() === true)';
-} ?> {
+            if (validateAccountData() === true <?php
+    if ($bestaatAl) {
+        echo ')';
+    } else {
+        echo '&& allFieldsEntered() === true)';
+    }
+    ?> {
                 addTranserListsToForm('form', 'rollen');
                 addTranserListsToForm('form', 'rubrieken');
                 $('#form').submit();
@@ -39,31 +55,31 @@
     if (isset($docent)) {
         echo $docent->getFirstName();
     }
-?>"/></td>
+    ?>"/></td>
                 </tr>     
                 <tr>
                     <td>Tussenvoegsels</td>  
                     <td><input name="tussenvoegsel" type="text" value="<?php
-    if (isset($docent)) {
-        echo $docent->getInsert();
-    }
-?>"/></td>
+                        if (isset($docent)) {
+                            echo $docent->getInsert();
+                        }
+    ?>"/></td>
                 </tr>
                 <tr>
                     <td>Achternaam</td>  
                     <td><input name="achternaam"  type="text" value="<?php
-    if (isset($docent)) {
-        echo $docent->getLastName();
-    }
-?>"/></td>
+                        if (isset($docent)) {
+                            echo $docent->getLastName();
+                        }
+    ?>"/></td>
                 </tr>
                 <tr>
                     <td>E-mail</td>  
                     <td><input name="mail" type="text" autocomplete="false" oninput="sync();"  value="<?php
-    if (isset($docent)) {
-        echo $docent->getMail();
-    }
-?>"/></td>
+                        if (isset($docent)) {
+                            echo $docent->getMail();
+                        }
+    ?>"/></td>
                 </tr> 
             </table> 
 
@@ -106,18 +122,18 @@
                 <tr>
                     <td>Nieuw wachtwoord</td>  
                     <td><input <?php
-                if ($bestaatAl) {
-                    echo ' required ';
-                }
+                        if ($bestaatAl) {
+                            echo ' required ';
+                        }
                 ?> class="password"  name="newPass1"type="password"/></td>
 
                 </tr>
                 <tr>
                     <td>Herhaal nieuw wachtwoord</td>  
                     <td><input <?php
-                if ($bestaatAl) {
-                    echo ' required ';
-                }
+                        if ($bestaatAl) {
+                            echo ' required ';
+                        }
                 ?> class="password"  name="newPass2" type="password"/></td>
                 </tr>
                 <tr>

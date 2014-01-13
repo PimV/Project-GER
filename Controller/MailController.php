@@ -102,7 +102,7 @@ class MailController {
         require 'Libraries/PHPMailer/PHPMailerAutoload.php';
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
-        $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth = true;  // authentication enabled
         $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
         $mail->Host = 'ssl://smtp.gmail.com';
@@ -134,7 +134,7 @@ class MailController {
 
         $mail = new PHPMailer();  // create a new object
         $mail->IsSMTP(); // enable SMTP
-        $mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth = true;  // authentication enabled
         $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
         $mail->Host = 'ssl://smtp.gmail.com';

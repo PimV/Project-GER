@@ -97,5 +97,11 @@ class Docenten {
         $result = DatabaseConnector::executeQuery($query);
         return $result;
     }
+    
+    public function fetchMailsOnly() {
+        $query = "SELECT mail FROM docent WHERE verwijderd = 0";
+        $result = DatabaseConnector::executeQuery($query);
+        return $result;
+    }
 
 }

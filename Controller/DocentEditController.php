@@ -19,7 +19,9 @@ class DocentEditController {
     private $accountModel;
 
     public function __construct() {
-        if(!$_SESSION["admin"]) { header("location: index.php?p=home"); }
+        if (!$_SESSION["admin"]) {
+            header("location: index.php?p=home");
+        }
         include_once("Model" . DIRECTORY_SEPARATOR . "Docent.php");
         include_once("Model" . DIRECTORY_SEPARATOR . "Docenten.php");
         include_once("Model" . DIRECTORY_SEPARATOR . "Rechten.php");
@@ -76,6 +78,67 @@ class DocentEditController {
         }
         if (isset($_GET["id"])) {
             //Update class.
+
+            $newMail = $_POST['mail'];
+            $allMailsRaw = $this->docentenModel->fetchMailsOnly();
+            $newMailExists = false;
+            foreach ($allMailsRaw as $row) {
+                if ($newMail === $row['mail']) {
+                    $newMailExists = true;
+                    break;
+                }
+            }
+            $oldDocent = $this->docentenModel->getTeacher($_GET['id']);
+            if (count($oldDocent) > 0) {
+                $oldDocent = $oldDocent[0];
+                if ($oldDocent['mail'] === $newMail) {
+                    
+                } else {
+
+                    if ($newMailExists) {
+                        $_SESSION['editError'] = "Dit e-mailadres bestaat al en kan niet worden opgeslagen.";
+                        header("location: index.php?p=docentedit&id=" . $_GET['id']);
+                        die;
+                    } else {
+                        $this->docentModel->setMail($_POST["mail"]);
+                    }
+                }
+            }
+
+            $newUsername = $_POST['username'];
+            include_once("Model" . DIRECTORY_SEPARATOR . "Accounten.php");
+            $accountenModel = new Accounten();
+            $allUsersRaw = $accountenModel->getAllActiveAccounts();
+            $userExists = false;
+            foreach ($allUsersRaw as $userRaw) {
+                if ($newUsername === $userRaw['gebruikersnaam']) {
+                    $userExists = true;
+                    break;
+                }
+            }
+
+            $oldAccount = $this->accountModel->getAccount($_GET['id']);
+            if (count($allUsers) > 0) {
+                $oldAccount = $oldAccount[0];
+                $oldUserName = $oldAccount['gebruikersnaam'];
+                if ($oldUserName === $newUsername) {
+                    //Niets aanpassen
+                } else {
+                    if ($userExists) {
+                        $_SESSION['editError'] = "Username kan niet aangepast worden, bestaat namelijk al!";
+                        header("location: index.php?p=docentedit&id=" . $_GET['id']);
+                        die;
+                    } else {
+                        var_dump("Username aangepast!");
+                    }
+                }
+            }
+
+            unset($_SESSION['editError']);
+
+
+
+
             $this->docentModel->setFirstName($_POST["voornaam"]);
             $this->docentModel->setInsert($_POST["tussenvoegsel"]);
             $this->docentModel->setLastName($_POST["achternaam"]);

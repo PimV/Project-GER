@@ -1,4 +1,10 @@
-<h1>Waardering Bewerken</h1>          
+<?php
+if(empty($_GET["id"])) {
+    echo("<h1>Waardering toevoegen</h1>");
+} else {
+    echo("<h1>Waardering bewerken</h1>");
+}
+?>      
 <div class="ribbon">     
     <div class="item" onclick="
             $('#form').submit();">

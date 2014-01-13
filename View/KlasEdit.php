@@ -1,4 +1,10 @@
-<h1>Klas bewerken</h1>          
+<?php
+if(empty($_GET["id"])) {
+    echo("<h1>Klas toevoegen</h1>");
+} else {
+    echo("<h1>Klas $classCode bewerken</h1>");
+}
+?>
 <div class="ribbon">     
     <div class="item" onclick="addTranserListsToForm('form', 'list1'); $('#form').submit();">
         <div class="fontIcon">

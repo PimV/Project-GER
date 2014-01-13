@@ -1,6 +1,12 @@
 <script src="JavaScript/DocentEdit.js"></script>
 <script src="JavaScript/AccountValidation.js"></script>
-<h1>Account bewerken</h1>          
+<?php
+if(empty($_GET["id"])) {
+    echo("<h1>Account toevoegen</h1>");
+} else {
+    echo("<h1>Account bewerken</h1>");
+}
+?>          
 <div class="ribbon">     
     <div class="item" onclick="
             if (validateAccountData() === true <?php

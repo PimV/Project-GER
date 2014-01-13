@@ -2,7 +2,14 @@
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <link href="Styles/datepicker.css" rel="stylesheet" type="text/css"/>
 
-<h1>Blok bewerken</h1> 
+
+<?php
+if(empty($_GET["id"])) {
+    echo("<h1>Blok toevoegen</h1>");
+} else {
+    echo("<h1>Blok bewerken</h1>");
+}
+?> 
 <form id="save-form" action="index.php?p=blokedit" method="POST"> 
 	<div class="ribbon">     
 		<div class="item" onclick="document.forms['save-form'].submit();">
