@@ -1,21 +1,26 @@
 <script src="JavaScript/DocentEdit.js"></script>
 <script src="JavaScript/AccountValidation.js"></script>
 <?php
-if(empty($_GET["id"])) {
+if (empty($_GET["id"])) {
     echo("<h1>Account toevoegen</h1>");
 } else {
-    echo("<h1>Account bewerken</h1>");
+    echo("<h1>Account '" . $_GET['id'] . "' bewerken</h1>");
 }
+
+if (isset($_SESSION['editError'])) {
+    echo '<script>showError("' . $_SESSION['editError'] . '");</script>';
+}
+unset($_SESSION['editError']);
 ?>          
 <div class="ribbon">     
     <div class="item" onclick="
             if (validateAccountData() === true <?php
-    if ($bestaatAl) {
-        echo ')';
-    } else {
-        echo '&& allFieldsEntered() === true)';
-    }
-    ?> {
+if ($bestaatAl) {
+    echo ')';
+} else {
+    echo '&& allFieldsEntered() === true)';
+}
+?> {
                 addTranserListsToForm('form', 'rollen');
                 addTranserListsToForm('form', 'rubrieken');
                 $('#form').submit();
@@ -42,10 +47,10 @@ if(empty($_GET["id"])) {
         <tr>
             <td>Gebruikersnaam</td>  
             <td><input id="minLength" name="username" value="<?php
-                if (isset($account)) {
-                    echo $account['gebruikersnaam'];
-                }
-                ?>" type="text"/></td>
+    if (isset($account)) {
+        echo $account['gebruikersnaam'];
+    }
+?>" type="text"/></td>
         </tr>
         <tr>
             <td>Nieuw wachtwoord</td>  
@@ -53,7 +58,7 @@ if(empty($_GET["id"])) {
                 if ($bestaatAl) {
                     echo ' required ';
                 }
-                ?> class="password"  name="newPass1"type="password"/></td>
+?> class="password"  name="newPass1"type="password"/></td>
 
         </tr>
         <tr>
@@ -62,7 +67,7 @@ if(empty($_GET["id"])) {
                 if ($bestaatAl) {
                     echo ' required ';
                 }
-                ?> class="password"  name="newPass2" type="password"/></td>
+?> class="password"  name="newPass2" type="password"/></td>
         </tr>
         <tr>
             <td>Rechten niveau</td>  
@@ -74,30 +79,30 @@ if(empty($_GET["id"])) {
                         padding: 3px;" 
                         class="dropDownBox" 
                         name="level">';
-                            <?php
-                            foreach ($levels as $level) {
-                                if (isset($account)) {
-                                    if ($level['id'] == $account['level_id']) {
-                                        echo '<option selected value=' . $level['id'] . '>' . $level['rol'] . '</option>';
-                                    } else {
-                                        echo '<option value=' . $level['id'] . '>' . $level['rol'] . '</option>';
-                                    }
-                                } else {
-                                    echo '<option value=' . $level['id'] . '>' . $level['rol'] . '</option>';
-                                }
-                            }
-                            echo '</select></td>';
-                            ?>
+<?php
+foreach ($levels as $level) {
+    if (isset($account)) {
+        if ($level['id'] == $account['level_id']) {
+            echo '<option selected value=' . $level['id'] . '>' . $level['rol'] . '</option>';
+        } else {
+            echo '<option value=' . $level['id'] . '>' . $level['rol'] . '</option>';
+        }
+    } else {
+        echo '<option value=' . $level['id'] . '>' . $level['rol'] . '</option>';
+    }
+}
+echo '</select></td>';
+?>
         </tr>
         <tr>
             <td>Geactiveerd</td>
             <td><input type="checkbox" name="activated" value="true" <?php
-                if (isset($account)) {
-                    if ($account['disabled'] === 0) {
-                        echo 'checked';
-                    }
-                }
-                ?>></td>
+                            if (isset($account)) {
+                                if ($account['disabled'] === 0) {
+                                    echo 'checked';
+                                }
+                            }
+?>></td>
         </tr>
     </table> 
 </div>
