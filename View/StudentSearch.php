@@ -219,7 +219,7 @@
     </table>        
 
     <?php else: ?>
-        <table class="noAction"><tr><td><div>U kunt geen studenten zien omdat geen coach bent van een klas</div></td></tr></table>
+        <table class="noAction"><tr><td><div>Er kunnen geen studenten worden getoond omdat u van geen een klas de coach bent.</div></td></tr></table>
     <?php endif; ?>
 
 
