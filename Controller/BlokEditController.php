@@ -85,7 +85,6 @@ class BlokEditController {
                 }
 				// Check of de deadline zojuist is gezet, zo ja roep de mailcontroller aan
 				if (isset($deadline)) {
-					echo "<script> showError('De e-mails worden naar de docenten verzonden..', 'Een ogenblik geduld'); </script>"; 
 					var_dump($this->blokkenModel->getBlock($id)->getDeadline());
 					$temp = $this->blokkenModel->getBlock($id)->getDeadline();
 					if (!isset($temp)) {

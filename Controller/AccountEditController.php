@@ -94,6 +94,29 @@ class AccountEditController {
 
             $this->accountModel->update(null, $_POST['username'], $pass, $_POST['level'], $activated, $_GET["id"]);
         } else {
+            $newUsername = $_POST['username'];
+            include_once("Model" . DIRECTORY_SEPARATOR . "Accounten.php");
+            $accountenModel = new Accounten();
+            $oldUsername = "";
+            $oldAccounts = $accountenModel->getAllActiveAccounts();
+            $userExists = false;
+            foreach ($oldAccounts as $oldAccount) {
+                if ($newUsername === $oldAccount['gebruikersnaam']) {
+                    $oldUsername = $oldAccount['gebruikersnaam'];
+                    $userExists = true;
+                    break;
+                }
+            }
+
+
+            if ($userExists) {
+                $_SESSION['editError'] = "Deze gebruikersnaam is al in gebruik en kan dus niet opgeslagen worden.";
+                header("location: index.php?p=accountedit");
+                die;
+            } else {
+                
+            }
+
             $this->accountModel->save($_POST['username'], $pass, $_POST['level']);
         }
         header("location: index.php?p=account");
