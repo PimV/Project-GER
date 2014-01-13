@@ -7,7 +7,14 @@ unset($_SESSION['editError']);
 
 <script src="JavaScript/DocentEdit.js"></script>
 <script src="JavaScript/AccountValidation.js"></script>
-<h1>Docent bewerken</h1>          
+
+<?php
+if(empty($_GET["id"])) {
+    echo("<h1>Docent toevoegen</h1>");
+} else {
+    echo("<h1>Docent bewerken</h1>");
+}
+?>
 <div class="ribbon">     
     <div class="item" onclick="
             if (validateAccountData() === true <?php
