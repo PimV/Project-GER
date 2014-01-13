@@ -44,7 +44,7 @@
         <div class="contentMessage">
             <h2>Weet u zeker dat u deze rol wilt verwijderen?</h2>
             <br><br><br><br><br><br><br><br>
-            <input style="height: 40px; width: 180px;" type="button" value="Blok verwijderen" onclick="javascript:location.href='index.php?p=groep&del='+getSelectedItemId();"/>
+            <input style="height: 40px; width: 180px;" type="button" value="Rol verwijderen" onclick="javascript:location.href='index.php?p=groep&del='+getSelectedItemId();"/>
             &nbsp;&nbsp;&nbsp;
             <input style="height: 40px; width: 100px;" type="button" value="Annuleren" onclick="closeCover('cover')"/>
         </div>
