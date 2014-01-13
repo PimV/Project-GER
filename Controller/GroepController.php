@@ -13,7 +13,7 @@ class GroepController {
     }
     
     public function invoke() {
-		// Als sessie 'blok' nog bestaat, unset sessie
+		// Als sessie 'groep' nog bestaat, unset sessie
 		if(isset($_SESSION['groep'])) {
                     unset($_SESSION['groep']);
 		}

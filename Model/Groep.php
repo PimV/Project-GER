@@ -100,7 +100,7 @@ class Groep {
     }
     
     private function addGroup(){
-        DatabaseConnector::executeQuery("INSERT INTO rol SET "
+        DatabaseConnector::executeQuery("INSERT INTO rol "
                 . "(naam, omschrijving, verwijderd) "
                 . "VALUES "
                 . "('" .  $this->_naam . "', '" . $this->_omschrijving . "', 0)");
@@ -110,7 +110,9 @@ class Groep {
         $this->_id = $idQuery['0']['id'];
         
         foreach($this->_rubics as $key => $rol) {            
-            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET (rol_id, rubriek_id) VALUES (" . $rol . ", " . $this->_id . ")");
+            DatabaseConnector::executeQuery("INSERT INTO rol_rubriek SET "
+                    . "rol_id = " . $this->_id . ", "
+                    . "rubriek_id = " . $rol);
         }
     }
 

@@ -26,7 +26,7 @@
             Bewerken
         </div>
     </div> 
-    <div class="item"  onclick="javascript:location.href='index.php?p=groep&del='+getSelectedItemId() ">
+    <div class="item" onclick="deleteClicked(getSelectedItemId());">
         <div class="fontIcon">
             &#xe0a8;
         </div>  
@@ -35,6 +35,22 @@
         </div>
     </div>
 </div>
+		
+<div class="coverBg" id="cover">
+    <div class="cover">
+        <div class="header">
+            <div class="closeButton fontIcon" onclick="closeCover('cover')"></div>
+        </div>
+        <div class="contentMessage">
+            <h2>Weet u zeker dat u deze rol wilt verwijderen?</h2>
+            <br><br><br><br><br><br><br><br>
+            <input style="height: 40px; width: 180px;" type="button" value="Blok verwijderen" onclick="javascript:location.href='index.php?p=groep&del='+getSelectedItemId();"/>
+            &nbsp;&nbsp;&nbsp;
+            <input style="height: 40px; width: 100px;" type="button" value="Annuleren" onclick="closeCover('cover')"/>
+        </div>
+    </div>
+</div>
+
 <table cellpadding="0" cellspacing="0">
     <thead>  
         <th>Naam</th>   
